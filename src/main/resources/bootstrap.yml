@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: catalogos
+  profiles:
+    active: #spring.profiles.active#
+  config:
+    location: classpath:/core-application.yml,classpath:/application.yml
