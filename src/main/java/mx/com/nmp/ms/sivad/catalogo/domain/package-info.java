@@ -13,7 +13,7 @@
  * Para los casos de creación de nuevos catálogos, es necesario clasificarlos por dominio y tipo,
  * esto con el fin de hacer configurable el procedimiento de agregación de nuevos catálogos.
  * <p>
- * La nomenclatura de nombre de las entidades debe ser: cat_<dominio>_<tipo_catalogo>.
+ * La nomenclatura de nombre de las entidades debe ser: cat_dominio_tipo_catalogo.
  *
  * @author osanchez
  */
