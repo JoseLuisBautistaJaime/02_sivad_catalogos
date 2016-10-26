@@ -12,17 +12,7 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-server:
-  port: 8080
-
 spring:
-  devtools:
-    restart:
-      enabled: true
-    livereload:
-      enabled: true
-  jackson:
-    serialization.indent_output: true
   datasource:
     initialize: true
     schema: classpath:/schema-h2.sql
