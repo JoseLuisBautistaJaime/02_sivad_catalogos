@@ -29,7 +29,7 @@ import java.util.List;
 @RequestMapping("/catalogos")
 public class ConfiguracionCatalogoResource {
 
-    private final Logger log = LoggerFactory.getLogger(ConfiguracionCatalogoResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfiguracionCatalogoResource.class);
 
     @Inject
     ConfiguracionCatalogoService configuracionCatalogoService;
@@ -47,8 +47,8 @@ public class ConfiguracionCatalogoResource {
     @Timed
     public ResponseEntity<List<ConfiguracionCatalogo>> getAllConfiguracionCatalogo(Pageable paginacion)
             throws URISyntaxException {
-        if (log.isInfoEnabled()) {
-            log.info(">> getAllConfiguracionCatalogo({})", paginacion);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> getAllConfiguracionCatalogo({})", paginacion);
         }
 
         Page<ConfiguracionCatalogo> page = configuracionCatalogoService.findAll(paginacion);

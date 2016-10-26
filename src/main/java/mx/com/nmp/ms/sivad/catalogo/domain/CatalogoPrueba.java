@@ -43,7 +43,7 @@ public class CatalogoPrueba implements Serializable {
      * Constructor de la clase.
      */
     public CatalogoPrueba() {
-
+        // Constructor vacio
     }
 
 

@@ -1,0 +1,42 @@
+# ===================================================================
+# Configuración Spring Boot
+#
+# Configuración para el profile de Spring "ensamble".
+# Aquí puedes establecer la configuración necesaria para el perfil de
+# ensamble.
+# ===================================================================
+
+# ===================================================================
+# Propiedades estandar de Spring.
+# Referencia completa en:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+server:
+  port: 8080
+
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  datasource:
+    initialize: false
+    schema: classpath:/schema-informix.sql
+    data: classpath:/data-informix.sql
+    driver-class-name: com.informix.jdbc.IfxDriver
+    type:
+    url: jdbc:informix-sqli://10.30.3.53:1525/sivad_catalogos:informixServer=midas_prodpri_tcp
+    name: sivad_catalogos
+    username: # username
+    password: # password
+  jpa:
+    database-platform: org.hibernate.dialect.InformixDialect
+    database: informix
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: localhost
+    port: 25

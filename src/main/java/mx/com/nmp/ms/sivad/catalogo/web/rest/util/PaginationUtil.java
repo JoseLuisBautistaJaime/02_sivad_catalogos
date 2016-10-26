@@ -20,6 +20,20 @@ import java.net.URISyntaxException;
  */
 public class PaginationUtil {
 
+    /**
+     * Constructor.
+     */
+    private PaginationUtil() {
+        throw new IllegalAccessError("Utility class");
+    }
+
+    /**
+     * Permite crear los headers de la página indicada.
+     * @param page La página.
+     * @param baseUrl La URL base.
+     * @return El HttpHeaders creado.
+     * @throws URISyntaxException
+     */
     public static HttpHeaders generatePaginationHttpHeaders(Page<?> page, String baseUrl)
             throws URISyntaxException {
 

@@ -53,6 +53,7 @@ public class ConfiguracionCatalogo {
      * Constructor vacio
      */
     public ConfiguracionCatalogo() {
+        // Constructor vacio
     }
 
     /**

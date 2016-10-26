@@ -20,7 +20,7 @@ import javax.inject.Inject;
 @Transactional
 public class ConfiguracionCatalogoService {
 
-    private final Logger log = LoggerFactory.getLogger(ConfiguracionCatalogoService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfiguracionCatalogoService.class);
 
     @Inject
     private ConfiguracionCatalogoRepository configuracionCatalogoRepository;
@@ -33,11 +33,10 @@ public class ConfiguracionCatalogoService {
      */
     @Transactional(readOnly = true)
     public Page<ConfiguracionCatalogo> findAll(Pageable paginacion) {
-        if (log.isInfoEnabled()) {
-            log.info(">> findAll({})", paginacion);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> findAll({})", paginacion);
         }
 
-        Page<ConfiguracionCatalogo> result = configuracionCatalogoRepository.findAll(paginacion);
-        return result;
+        return configuracionCatalogoRepository.findAll(paginacion);
     }
 }
