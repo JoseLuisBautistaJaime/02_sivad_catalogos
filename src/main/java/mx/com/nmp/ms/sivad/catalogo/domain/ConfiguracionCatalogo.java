@@ -1,5 +1,12 @@
 package mx.com.nmp.ms.sivad.catalogo.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import mx.com.nmp.ms.arquetipo.date.CustomDateTimeDeserializer;
+import mx.com.nmp.ms.arquetipo.date.CustomDateTimeSerializer;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -49,6 +56,12 @@ public class ConfiguracionCatalogo {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    @Column(name = "ultima_actualizacion", nullable = true)
+    private DateTime ultimaActualizacion;
+
     /**
      * Constructor vacio
      */
@@ -57,18 +70,20 @@ public class ConfiguracionCatalogo {
     }
 
     /**
-     * @param id           Identificador y clave de la configuración.
-     * @param dominio      Nombre del dominio asociado a un catálogo, por ejemplo: Diamantes, Alhajas, Autos.
-     * @param tipo         Nombre del tipo de catálogo, permite especificar a detalle el tipo de catálogo dentro de determinado dominio.
-     * @param valorDefault Usado para identificar el valor por defecto para determinado catálogo.
-     * @param descripcion  Descripción asociada a la entrada del catálogo; uso informativo.
+     * @param id                  Identificador y clave de la configuración.
+     * @param dominio             Nombre del dominio asociado a un catálogo, por ejemplo: Diamantes, Alhajas, Autos.
+     * @param tipo                Nombre del tipo de catálogo, permite especificar a detalle el tipo de catálogo dentro de determinado dominio.
+     * @param valorDefault        Usado para identificar el valor por defecto para determinado catálogo.
+     * @param descripcion         Descripción asociada a la entrada del catálogo; uso informativo.
+     * @param ultimaActualizacion Fecha de última actualización del catálogo.
      */
-    public ConfiguracionCatalogo(Long id, String dominio, String tipo, String valorDefault, String descripcion) {
+    public ConfiguracionCatalogo(Long id, String dominio, String tipo, String valorDefault, String descripcion, DateTime ultimaActualizacion) {
         this.id = id;
         this.dominio = dominio;
         this.tipo = tipo;
         this.valorDefault = valorDefault;
         this.descripcion = descripcion;
+        this.ultimaActualizacion = ultimaActualizacion;
     }
 
     public Long getId() {
@@ -136,6 +151,19 @@ public class ConfiguracionCatalogo {
         return this;
     }
 
+    public DateTime getUltimaActualizacion() {
+        return ultimaActualizacion;
+    }
+
+    public void setUltimaActualizacion(DateTime ultimaActualizacion) {
+        this.ultimaActualizacion = ultimaActualizacion;
+    }
+
+    public ConfiguracionCatalogo ultimaActualizacion(DateTime ultimaActualizacion) {
+        this.ultimaActualizacion = ultimaActualizacion;
+        return this;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ConfiguracionCatalogo{");
@@ -144,6 +172,7 @@ public class ConfiguracionCatalogo {
         sb.append(", tipo='").append(tipo).append('\'');
         sb.append(", valorDefault='").append(valorDefault).append('\'');
         sb.append(", descripcion='").append(descripcion).append('\'');
+        sb.append(", ultimaActualizacion='").append(ultimaActualizacion).append('\'');
         sb.append('}');
         return sb.toString();
     }

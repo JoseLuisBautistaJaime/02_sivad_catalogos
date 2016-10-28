@@ -7,6 +7,8 @@ import com.hazelcast.config.MaxSizeConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.instance.HazelcastInstanceFactory;
+import mx.com.nmp.ms.arquetipo.config.CoreDatabaseConfiguration;
+import mx.com.nmp.ms.arquetipo.config.CoreMetricsConfiguration;
 import mx.com.nmp.ms.arquetipo.profile.NmpProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,7 @@ import javax.inject.Inject;
 @SuppressWarnings("unused")
 @Configuration
 @EnableCaching
-@AutoConfigureAfter(value = {DatabaseConfiguration.class})
+@AutoConfigureAfter(value = {CoreMetricsConfiguration.class, CoreDatabaseConfiguration.class, DatabaseConfiguration.class})
 public class CacheConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CacheConfiguration.class);
