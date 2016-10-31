@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * Entidad empleada para clasificar los diferentes catálogos que se manejarán dentro de NMP.
@@ -19,7 +20,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "cnf_configuracion_catalogo")
-public class ConfiguracionCatalogo {
+public class ConfiguracionCatalogo implements Serializable {
+    private static final long serialVersionUID = -5002190279030722799L;
 
     /**
      * Identificador y clave de la configuración.

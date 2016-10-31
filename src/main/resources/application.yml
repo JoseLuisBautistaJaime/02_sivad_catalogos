@@ -22,6 +22,10 @@ microservicio:
 
 
 spring:
+  jackson:
+    serialization:
+      WRAP_ROOT_VALUE: true
+
   jpa:
     properties:
       hibernate.cache.use_second_level_cache: true

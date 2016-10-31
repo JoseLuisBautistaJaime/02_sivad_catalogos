@@ -1,0 +1,152 @@
+/*
+ *
+ * Microservicios - Catálogos
+ *
+ * <p><b>Quarksoft Copyrigth © 2016</b></p>
+ *
+ */
+package mx.com.nmp.ms.sivad.catalogo.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import mx.com.nmp.ms.arquetipo.annotation.journal.JournalData;
+import mx.com.nmp.ms.arquetipo.journal.listener.JournalEntityListener;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+/**
+ * Entidad que representa los elementos del catálogo Tipos de prenda.
+ *
+ * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
+ */
+@Entity
+@Table(name = "cat_diamante_tipo_prenda")
+@JsonIgnoreProperties({"idElemento", "configuracion"})
+@EntityListeners(JournalEntityListener.class)
+public class TipoPrenda implements CatalogoConfigurable {
+    private static final long serialVersionUID = -2912682434670276479L;
+
+    /**
+     * Identificador del registro.
+     */
+    @JournalData
+    private Long idElemento;
+
+    /**
+     * Nombre reconocible de este elemento orientado a uso interno de los sistemas.
+     */
+    @JournalData
+    private String abreviatura;
+
+    /**
+     * Es el nombre que cualquier sistema de cara al usuario podría utilizar para presentar el elemento.
+     */
+    @JournalData
+    private String etiqueta;
+
+    /**
+     * Metadata del catálogo. Contiene la definición del catálogo en sí.
+     */
+    private ConfiguracionCatalogo configuracion;
+
+    /**
+     * Constructor.
+     */
+    public TipoPrenda() {
+        super();
+    }
+
+    /**
+     * Obtiene el valor de idElemento.
+     *
+     * @return Valor de idElemento.
+     */
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "elemento_id", nullable = false)
+    public Long getIdElemento() {
+        return idElemento;
+    }
+
+    /**
+     * Establece el nuevo valor de idElemento.
+     *
+     * @param idElemento Nuevo valor de idElemento.
+     */
+    public void setIdElemento(Long idElemento) {
+        this.idElemento = idElemento;
+    }
+
+    /**
+     * Obtiene el valor de abreviatura.
+     *
+     * @return Valor de abreviatura.
+     */
+    @NotNull
+    @Size(min = 1)
+    @Column(name = "abreviatura", length = 20, nullable = false)
+    public String getAbreviatura() {
+        return abreviatura;
+    }
+
+    /**
+     * Establece el nuevo valor de abreviatura.
+     *
+     * @param abreviatura Nuevo valor de etiqueta.
+     */
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
+    }
+
+    /**
+     * Obtiene el valor de etiqueta.
+     *
+     * @return Valor de etiqueta.
+     */
+    @NotNull
+    @Size(min = 1)
+    @Column(name = "etiqueta", length = 150, nullable = false)
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    /**
+     * Establece el nuevo valor de etiqueta.
+     *
+     * @param etiqueta Nuevo valor de etiqueta.
+     */
+    public void setEtiqueta(String etiqueta) {
+        this.etiqueta = etiqueta;
+    }
+
+    /**
+     * Obtiene el valor de configuracion.
+     *
+     * @return Valor de configuracion.
+     */
+    @ManyToOne
+    @JoinColumn(name = "id_configuracion")
+    @Override
+    public ConfiguracionCatalogo getConfiguracion() {
+        return configuracion;
+    }
+
+    /**
+     * Establece el nuevo valor de configuracion.
+     *
+     * @param configuracion Nuevo valor de configuracion.
+     */
+    public void setConfiguracion(ConfiguracionCatalogo configuracion) {
+        this.configuracion = configuracion;
+    }
+}
