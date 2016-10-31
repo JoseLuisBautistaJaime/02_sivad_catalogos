@@ -32,19 +32,6 @@ public final class CatalogoFactory {
      * Crear un objeto {@link Catalogo}
      *
      * @param configuracion Configuración del catalogo {@link ConfiguracionCatalogo}
-     * @param elemento Elemtos del catálogo.
-     * @param <T> Tipo del elemento.
-     *
-     * @return Objeto {@link Catalogo}
-     */
-    public static <T> Catalogo build(ConfiguracionCatalogo configuracion, T elemento) {
-        return build(configuracion, Collections.singletonList(elemento));
-    }
-
-    /**
-     * Crear un objeto {@link Catalogo}
-     *
-     * @param configuracion Configuración del catalogo {@link ConfiguracionCatalogo}
      * @param elementos Elemtos del catálogo.
      *
      * @return Objeto {@link Catalogo}
