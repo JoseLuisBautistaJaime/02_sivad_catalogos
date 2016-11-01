@@ -20,8 +20,6 @@ import java.util.List;
  * Servicio que expone los metodos para la administración del catálogo de color del oro.
  *
  * @author ngonzalez
- * @version 1.0
- * @created 01-Nov-2016
  */
 @Service
 @Transactional

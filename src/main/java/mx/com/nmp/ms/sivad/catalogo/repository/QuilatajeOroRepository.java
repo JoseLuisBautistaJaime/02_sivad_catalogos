@@ -12,8 +12,6 @@ import org.springframework.stereotype.Repository;
  * Expone los metodos de acceso a datos para el catálogo de quilatajes del oro.
  *
  * @author ngonzalez
- * @version 1.0
- * @created 01-Nov-2016
  */
 @Repository
 public interface QuilatajeOroRepository extends JpaRepository<QuilatajeOro, Long> {

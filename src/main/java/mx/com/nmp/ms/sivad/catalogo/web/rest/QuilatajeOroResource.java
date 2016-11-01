@@ -23,8 +23,6 @@ import java.util.List;
  * Controlador REST utilizado para obtener la información del catálogo de quilatajes del oro.
  *
  * @author ngonzalez
- * @version 1.0
- * @created 01-Nov-2016
  */
 @RestController
 @RequestMapping("/catalogos/diamantes/alhajas/quilatajes")

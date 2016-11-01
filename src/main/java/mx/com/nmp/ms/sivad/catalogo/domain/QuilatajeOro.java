@@ -18,8 +18,6 @@ import static javax.persistence.GenerationType.IDENTITY;
  * Entidad que representa el catálogo de quilatajes del oro.
  *
  * @author ngonzalez
- * @version 1.0
- * @created 01-Nov-2016
  */
 @Entity
 @Table(name = "cat_quilataje_oro")
