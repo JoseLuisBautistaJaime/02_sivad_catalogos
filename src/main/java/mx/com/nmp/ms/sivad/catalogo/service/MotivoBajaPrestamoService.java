@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Servicio que provee la lógica de negocio para el catalogo de tipo MotivoBajaPrestamo.
+ * Servicio que provee la lÃ³gica de negocio para el catalogo de tipo MotivoBajaPrestamo.
  *
  * @author jbautista
  */
@@ -28,7 +28,7 @@ public class MotivoBajaPrestamoService {
     private ConfiguracionCatalogoRepository configuracionCatalogoRepository;
 
     /**
-     * Guarda elemento de catálgo de tipo MotivoBajaPrestamo
+     * Guarda elemento de catÃ¡lgo de tipo MotivoBajaPrestamo
      *
      * @param motivoBajaPrestamo
      * @return MotivoBajaPrestamo
@@ -39,7 +39,7 @@ public class MotivoBajaPrestamoService {
     }
 
     /**
-     *  Actualiza elemento de catálgo de tipo MotivoBajaPrestamo
+     *  Actualiza elemento de catÃ¡lgo de tipo MotivoBajaPrestamo
      *
      * @param motivoBaja
      */
@@ -93,7 +93,7 @@ public class MotivoBajaPrestamoService {
         List<MotivoBajaPrestamo> result = motivoBajaPrestamoRepository.findAll();
         Catalogo catalogo = null;
         if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catálogo TipoPrenda no contiene elementos.");
+            LOGGER.warn("El catÃ¡logo TipoPrenda no contiene elementos.");
         } else {
             catalogo = CatalogoFactory.build(result);
         }
@@ -101,9 +101,9 @@ public class MotivoBajaPrestamoService {
     }
 
     /**
-     * Asigna el valor del repositorio para el catálogo.
+     * Asigna el valor del repositorio para el catÃ¡logo.
      *
-     * @param motivoBajaPrestamoRepository Repositorio para manejar el catálogo.
+     * @param motivoBajaPrestamoRepository Repositorio para manejar el catÃ¡logo.
      */
     @Inject
     public void setMotivoBajaPrestamoRepository(MotivoBajaPrestamoRepository motivoBajaPrestamoRepository) {
@@ -111,9 +111,9 @@ public class MotivoBajaPrestamoService {
     }
 
     /**
-     * Asigna el valor del repositorio para la configuración del catálogo.
+     * Asigna el valor del repositorio para la configuraciÃ³n del catÃ¡logo.
      *
-     * @param configuracionCatalogoRepository Repositorio para manejar la configuracion del catálogo..
+     * @param configuracionCatalogoRepository Repositorio para manejar la configuracion del catÃ¡logo..
      */
     @Inject
     public void setConfiguracionCatalogoRepository(ConfiguracionCatalogoRepository configuracionCatalogoRepository) {

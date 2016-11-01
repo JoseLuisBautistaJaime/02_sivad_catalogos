@@ -39,7 +39,7 @@ public class MotivoBajaPrestamoResource {
     }
 
     /**
-     * GET  /catalogos : obtiene los elementos del cat·logo MotivoBajaPrestamo.
+     * GET  /catalogos : obtiene los elementos del cat√°logo MotivoBajaPrestamo.
      *
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion

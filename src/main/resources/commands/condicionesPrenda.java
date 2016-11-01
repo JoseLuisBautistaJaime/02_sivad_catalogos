@@ -69,7 +69,7 @@ public class condicionesPrenda extends BaseCommand {
      * @param id identificador del elemento que sera eliminado.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
      * @param etiqueta nueva etiqueta que sera asignada al elemento.
-     * @param configuracion nueva configuraci�n que sera asignada al elemento.
+     * @param configuracion nueva configuración que sera asignada al elemento.
      */
     @Command
     @Usage("Modifica los datos del elemento del catalogo Condicion de Prenda especidifcado por una ID")
@@ -77,7 +77,7 @@ public class condicionesPrenda extends BaseCommand {
                           @Usage("id") @Required @Option(names = {"id", "modificar"}) String modificar,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
                           @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta,
-                          @Usage("ID Configuración.") @Required @Option(names = {"c", "configuracion"}) String configuracion) {
+                          @Usage("ID ConfiguraciÃ³n.") @Required @Option(names = {"c", "configuracion"}) String configuracion) {
 
         try {
 
@@ -106,7 +106,7 @@ public class condicionesPrenda extends BaseCommand {
     }
 
     /**
-     * Obtiene los elementos del cat�logo.
+     * Obtiene los elementos del catálogo.
      *
      * @param context
      */
@@ -136,7 +136,7 @@ public class condicionesPrenda extends BaseCommand {
     }
 
     /**
-     * Obtiene los elementos del cat�logo.
+     * Obtiene los elementos del catálogo.
      *
      * @param context
      */
@@ -165,7 +165,7 @@ public class condicionesPrenda extends BaseCommand {
     }
 
     /**
-     * Elimina elemento del cat�logo por identificador.
+     * Elimina elemento del catálogo por identificador.
      *
      * @param id identificador de elemento a eliminar.
      * @return String.
@@ -184,7 +184,7 @@ public class condicionesPrenda extends BaseCommand {
 
 
     /**
-     * Agrega elemento de cat�logo de tipo CondicionPrenda.
+     * Agrega elemento de catálogo de tipo CondicionPrenda.
      * @param context
      * @param abreviatura
      * @param etiqueta
@@ -201,7 +201,7 @@ public class condicionesPrenda extends BaseCommand {
                         @Required
                         @Option(names = {"e", "etiqueta"})
                         String etiqueta,
-                        @Usage("ID Configuraci�n.")
+                        @Usage("ID Configuración.")
                         @Required
                         @Option(names = {"c", "configuracion"})
                         String configuracion) {

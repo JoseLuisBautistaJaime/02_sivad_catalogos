@@ -29,21 +29,21 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     private Long elementoId;
 
     /**
-     * Abreviatura del elemento de cat醠ogo.
+     * Abreviatura del elemento de cat谩logo.
      */
     @Column(name = "abreviatura")
     @JournalData
     private String abreviatura;
 
     /**
-     * Descripci髇 del emento de cat醠ogo.
+     * Descripci贸n del emento de cat谩logo.
      */
     @Column(name = "etiqueta")
     @JournalData
     private String etiqueta;
 
     /**
-     * Configuraci髇 del cat醠ogo, se relaciona con la tabla de configuraci髇.
+     * Configuraci贸n del cat谩logo, se relaciona con la tabla de configuraci贸n.
      */
     @ManyToOne
     @JoinColumn(name="id_configuracion")
@@ -57,7 +57,7 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     }
 
     /**
-     * Recupera el valor del elemento configuraci髇.
+     * Recupera el valor del elemento configuraci贸n.
      * @return ConfiguracionCatalogo
      */
     @Override
@@ -66,9 +66,9 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     }
 
     /**
-     * Asigna el valor del elemento configuraci髇.
+     * Asigna el valor del elemento configuraci贸n.
      *
-     * @param configuracion
+     * @param configuracion elemento actualizable
      */
     public void setConfiguracion(ConfiguracionCatalogo configuracion) {
         this.configuracion = configuracion;
@@ -77,7 +77,7 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     /**
      * Recupera el valor del elemento id.
      *
-     * @return elementoId
+     * @return elementoId elemento actual
      */
     public Long getElementoId() {
         return elementoId;
@@ -86,7 +86,7 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     /**
      * Asigna el valor del elemento id.
      *
-     * @param elementoId
+     * @param elementoId elemento actualizable
      */
     public void setElementoId(Long elementoId) {
         this.elementoId = elementoId;
@@ -95,7 +95,7 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     /**
      * Recupera el elemento abreviatura.
      *
-     * @return abreviatura.
+     * @return abreviatura elemento actual
      */
     public String getAbreviatura() {
         return abreviatura;
@@ -104,7 +104,7 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     /**
      * Asigna el valor del elemento abreviatura.
      *
-     * @param abreviatura
+     * @param abreviatura elemento actualizable
      */
     public void setAbreviatura(String abreviatura) {
         this.abreviatura = abreviatura;
@@ -113,7 +113,7 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     /**
      * Obtiene el valor del elemento etiqueta.
      *
-     * @return etiqueta.
+     * @return etiqueta elemento actual
      */
     public String getEtiqueta() {
         return etiqueta;
@@ -122,10 +122,32 @@ public class MotivoBajaPrestamo implements CatalogoConfigurable{
     /**
      * Asigna el valor del elemento eiqueta.
      *
-     * @param etiqueta
+     * @param etiqueta elemento actualizable
      */
     public void setEtiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
+    }
+
+    /**
+     * Builder para elemento abreviatura
+     *
+     * @param abreviatura elemento
+     * @return CondicionPrenda
+     */
+    public MotivoBajaPrestamo abreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
+        return this;
+    }
+
+    /**
+     * Builder para elemento etiqueta
+     *
+     * @param etiqueta elemento
+     * @return CondicionPrenda
+     */
+    public MotivoBajaPrestamo etiqueta(String etiqueta) {
+        this.etiqueta = etiqueta;
+        return this;
     }
 
     /**
