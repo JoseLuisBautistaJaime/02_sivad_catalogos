@@ -50,4 +50,13 @@ public enum ConfiguracionCatalogoEnum {
     public DominioEnum getDominio() {
         return dominio;
     }
+
+    /**
+     * Obtiene el valor de {@code dominio.dominio}.
+     *
+     * @return Valor de {@code dominio.dominio}.
+     */
+    public String getDominioUnwrap() {
+        return dominio.getDominio();
+    }
 }

@@ -1,13 +1,17 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
+import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import javax.inject.Inject;
 
@@ -50,5 +54,30 @@ public class ConfiguracionCatalogoService {
         }
 
         return configuracionCatalogoRepository.findAll(paginacion);
+    }
+
+    /**
+     * Recupera la configuración de un catálogo, filtrando por {@link ConfiguracionCatalogo#dominio}
+     * y {@link ConfiguracionCatalogo#tipo}
+     * Actualiza la fecha de última actualización, establece la fecha y hora en la que se realiza la
+     * invocación a éste método.
+     *
+     * @return Regresa el objeto {@link ConfiguracionCatalogo} modificado.
+     *
+     * @throws CatalogoNotFoundException Cuando no existe la configuración buscada.
+     */
+    public ConfiguracionCatalogo getAndUpdateOperationDate(@HasText String dominio, @HasText String tipo) {
+        ConfiguracionCatalogo configuracion = configuracionCatalogoRepository.findByDominioAndTipo(dominio, tipo);
+
+        if (ObjectUtils.isEmpty(configuracion)) {
+            String mensage = String.format("ConfiguracionCatalogo[dominio = %s, tipo = %s], no existe.",
+                    dominio, tipo);
+            LOGGER.warn(mensage);
+            throw new CatalogoNotFoundException(mensage, ConfiguracionCatalogo.class);
+        }
+
+        configuracion.setUltimaActualizacion(DateTime.now());
+
+        return configuracion;
     }
 }
