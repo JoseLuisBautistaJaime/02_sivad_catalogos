@@ -26,6 +26,18 @@ public class ConfiguracionCatalogoService {
     private ConfiguracionCatalogoRepository configuracionCatalogoRepository;
 
     /**
+     * Obtener entidad de tipo CondicionPrenda por id
+     *
+     * @param id
+     * @return CondicionPrenda
+     */
+    @Transactional(readOnly=true)
+    public ConfiguracionCatalogo findOne(Long id){
+        LOGGER.info(">> findOne({})",id);
+        return configuracionCatalogoRepository.findOne(id);
+    }
+
+    /**
      * Obtener todas las configuraciones de catalogo
      *
      * @param paginacion información de paginación
