@@ -105,9 +105,9 @@ public class ConfiguracionCatalogoResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(configuracionCatalogo.getId().intValue())))
-                .andExpect(jsonPath("$.[*].dominio").value(hasItem(DOMINIO_DEFAULT.toString())))
-                .andExpect(jsonPath("$.[*].tipo").value(hasItem(TIPO_DEFAULT.toString())))
-                .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DESCRIPCION_DEFAULT.toString())))
+                .andExpect(jsonPath("$.[*].dominio").value(hasItem(DOMINIO_DEFAULT)))
+                .andExpect(jsonPath("$.[*].tipo").value(hasItem(TIPO_DEFAULT)))
+                .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DESCRIPCION_DEFAULT)))
                 .andExpect(jsonPath("$.[*].ultimaActualizacion").value(hasItem(ULTIMA_ACTUALIZACION_DEFAULT_STR)));
     }
 }
