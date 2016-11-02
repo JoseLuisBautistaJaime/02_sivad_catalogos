@@ -1,5 +1,6 @@
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
+import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.service.MotivoBajaPrestamoService;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
-import java.util.List;
 
 /**
  * Controlador REST para consultar entidades de tipo MotivoBajaPrestamo.
@@ -34,12 +34,12 @@ public class MotivoBajaPrestamoResource {
     /**
      * Constructor
      */
-    private MotivoBajaPrestamoResource(){
+    private MotivoBajaPrestamoResource() {
         super();
     }
 
     /**
-     * GET  /catalogos : obtiene los elementos del catálogo MotivoBajaPrestamo.
+     * GET  /catalogos : obtiene los elementos del catalogo MotivoBajaPrestamo.
      *
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
@@ -47,8 +47,8 @@ public class MotivoBajaPrestamoResource {
     @RequestMapping(value = "diamantes/motivos_baja_prestamo",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> getAll()
-            throws URISyntaxException {
+    @Timed
+    public ResponseEntity<Catalogo> getAll() throws URISyntaxException {
         LOGGER.debug(">> getAll()");
         Catalogo catalogo = motivoBajaPrestamoService.getAll();
         HttpHeaders headers = new HttpHeaders();
@@ -56,9 +56,9 @@ public class MotivoBajaPrestamoResource {
 
         if (catalogo == null) {
             LOGGER.warn("El catalogo MotivosBajaPrestamo es null");
-            return new ResponseEntity<Catalogo>(headers, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<Catalogo>(catalogo, headers, HttpStatus.OK);
+        return new ResponseEntity<>(catalogo, headers, HttpStatus.OK);
     }
 }

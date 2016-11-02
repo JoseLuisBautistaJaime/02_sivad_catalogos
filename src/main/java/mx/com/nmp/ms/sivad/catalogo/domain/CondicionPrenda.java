@@ -3,6 +3,7 @@ package mx.com.nmp.ms.sivad.catalogo.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import mx.com.nmp.ms.arquetipo.annotation.journal.JournalData;
 import mx.com.nmp.ms.arquetipo.journal.listener.JournalEntityListener;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Table(name = "cat_condicion_prenda")
 @JsonIgnoreProperties({"elementoId", "configuracion"})
 @EntityListeners(JournalEntityListener.class)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CondicionPrenda implements CatalogoConfigurable{
 
     private static final long serialVersionUID = 1L;

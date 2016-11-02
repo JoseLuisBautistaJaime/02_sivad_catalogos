@@ -11,4 +11,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MotivoBajaPrestamoRepository extends JpaRepository<MotivoBajaPrestamo,Long> {
+
+    /**
+     * Obtiene el elemento del catalogo MotivoBajaPrestamo por abreviatura.
+     *
+     * @param abreviatura abreviatura.
+     * @return MotivoBajaPrestamo
+     */
+    MotivoBajaPrestamo findByAbreviatura(String abreviatura);
 }

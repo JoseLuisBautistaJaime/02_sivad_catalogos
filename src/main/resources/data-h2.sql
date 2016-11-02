@@ -23,7 +23,7 @@ INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('
 INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('24_Q', '24', 4);
 UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = '14_Q' WHERE id = 4;
 
-INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (1,'Alhajas','diamantes','1','diamantes');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (1,'Diamantes','CondicionPrenda','BN','Catálogo Condición de Prenda');
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('BN','Buen Estado', 1);
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('RE','Regular', 1);
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('MA','Maltratada', 1);

@@ -11,4 +11,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CondicionPrendaRepository extends JpaRepository<CondicionPrenda,Long> {
+
+    /**
+     * Obtiene el elemento del catalogo CondicionPrenda por abreviatura.
+     *
+     * @param abreviatura abreviatura.
+     * @return CondicionPrenda
+     */
+    CondicionPrenda findByAbreviatura(String abreviatura);
 }

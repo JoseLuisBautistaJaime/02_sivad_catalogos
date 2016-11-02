@@ -1,10 +1,14 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
+import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
+import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.MotivoBajaPrestamo;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.MotivoBajaPrestamoRepository;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,7 +19,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Servicio que provee la lógica de negocio para el catalogo de tipo MotivoBajaPrestamo.
+ * Servicio que provee la logica de negocio para el catalogo de tipo MotivoBajaPrestamo.
  *
  * @author jbautista
  */
@@ -24,38 +28,55 @@ import java.util.List;
 public class MotivoBajaPrestamoService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MotivoBajaPrestamoService.class);
 
+    @Inject
     private MotivoBajaPrestamoRepository motivoBajaPrestamoRepository;
+
+    @Inject
     private ConfiguracionCatalogoRepository configuracionCatalogoRepository;
 
     /**
-     * Guarda elemento de catálgo de tipo MotivoBajaPrestamo
+     * Guarda elemento de catalgo de tipo MotivoBajaPrestamo
      *
-     * @param motivoBajaPrestamo
+     * @param motivoBajaPrestamo elemento que sera guardado.
      * @return MotivoBajaPrestamo
      */
-    public MotivoBajaPrestamo save(MotivoBajaPrestamo motivoBajaPrestamo){
+    public MotivoBajaPrestamo save(@NotNull MotivoBajaPrestamo motivoBajaPrestamo){
         LOGGER.info(">> save({})",motivoBajaPrestamo);
+        ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
+                ConfiguracionCatalogoEnum.CONDICION_PRENDA.getDominioUnwrap(),
+                ConfiguracionCatalogoEnum.CONDICION_PRENDA.getTipo());
+        configuracionCatalogo.setUltimaActualizacion(new DateTime());
+        motivoBajaPrestamo.setConfiguracion(configuracionCatalogo);
+
         return motivoBajaPrestamoRepository.save(motivoBajaPrestamo);
     }
 
     /**
-     *  Actualiza elemento de catálgo de tipo MotivoBajaPrestamo
+     * Actualiza elemento de catalogo de tipo MotivoBajaPrestamo.
      *
-     * @param motivoBaja
+     * @param abreviatura abreviatura del elemento que sera modificado.
+     * @param motivoBajaPrestamo objeto a modificar.
+     * @return MotivoBajaPrestamo
      */
-    public void saveAndFlush(MotivoBajaPrestamo motivoBaja){
-        LOGGER.info(">> save({})",motivoBaja);
-        motivoBajaPrestamoRepository.saveAndFlush(motivoBaja);
+    public MotivoBajaPrestamo update(@NotNull String abreviatura, @NotNull MotivoBajaPrestamo motivoBajaPrestamo){
+        LOGGER.info(">> update({})",abreviatura);
+
+        MotivoBajaPrestamo motivoBajaPrestamoActual = motivoBajaPrestamoRepository.findByAbreviatura(abreviatura);
+        motivoBajaPrestamoActual.setEtiqueta(motivoBajaPrestamo.getEtiqueta());
+        motivoBajaPrestamoActual.setAbreviatura(motivoBajaPrestamo.getAbreviatura());
+        motivoBajaPrestamoActual.getConfiguracion().setUltimaActualizacion(new DateTime());
+
+        return motivoBajaPrestamoRepository.save(motivoBajaPrestamoActual);
     }
 
     /**
      * Obtiene entidad de tipo MotivoBajaPrestamo por identificador
      *
-     * @param id
+     * @param id identificador del elemento
      * @return MotivoBajaPrestamo
      */
     @Transactional(readOnly=true)
-    public MotivoBajaPrestamo findOne(Long id){
+    public MotivoBajaPrestamo findOne(@NotNull Long id){
         LOGGER.info(">> findOne({})",id);
         return motivoBajaPrestamoRepository.findOne(id);
     }
@@ -63,10 +84,12 @@ public class MotivoBajaPrestamoService {
     /**
      * Borrar elemento de tipo MotivoBajaPrestamo por id
      *
-     * @param id
+     * @param id identificador que del elemento.
      */
     public void delete(Long id){
         LOGGER.info(">> delete({})",id);
+        MotivoBajaPrestamo motivoBajaPrestamo = motivoBajaPrestamoRepository.findOne(id);
+        motivoBajaPrestamo.getConfiguracion().setUltimaActualizacion(new DateTime());
         motivoBajaPrestamoRepository.delete(id);
     }
 
@@ -100,23 +123,4 @@ public class MotivoBajaPrestamoService {
         return catalogo;
     }
 
-    /**
-     * Asigna el valor del repositorio para el catálogo.
-     *
-     * @param motivoBajaPrestamoRepository Repositorio para manejar el catálogo.
-     */
-    @Inject
-    public void setMotivoBajaPrestamoRepository(MotivoBajaPrestamoRepository motivoBajaPrestamoRepository) {
-        this.motivoBajaPrestamoRepository = motivoBajaPrestamoRepository;
-    }
-
-    /**
-     * Asigna el valor del repositorio para la configuración del catálogo.
-     *
-     * @param configuracionCatalogoRepository Repositorio para manejar la configuracion del catálogo..
-     */
-    @Inject
-    public void setConfiguracionCatalogoRepository(ConfiguracionCatalogoRepository configuracionCatalogoRepository) {
-        this.configuracionCatalogoRepository = configuracionCatalogoRepository;
-    }
 }

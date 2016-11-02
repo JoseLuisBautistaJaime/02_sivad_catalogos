@@ -17,7 +17,7 @@ import org.springframework.beans.factory.BeanFactory;
 
 import java.util.List;
 
-@Usage("Administra operaciones del catalogo CondicionPrenda.")
+@Usage("Administra operaciones del cat\u00e1logo Condicion de Prenda.")
 public class condicionesPrenda extends BaseCommand {
 
     private TableElement table;
@@ -25,21 +25,11 @@ public class condicionesPrenda extends BaseCommand {
     /**
      * Obtiene el bean del contexto de spring para interarctuar con el API, clase CondicionPrendaService
      *
-     * @return
+     * @return CondicionPrendaService
      */
     private CondicionPrendaService getController() {
         BeanFactory factory = (BeanFactory) this.context.getAttributes().get("spring.beanfactory");
         return (CondicionPrendaService) factory.getBean(CondicionPrendaService.class);
-    }
-
-    /**
-     * Obtiene el bean del contexto de spring para interarctuar con el API, clase ConfiguracionCatalogoService
-     *
-     * @return
-     */
-    private ConfiguracionCatalogoService getControllerConfig() {
-        BeanFactory factory = (BeanFactory) this.context.getAttributes().get("spring.beanfactory");
-        return (ConfiguracionCatalogoService) factory.getBean(ConfiguracionCatalogoService.class);
     }
 
     /**
@@ -65,29 +55,26 @@ public class condicionesPrenda extends BaseCommand {
     /**
      * Modifica un elemento del catalogo.
      *
-     * @param context
+     * @param context coontexto del objeto.
      * @param id identificador del elemento que sera eliminado.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
      * @param etiqueta nueva etiqueta que sera asignada al elemento.
-     * @param configuracion nueva configuración que sera asignada al elemento.
+     * @param configuracion nueva configuracion que sera asignada al elemento.
      */
     @Command
-    @Usage("Modifica los datos del elemento del catalogo Condicion de Prenda especidifcado por una ID")
+    @Usage("Modifica los datos del elemento del cat\u00e1logo mediante la Abreviatura")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("id") @Required @Option(names = {"id", "modificar"}) String modificar,
+                          @Usage("Elemento a Modificar") @Required @Option(names = {"m", "elemento"}) String elemento,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
-                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta,
-                          @Usage("ID ConfiguraciÃ³n.") @Required @Option(names = {"c", "configuracion"}) String configuracion) {
+                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
 
         try {
 
-            CondicionPrenda condicionPrenda = this.getController().findOne(Long.parseLong(modificar));
+            CondicionPrenda condicionPrendaModificar = new CondicionPrenda();
+            condicionPrendaModificar.setAbreviatura(abreviatura);
+            condicionPrendaModificar.setEtiqueta(etiqueta);
 
-            condicionPrenda.setAbreviatura(abreviatura);
-            condicionPrenda.setEtiqueta(etiqueta);
-            condicionPrenda.setConfiguracion(this.getControllerConfig().findOne((Long.parseLong(configuracion))));
-
-            this.getController().saveAndFlush(condicionPrenda);
+            CondicionPrenda condicionPrenda = this.getController().update(elemento,condicionPrendaModificar);
 
             table = getTable();
 
@@ -106,12 +93,12 @@ public class condicionesPrenda extends BaseCommand {
     }
 
     /**
-     * Obtiene los elementos del catálogo.
+     * Obtiene los elementos del catalogo.
      *
-     * @param context
+     * @param context contexto del objeto.
      */
     @Command
-    @Usage("Muestra los elementos del catalogo CondicionPrenda.")
+    @Usage("Muestra los elementos del cat\u00e1logo.")
     public void elementos(InvocationContext<Object> context) {
 
         try {
@@ -128,7 +115,7 @@ public class condicionesPrenda extends BaseCommand {
                 );
             }
 
-            context.provide(new LabelElement("\nElementos del catalogo Condicion de Prenda:\n"));
+            context.provide(new LabelElement("\nElementos del cat\u00e1logo:\n"));
             context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -136,14 +123,14 @@ public class condicionesPrenda extends BaseCommand {
     }
 
     /**
-     * Obtiene los elementos del catálogo.
+     * Obtiene los elementos del catalogo.
      *
-     * @param context
+     * @param context contexto del objeto.
      */
     @Command
-    @Usage("Muestra un elemento del catalogo CondicionPrenda.")
+    @Usage("Muestra un elemento del cat\u00e1logo.")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("identificador ddel elemento.") @Required @Argument String id) {
+                         @Usage("Identificador del elemento.") @Required @Argument String id) {
 
         try {
             CondicionPrenda condicionPrenda = this.getController().findOne(Long.parseLong(id));
@@ -157,7 +144,7 @@ public class condicionesPrenda extends BaseCommand {
                     new LabelElement(condicionPrenda.getConfiguracion().getId().toString())
             );
 
-            context.provide(new LabelElement("\nElemento del catalogo Condicion de Prenda:\n"));
+            context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
             context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -165,54 +152,41 @@ public class condicionesPrenda extends BaseCommand {
     }
 
     /**
-     * Elimina elemento del catálogo por identificador.
+     * Elimina elemento del catalogo por identificador.
      *
      * @param id identificador de elemento a eliminar.
      * @return String.
      */
     @Command
-    @Usage("Eliminar un elemento del catalogo CondicionPrenda especificado por ID.")
+    @Usage("Elimina un elemento del cat\u00e1go por el identificador.")
     public String eliminar(
-            @Usage("identificador de la entrada del cat\u00E1logo.")
+            @Usage("identificador de la entrada del cat\u00e1logo.")
             @Required
             @Argument String id) {
 
         this.getController().delete(Long.parseLong(id));
 
-        return "El elemento con ID " + id + " fue eliminado exitosamente!";
+        return "El elemento con identificador " + id + " fue eliminado exitosamente!";
     }
 
 
     /**
-     * Agrega elemento de catálogo de tipo CondicionPrenda.
-     * @param context
-     * @param abreviatura
-     * @param etiqueta
-     * @param configuracion
+     * Agrega elemento de catalogo de tipo CondicionPrenda.
+     * @param context contexto del objeto.
+     * @param abreviatura abreviatura del elemento.
+     * @param etiqueta etiqueta del elemento.
+     * @param configuracion configuracion del elemento.
      */
     @Command
-    @Usage("Agrega un elemento al catalogo de tipo CondicionPrenda.")
+    @Usage("Agrega un elemento al cat\u00e1logo de tipo CondicionPrenda.")
     public void agregar(InvocationContext<Object> context,
-                        @Usage("Abreviatura")
-                        @Required
-                        @Option(names = {"a", "abreviatura"})
-                        String abreviatura,
-                        @Usage("Etiqueta")
-                        @Required
-                        @Option(names = {"e", "etiqueta"})
-                        String etiqueta,
-                        @Usage("ID Configuración.")
-                        @Required
-                        @Option(names = {"c", "configuracion"})
-                        String configuracion) {
-
-
+                        @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
+                        @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
         try {
             CondicionPrenda condicionPrenda = new CondicionPrenda();
 
             condicionPrenda.setAbreviatura(abreviatura);
             condicionPrenda.setEtiqueta(etiqueta);
-            condicionPrenda.setConfiguracion(this.getControllerConfig().findOne((Long.parseLong(configuracion))));
 
             this.getController().save(condicionPrenda);
 
