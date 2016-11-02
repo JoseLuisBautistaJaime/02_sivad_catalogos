@@ -7,7 +7,7 @@ import mx.com.nmp.ms.arquetipo.journal.listener.JournalEntityListener;
 import javax.persistence.*;
 
 /**
- * Entidad de tipo Condición Prenda.
+ * Entidad de tipo CondicionPrenda.
  *
  * @author jbautista
  */
@@ -29,21 +29,21 @@ public class CondicionPrenda implements CatalogoConfigurable{
     private Long elementoId;
 
     /**
-     * Abreviatura del elemento de catálogo.
+     * Abreviatura del elemento de catalogo.
      */
     @Column(name = "abreviatura")
     @JournalData
     private String abreviatura;
 
     /**
-     * Descripción del emento de catálogo.
+     * Descripcion del elemento de catalogo.
      */
     @Column(name = "etiqueta")
     @JournalData
     private String etiqueta;
 
     /**
-     * Configuración del catálogo, se relaciona con la tabla de configuración.
+     * Configuracion del catalogo, se relaciona con la tabla de configuracion.
      */
     @ManyToOne
     @JoinColumn(name="id_configuracion")
@@ -57,7 +57,7 @@ public class CondicionPrenda implements CatalogoConfigurable{
     }
 
     /**
-     * Recupera el valor del elemento configuración.
+     * Recupera el valor del elemento configuracion.
      * @return ConfiguracionCatalogo elemento actual.
      */
     @Override
@@ -66,7 +66,7 @@ public class CondicionPrenda implements CatalogoConfigurable{
     }
 
     /**
-     * Asigna el valor del elemento configuración.
+     * Asigna el valor del elemento configuracion.
      *
      * @param configuracion elemento actualizable.
      */
