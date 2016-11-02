@@ -6,22 +6,22 @@ INSERT INTO catalogo_prueba(abreviatura, descripcion, catalogo) VALUES ('CAT1', 
 INSERT INTO catalogo_prueba(abreviatura, descripcion, catalogo) VALUES ('CAT2', 'Catalogo 2', 'DB-h2');
 INSERT INTO catalogo_prueba(abreviatura, descripcion, catalogo) VALUES ('CAT3', 'Catalogo 3', 'DB-h2');
 
-INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (3, 'Alhajas', 'ColorOro', 'Catálogo de color del oro');
-INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (4, 'Alhajas', 'QuilatajeOro', 'Catálogo de quilatajes del oro');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (3, 'Alhajas', 'ColorOro', 'Catálogo de Color Oro');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (4, 'Alhajas', 'QuilatajeOro', 'Catálogo de Quilataje Oro');
 
-INSERT INTO CAT_COLOR_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_AMARILLO', 'Amarillo', 3);
-INSERT INTO CAT_COLOR_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_BLANCO', 'Blanco', 3);
-UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = 'Amarillo' WHERE id = 3;
+INSERT INTO CAT_COLOR_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('AM', 'Amarillo', 3);
+INSERT INTO CAT_COLOR_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('BL', 'Blanco', 3);
+UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = 'AM' WHERE id = 3;
 
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_8_QUILATES', '8', 4);
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_10_QUILATES', '10', 4);
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_12_QUILATES', '12', 4);
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_14_QUILATES', '14', 4);
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_16_QUILATES', '16', 4);
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_18_QUILATES', '18', 4);
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_22_QUILATES', '22', 4);
-INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('ORO_24_QUILATES', '24', 4);
-UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = '14' WHERE id = 4;
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('8_Q', '8', 4);
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('10_Q', '10', 4);
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('12_Q', '12', 4);
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('14_Q', '14', 4);
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('16_Q', '16', 4);
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('18_Q', '18', 4);
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('22_Q', '22', 4);
+INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('24_Q', '24', 4);
+UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = '14_Q' WHERE id = 4;
 
 INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (1,'Alhajas','diamantes','1','diamantes');
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('BN','Buen Estado', 1);

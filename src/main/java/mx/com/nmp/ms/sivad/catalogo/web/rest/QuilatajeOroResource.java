@@ -4,9 +4,8 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
-import mx.com.nmp.ms.sivad.catalogo.domain.QuilatajeOro;
+import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.QuilatajeOroService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +16,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
- * Controlador REST utilizado para obtener la información del catálogo de quilatajes del oro.
+ * Controlador REST utilizado para obtener la información del catálogo Quilataje Oro.
  *
  * @author ngonzalez
  */
@@ -50,11 +48,33 @@ public class QuilatajeOroResource {
      */
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
     public ResponseEntity<Catalogo> getAll() {
         LOGGER.info(">> getAll");
-        List<QuilatajeOro> result = quilatajeOroService.getAll();
-        Catalogo catalogo = CatalogoFactory.build(result);
+        Catalogo catalogo = quilatajeOroService.getAll();
         return new ResponseEntity<>(catalogo, HttpStatus.OK);
+    }
+
+    /**
+     * GET      / : Obtener todos los elementos del catálogo.
+     *
+     * @param dependencias Indica si deben recuperarse las dependencias del catálogo.
+     * @return ResponseEntity con status 200 (OK) y la lista de elementos del catálogo en el body si
+     *         {@code dependencias = false}.
+     *         ResponseEntity con status 406 (Not Acceptable) si {@code dependencias = true} ya que
+     *         esté catálogo no contiene dependencias.
+     */
+    @RequestMapping(method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            params = "dependencias")
+    @Timed
+    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") Boolean dependencias) {
+        if (dependencias) {
+            LOGGER.warn("El catalogo QuilatajeOro no contiene dependencias.");
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        return getAll();
     }
 
     /**
@@ -67,36 +87,15 @@ public class QuilatajeOroResource {
     @RequestMapping(value = "/{abreviatura}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
     public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
         LOGGER.info(">> get: [{}]", abreviatura);
-        QuilatajeOro quilatajeOro = quilatajeOroService.get(abreviatura);
+        Catalogo catalogo = quilatajeOroService.get(abreviatura);
 
-        if (ObjectUtils.isEmpty(quilatajeOro)) {
+        if (ObjectUtils.isEmpty(catalogo)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            Catalogo catalogo = CatalogoFactory.build(quilatajeOro);
-            return new ResponseEntity<>(catalogo, HttpStatus.OK);
-        }
-    }
-
-    /**
-     * GET      / : Obtener todos los elementos del catálogo.
-     *
-     * @param dependencias Indica si deben recuperarse las dependencias del catálogo.
-     * @return ResponseEntity con status 200 (OK) y la lista de elementos del catálogo en el body.
-     *         ResponseEntity con status 406 (Not Acceptable) si {@code dependencias = true} ya que esté catálogo
-     *         no contiene dependencias.
-     */
-    @RequestMapping(method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") Boolean dependencias) {
-        if (dependencias) {
-            LOGGER.warn("El cat\u00E1logo no contiene dependencias.");
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        return getAll();
+        return new ResponseEntity<>(catalogo, HttpStatus.OK);
     }
-
 }

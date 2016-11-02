@@ -13,11 +13,16 @@ package mx.com.nmp.ms.sivad.catalogo.domain;
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 public enum ConfiguracionCatalogoEnum {
-    TIPO_PRENDA("TipoPrenda", DominioEnum.ALHAJAS),
-    GRADO_COLOR("GradoColor", DominioEnum.DIAMANTES),
+
+    // Ordenar alfabéticamente.
+
     COLOR("Color", DominioEnum.DIAMANTES),
+    COLOR_ORO("ColorOro", DominioEnum.ALHAJAS),
     ESCALA_COLOR("EscalaColor", DominioEnum.DIAMANTES),
-    GRUPO_COLOR("GrupoColor", DominioEnum.DIAMANTES);
+    GRADO_COLOR("GradoColor", DominioEnum.DIAMANTES),
+    GRUPO_COLOR("GrupoColor", DominioEnum.DIAMANTES),
+    QUILATAJE_ORO("QuilatajeOro", DominioEnum.ALHAJAS),
+    TIPO_PRENDA("TipoPrenda", DominioEnum.ALHAJAS);
 
     private String tipo;
     private DominioEnum dominio;

@@ -13,8 +13,11 @@ package mx.com.nmp.ms.sivad.catalogo.domain;
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 public enum DominioEnum {
-    DIAMANTES("Diamantes"),
-    ALHAJAS("Alhajas");
+
+    // Ordenar alfabéticamente.
+
+    ALHAJAS("Alhajas"),
+    DIAMANTES("Diamantes");
 
     private String dominio;
 

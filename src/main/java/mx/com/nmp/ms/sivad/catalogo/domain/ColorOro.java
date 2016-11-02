@@ -7,6 +7,7 @@ package mx.com.nmp.ms.sivad.catalogo.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import mx.com.nmp.ms.arquetipo.annotation.journal.JournalData;
 import mx.com.nmp.ms.arquetipo.journal.listener.JournalEntityListener;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,15 +16,18 @@ import javax.validation.constraints.Size;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * Entidad que representa el catálogo de color del oro.
+ * Entidad que representa el catálogo Color Oro.
  *
  * @author ngonzalez
  */
 @Entity
 @Table(name = "cat_color_oro")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonIgnoreProperties({"idElemento", "configuracion"})
 @EntityListeners(JournalEntityListener.class)
 public class ColorOro implements CatalogoConfigurable {
+
+    private static final long serialVersionUID = -5002190279030644799L;
 
     /**
      * Identificador del registro.
@@ -161,5 +165,4 @@ public class ColorOro implements CatalogoConfigurable {
                 ", configuracion=" + configuracion.toString() +
                 '}';
     }
-
 }

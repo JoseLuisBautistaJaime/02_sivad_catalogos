@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Expone los metodos de acceso a datos para el catálogo de color del oro.
+ * Expone los metodos de acceso a datos para el catálogo Color Oro.
  *
  * @author ngonzalez
  */
