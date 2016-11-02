@@ -16,12 +16,15 @@ public enum ConfiguracionCatalogoEnum {
 
     // Ordenar alfabéticamente.
 
+    CERTIFICADO_DIAMANTES("CertificadoDiamantes", DominioEnum.DIAMANTES),
+    CLARIDAD_DIAMANTE("ClaridadDiamante", DominioEnum.DIAMANTES),
     COLOR("Color", DominioEnum.DIAMANTES),
     COLOR_ORO("ColorOro", DominioEnum.ALHAJAS),
     ESCALA_COLOR("EscalaColor", DominioEnum.DIAMANTES),
     GRADO_COLOR("GradoColor", DominioEnum.DIAMANTES),
     GRUPO_COLOR("GrupoColor", DominioEnum.DIAMANTES),
     QUILATAJE_ORO("QuilatajeOro", DominioEnum.ALHAJAS),
+    TIPO_PIEDRA_COMPLEMENTARIA("TipoPiedraComplementaria", DominioEnum.DIAMANTES),
     TIPO_PRENDA("TipoPrenda", DominioEnum.ALHAJAS);
 
     private String tipo;
