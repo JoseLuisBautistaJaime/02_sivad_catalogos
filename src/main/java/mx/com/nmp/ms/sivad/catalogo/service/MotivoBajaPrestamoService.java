@@ -73,7 +73,7 @@ public class MotivoBajaPrestamoService {
     /**
      * Obtiene las entidades del catalogo de tipo MotivoBajaPrestamo.
      *
-     * @return List<MotivoBajaPrestamo> lista de entidades de tipo MotivoBajaPrestamo
+     * @return List MotivoBajaPrestamo lista de entidades de tipo MotivoBajaPrestamo
      */
     @Transactional(readOnly = true)
     public List<MotivoBajaPrestamo> findAll() {
@@ -86,7 +86,7 @@ public class MotivoBajaPrestamoService {
     /**
      * Obtiene las entidades del catalogo de tipo MotivoBajaPrestamo.
      *
-     * @return List<MotivoBajaPrestamo>
+     * @return List MotivoBajaPrestamo
      */
     @Transactional(readOnly=true)
     public Catalogo getAll() {

@@ -73,7 +73,7 @@ public class CondicionPrendaService {
     /**
      * Obtiene las entidades del catalogo de tipo CondicionPrenda.
      *
-     * @return List<CondicionPrenda> lista de entidades de tipo CondicionPrenda
+     * @return List CondicionPrenda lista de entidades de tipo CondicionPrenda
      */
     @Transactional(readOnly = true)
     public List<CondicionPrenda> findAll() {
