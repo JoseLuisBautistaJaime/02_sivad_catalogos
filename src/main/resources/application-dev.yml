@@ -32,6 +32,3 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: none
-  mail:
-    host: localhost
-    port: 25

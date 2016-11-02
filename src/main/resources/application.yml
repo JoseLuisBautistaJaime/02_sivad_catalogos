@@ -17,8 +17,6 @@ microservicio:
     timeToLiveSeconds: 3600
     hazelcast:
       backupCount: 1
-  mail:
-    plataforma: dummy
 
 
 spring:

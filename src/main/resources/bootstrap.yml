@@ -1,6 +1,6 @@
 spring:
   application:
-    name: catalogos
+    name: sivad-catalogos
   profiles:
     active: #spring.profiles.active#
   config:

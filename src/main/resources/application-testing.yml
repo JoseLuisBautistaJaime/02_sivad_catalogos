@@ -35,6 +35,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  mail:
-    host: localhost
-    port: 25
