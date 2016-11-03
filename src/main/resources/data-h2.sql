@@ -92,3 +92,10 @@ INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('AS', 'As
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('TR', 'Trillion', 12);
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('AN', 'Antiguo', 12);
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('OT', 'Otro', 12);
+
+
+RUNSCRIPT FROM 'classpath:/bd/data-diamante_tipo_prenda-h2.sql';
+RUNSCRIPT FROM 'classpath:/bd/data-diamante_grado_color-h2.sql';
+RUNSCRIPT FROM 'classpath:/bd/data-diamante_color-h2.sql';
+RUNSCRIPT FROM 'classpath:/bd/data-diamante_escala_color-h2.sql';
+RUNSCRIPT FROM 'classpath:/bd/data-diamante_grupo_color-h2.sql';
