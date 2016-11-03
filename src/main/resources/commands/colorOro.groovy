@@ -124,7 +124,7 @@ class colorOro {
                   @Option(names = ["e", "etiqueta"]) String etiqueta) {
 
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
-            out.println("Se requiere al menos uno de los atributos (abreviatura o etiqueta) " +
+            out.println("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta]) " +
                     "para realizar la actualización.")
         } else {
             try {
@@ -133,9 +133,9 @@ class colorOro {
                 out.println("La abreviatura fue actualizada correctamente.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
-                out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
+                out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
             } catch (CatalogoDuplicateKeyException e) {
-                out.println("Ya existe un elemento del catálogo con abreviatura [${abreviaturaNueva}].")
+                out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
             }
         }
     }

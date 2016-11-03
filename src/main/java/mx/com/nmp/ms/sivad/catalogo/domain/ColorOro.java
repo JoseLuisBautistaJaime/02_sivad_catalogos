@@ -162,7 +162,7 @@ public class ColorOro implements CatalogoConfigurable {
                 "idElemento=" + idElemento +
                 ", abreviatura='" + abreviatura + '\'' +
                 ", etiqueta='" + etiqueta + '\'' +
-                ", configuracion=" + configuracion.toString() +
+                ", configuracion=" + ((configuracion != null) ? configuracion.toString() : "null") +
                 '}';
     }
 }
