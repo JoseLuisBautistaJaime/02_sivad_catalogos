@@ -12,6 +12,7 @@ import org.crsh.cli.*
 import org.crsh.command.InvocationContext
 import org.crsh.text.ui.Overflow
 import org.crsh.text.ui.UIBuilder
+import org.springframework.util.ObjectUtils
 
 /**
  * Utilizada por la consola CRaSH para la administración del catálogo Quilataje Oro.
@@ -19,7 +20,7 @@ import org.crsh.text.ui.UIBuilder
  * @author ngonzalez
  */
 @Usage("Administración del catálogo Quilataje Oro")
-class cat_quilataje_oro {
+class quilatajeOro {
 
 
 
@@ -60,8 +61,7 @@ class cat_quilataje_oro {
     def elemento(InvocationContext context,
                  @Usage("Abreviatura del elemento a recuperar") @Required @Argument String abreviatura) {
         try {
-            def catalogo = getServicio(context).get(abreviatura)
-            mostrarTablaResultados(catalogo.elementos)
+            mostrarTablaResultados([getServicio(context).get(abreviatura)])
         } catch (CatalogoNotFoundException e) {
             out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
         }
@@ -76,10 +76,10 @@ class cat_quilataje_oro {
     @Usage("Permite recuperar todos los elementos del catálogo")
     @Command
     def elementos(InvocationContext context) {
-        def catalogo = getServicio(context).getAll();
+        def result = getServicio(context).getAll();
 
-        if (catalogo) {
-            mostrarTablaResultados(catalogo.elementos)
+        if (result) {
+            mostrarTablaResultados(result)
         } else {
             out.println("El catálogo no contiene elementos.")
         }
@@ -97,7 +97,7 @@ class cat_quilataje_oro {
     def eliminar(InvocationContext context,
                  @Usage("Abreviatura del elemento a eliminar") @Required @Argument String abreviatura) {
         try {
-            def result = getServicio(context).delete(abreviatura)
+            getServicio(context).delete(abreviatura)
             out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del catálogo.")
         } catch (CatalogoNotFoundException e) {
             out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
@@ -105,52 +105,38 @@ class cat_quilataje_oro {
     }
 
     /**
-     * Permite actualizar la abreviatura de un elemento del catálogo.
+     * Permite actualizar un elemento del catálogo.
      *
      * @param context El contexto de la invocación.
-     * @param abreviatura La abreviatura actual del elemento a actualizar.
-     * @param abreviaturaNueva La nueva abreviatura.
+     * @param abreviaturaActual La abreviatura actual del elemento a actualizar.
+     * @param abreviatura Nuevo valor de la abreviatura (puede ser opcional).
+     * @param etiqueta Nuevo valor de la etiqueta (puede ser opcional).
      * @return El elemento actualizado en caso de éxito o el mensaje correspondiente en caso de fallo.
      */
-    @Usage("Permite actualizar la abreviatura de un elemento del catálogo")
+    @Usage("Permite actualizar un elemento del catálogo")
     @Command
-    def modificar_abreviatura(InvocationContext context,
-                              @Usage("Abreviatura actual del elemento a actualizar")
-                              @Option(names = ["a", "abreviatura"]) @Required String abreviatura,
-                              @Usage("Abreviatura nueva")
-                              @Option(names = ["n", "abreviaturaNueva"]) @Required String abreviaturaNueva) {
-        try {
-            def elemento = getServicio(context).updateAbreviatura(abreviatura, abreviaturaNueva)
-            out.println("La abreviatura fue actualizada correctamente.")
-            mostrarTablaResultados([elemento])
-        } catch (CatalogoNotFoundException e) {
-            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
-        } catch (CatalogoDuplicateKeyException e) {
-            out.println("Ya existe un elemento del catálogo con abreviatura [${abreviaturaNueva}].")
-        }
-    }
+    def modificar(InvocationContext context,
+                  @Usage("Abreviatura actual del elemento a actualizar")
+                  @Option(names = ["i", "abreviaturaActual"]) @Required String abreviaturaActual,
+                  @Usage("Abreviatura")
+                  @Option(names = ["a", "abreviatura"]) String abreviatura,
+                  @Usage("Etiqueta")
+                  @Option(names = ["e", "etiqueta"]) String etiqueta) {
 
-    /**
-     * Permite actualizar la etiqueta de un elemento del catálogo.
-     *
-     * @param context El contexto de la invocación.
-     * @param abreviatura La abreviatura del elemento a actualizar.
-     * @param etiquetaNueva La nueva etiqueta.
-     * @return El elemento actualizado en caso de éxito o el mensaje correspondiente en caso de fallo.
-     */
-    @Usage("Permite actualizar la etiqueta de un elemento del catálogo")
-    @Command
-    def modificar_etiqueta(InvocationContext context,
-                           @Usage("Abreviatura del elemento a actualizar")
-                           @Option(names = ["a", "abreviatura"]) @Required String abreviatura,
-                           @Usage("Etiqueta")
-                           @Option(names = ["e", "etiquetaNueva"]) @Required String etiquetaNueva) {
-        try {
-            def elemento = getServicio(context).updateEtiqueta(abreviatura, etiquetaNueva)
-            out.println("La etiqueta fue actualizada correctamente.")
-            mostrarTablaResultados([elemento])
-        } catch (CatalogoNotFoundException e) {
-            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
+        if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
+            out.println("Se requiere al menos uno de los atributos (abreviatura o etiqueta) " +
+                    "para realizar la actualización.")
+        } else {
+            try {
+                def quilatajeOro = new QuilatajeOro([abreviatura: abreviatura, etiqueta: etiqueta])
+                def elemento = getServicio(context).update(abreviaturaActual, quilatajeOro)
+                out.println("La abreviatura fue actualizada correctamente.")
+                mostrarTablaResultados([elemento])
+            } catch (CatalogoNotFoundException e) {
+                out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
+            } catch (CatalogoDuplicateKeyException e) {
+                out.println("Ya existe un elemento del catálogo con abreviatura [${abreviaturaNueva}].")
+            }
         }
     }
 

@@ -5,18 +5,19 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
+import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.QuilatajeOro;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoDuplicateKeyException;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.QuilatajeOroRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -62,11 +63,8 @@ public class QuilatajeOroService {
      * @return El elemento guardado.
      * @throws CatalogoDuplicateKeyException En caso de que la abreviatura ya exista.
      */
-    public QuilatajeOro save(QuilatajeOro quilatajeOro) throws CatalogoDuplicateKeyException {
-        LOGGER.info(">> save");
-
-        // Se valida si no existe un elemento del catálogo con la misma abreviatura que la nueva.
-        validarAbreviaturaDuplicada(quilatajeOro.getAbreviatura());
+    public QuilatajeOro save(@NotNull QuilatajeOro quilatajeOro) throws CatalogoDuplicateKeyException {
+        LOGGER.info(">> save: [{}]", quilatajeOro.toString());
 
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.QUILATAJE_ORO.getDominioUnwrap(),
@@ -74,7 +72,15 @@ public class QuilatajeOroService {
 
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         quilatajeOro.setConfiguracion(configuracionCatalogo);
-        return quilatajeOroRepository.save(quilatajeOro);
+
+        try {
+            return quilatajeOroRepository.save(quilatajeOro);
+        } catch (DataIntegrityViolationException e) {
+            String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo QuilatajeOro ya " +
+                    "contiene un elemento con la abreviatura: [" + quilatajeOro.getAbreviatura() + "].";
+            LOGGER.warn(mensaje);
+            throw new CatalogoDuplicateKeyException(mensaje, QuilatajeOro.class);
+        }
     }
 
     /**
@@ -98,11 +104,11 @@ public class QuilatajeOroService {
      * @return Objeto {@link Catalogo} con el elemento que coincida con la abreviatura indicada.
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public Catalogo get(@HasText String abreviatura) throws CatalogoNotFoundException {
+    @Transactional(readOnly = true)
+    public QuilatajeOro get(@HasText String abreviatura) throws CatalogoNotFoundException {
         LOGGER.info(">> get: [{}]", abreviatura);
 
-        QuilatajeOro quilatajeOro = obtenerElemento(abreviatura);
-        return CatalogoFactory.build(quilatajeOro);
+        return obtenerElemento(abreviatura);
     }
 
     /**
@@ -110,58 +116,56 @@ public class QuilatajeOroService {
      *
      * @return Objeto {@link Catalogo} con la lista de elementos del catálogo.
      */
-    public Catalogo getAll() {
+    @Transactional(readOnly = true)
+    public List<QuilatajeOro> getAll() {
         LOGGER.info(">> getAll");
 
         List<QuilatajeOro> result = quilatajeOroRepository.findAll();
         if (ObjectUtils.isEmpty(result)) {
             LOGGER.warn("El catalogo QuilatajeOro no contiene elementos.");
-            return CatalogoFactory.build(new ArrayList<QuilatajeOro>());
+            return new ArrayList<>();
         }
 
-        return CatalogoFactory.build(result);
+        return result;
     }
 
     /**
-     * Permite actualizar la abreviatura de un elemento del catálogo.
+     * Permite actualizar la información del elemento del catálogo que se recibe como parámetro.
      *
      * @param abreviatura La abreviatura actual del elemento a actualizar.
-     * @param abreviaturaNueva La nueva abreviatura.
-     * @return El elemento actualizado.
-     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
-     * @throws CatalogoDuplicateKeyException En caso de que se quiera registrar una abreviatura duplicada.
-     */
-    public QuilatajeOro updateAbreviatura(String abreviatura, String abreviaturaNueva)
-            throws CatalogoNotFoundException, CatalogoDuplicateKeyException {
-        LOGGER.info(">> updateAbreviatura: [{}]", abreviatura);
-        LOGGER.info(">> nueva abreviatura: [{}]", abreviaturaNueva);
-
-        // Se valida si no existe un elemento del catálogo con la misma abreviatura que la nueva.
-        validarAbreviaturaDuplicada(abreviaturaNueva);
-
-        QuilatajeOro quilatajeOro = obtenerElemento(abreviatura);
-        quilatajeOro.setAbreviatura(abreviaturaNueva);
-        quilatajeOro.getConfiguracion().setUltimaActualizacion(new DateTime());
-        return quilatajeOroRepository.save(quilatajeOro);
-    }
-
-    /**
-     * Permite actualizar la etiqueta de un elemento del catálogo.
-     *
-     * @param abreviatura La abreviatura del elemento a actualizar.
-     * @param etiquetaNueva La nueva etiqueta.
+     * @param quilatajeOro Elemento del catálogo con la nueva información.
      * @return El elemento actualizado.
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public QuilatajeOro updateEtiqueta(String abreviatura, String etiquetaNueva)
+    public QuilatajeOro update(@HasText String abreviatura, @NotNull QuilatajeOro quilatajeOro)
             throws CatalogoNotFoundException {
-        LOGGER.info(">> updateEtiqueta: [{}]", abreviatura);
-        LOGGER.info(">> nueva etiqueta: [{}]", etiquetaNueva);
+        LOGGER.info(">> update: [{}], [{}]", abreviatura, quilatajeOro.toString());
 
-        QuilatajeOro quilatajeOro = obtenerElemento(abreviatura);
-        quilatajeOro.setEtiqueta(etiquetaNueva);
-        quilatajeOro.getConfiguracion().setUltimaActualizacion(new DateTime());
-        return quilatajeOroRepository.save(quilatajeOro);
+        QuilatajeOro quilatajeOroOriginal = obtenerElemento(abreviatura);
+        if (ObjectUtils.isEmpty(quilatajeOro.getAbreviatura())) {
+            LOGGER.warn("No se definio nueva abreviatura. Se conserva la abreviatura actual [{}].",
+                    quilatajeOroOriginal.getAbreviatura());
+        } else {
+            quilatajeOroOriginal.setAbreviatura(quilatajeOro.getAbreviatura());
+        }
+
+        if (ObjectUtils.isEmpty(quilatajeOro.getEtiqueta())) {
+            LOGGER.warn("No se definio nueva etiqueta. Se conserva la etiqueta actual [{}].",
+                    quilatajeOroOriginal.getEtiqueta());
+        } else {
+            quilatajeOroOriginal.setEtiqueta(quilatajeOro.getEtiqueta());
+        }
+
+        quilatajeOroOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
+
+        try {
+            return quilatajeOroRepository.save(quilatajeOroOriginal);
+        } catch (DataIntegrityViolationException e) {
+            String mensaje = "No fue posible realizar la actualizacion de la entidad. El catalogo QuilatajeOro ya " +
+                    "contiene un elemento con la abreviatura: [" + quilatajeOro.getAbreviatura() + "].";
+            LOGGER.warn(mensaje);
+            throw new CatalogoDuplicateKeyException(mensaje, QuilatajeOro.class);
+        }
     }
 
     /**
@@ -184,29 +188,6 @@ public class QuilatajeOroService {
         }
 
         return quilatajeOro;
-    }
-
-    /**
-     * Metodo auxiliar utilizado para validar si ya existe o no un elemento del catálogo con la misma abreviatura.
-     *
-     * @param abreviatura La abreviatura.
-     * @throws CatalogoDuplicateKeyException En caso de que la abreviatura ya exista.
-     */
-    private void validarAbreviaturaDuplicada(String abreviatura)
-            throws CatalogoDuplicateKeyException {
-        LOGGER.info(">> validarAbreviaturaDuplicada: [{}]", abreviatura);
-
-        try {
-            QuilatajeOro quilatajeOro = obtenerElemento(abreviatura);
-            if (!ObjectUtils.isEmpty(quilatajeOro)) {
-                String mensaje =
-                        "El catalogo QuilatajeOro ya contiene un elemento con la abreviatura: [" + abreviatura + "].";
-                LOGGER.warn(mensaje);
-                throw new CatalogoDuplicateKeyException(mensaje, QuilatajeOro.class);
-            }
-        } catch (CatalogoNotFoundException e) {
-            LOGGER.info("La abreviatura: [" + abreviatura + "] no esta duplicada.");
-        }
     }
 
 }

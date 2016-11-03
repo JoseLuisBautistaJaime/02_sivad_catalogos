@@ -7,6 +7,7 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
+import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.ColorOroService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,8 +52,7 @@ public class ColorOroResource {
     @Timed
     public ResponseEntity<Catalogo> getAll() {
         LOGGER.info(">> getAll");
-        Catalogo catalogo = colorOroService.getAll();
-        return new ResponseEntity<>(catalogo, HttpStatus.OK);
+        return new ResponseEntity<>(CatalogoFactory.build(colorOroService.getAll()), HttpStatus.OK);
     }
 
     /**
@@ -92,8 +92,7 @@ public class ColorOroResource {
         LOGGER.info(">> get: [{}]", abreviatura);
 
         try {
-            Catalogo catalogo = colorOroService.get(abreviatura);
-            return new ResponseEntity<>(catalogo, HttpStatus.OK);
+            return new ResponseEntity<>(CatalogoFactory.build(colorOroService.get(abreviatura)), HttpStatus.OK);
         } catch (CatalogoNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
