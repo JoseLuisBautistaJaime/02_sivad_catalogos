@@ -9,6 +9,8 @@ import mx.com.nmp.ms.sivad.catalogo.domain.ColorOro;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoDuplicateKeyException;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.ColorOroRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
@@ -57,18 +59,14 @@ public class ColorOroService {
      * Permite guardar el elemento del catálogo que se recibe como parámetro.
      *
      * @param colorOro Elemento del catálogo que se quiere guardar.
-     * @return El elemento guardado. NULL en caso de no poder realizar el guardado.
+     * @return El elemento guardado.
+     * @throws CatalogoDuplicateKeyException En caso de que la abreviatura ya exista.
      */
-    public ColorOro save(ColorOro colorOro) {
+    public ColorOro save(ColorOro colorOro) throws CatalogoDuplicateKeyException {
         LOGGER.info(">> save");
-        ColorOro result = colorOroRepository.findByAbreviatura(colorOro.getAbreviatura());
 
-        if (!ObjectUtils.isEmpty(result)) {
-            LOGGER.error("No fue posible realizar el guardado. " +
-                    "El catalogo ColorOro ya contiene un elemento con la abreviatura: [{}].",
-                    colorOro.getAbreviatura());
-            return null;
-        }
+        // Se valida si no existe un elemento del catálogo con la misma abreviatura que la nueva.
+        validarAbreviaturaDuplicada(colorOro.getAbreviatura());
 
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.COLOR_ORO.getDominioUnwrap(),
@@ -83,21 +81,14 @@ public class ColorOroService {
      * Permite eliminar el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
-     * @return TRUE si se eliminó el elemento del catálogo y FALSE en caso contrario.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public boolean delete(@HasText String abreviatura) {
+    public void delete(@HasText String abreviatura) throws CatalogoNotFoundException {
         LOGGER.info(">> delete: [{}]", abreviatura);
-        ColorOro result = colorOroRepository.findByAbreviatura(abreviatura);
 
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("No fue posible realizar la eliminacion. " +
-                    "El catalogo ColorOro no contiene un elemento con la abreviatura: [{}].", abreviatura);
-            return false;
-        }
-
-        result.getConfiguracion().setUltimaActualizacion(new DateTime());
-        colorOroRepository.delete(result);
-        return true;
+        ColorOro colorOro = obtenerElemento(abreviatura);
+        colorOro.getConfiguracion().setUltimaActualizacion(new DateTime());
+        colorOroRepository.delete(colorOro);
     }
 
     /**
@@ -105,19 +96,13 @@ public class ColorOroService {
      *
      * @param abreviatura La abreviatura.
      * @return Objeto {@link Catalogo} con el elemento que coincida con la abreviatura indicada.
-     * NULL en caso de no existir coincidencia.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public Catalogo get(@HasText String abreviatura) {
+    public Catalogo get(@HasText String abreviatura) throws CatalogoNotFoundException {
         LOGGER.info(">> get: [{}]", abreviatura);
-        ColorOro result = colorOroRepository.findByAbreviatura(abreviatura);
 
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("No fue posible realizar la consulta. " +
-                    "El catalogo ColorOro no contiene un elemento con la abreviatura: [{}].", abreviatura);
-            return null;
-        }
-
-        return CatalogoFactory.build(result);
+        ColorOro colorOro = obtenerElemento(abreviatura);
+        return CatalogoFactory.build(colorOro);
     }
 
     /**
@@ -127,8 +112,8 @@ public class ColorOroService {
      */
     public Catalogo getAll() {
         LOGGER.info(">> getAll");
-        List<ColorOro> result = colorOroRepository.findAll();
 
+        List<ColorOro> result = colorOroRepository.findAll();
         if (ObjectUtils.isEmpty(result)) {
             LOGGER.warn("El catalogo ColorOro no contiene elementos.");
             return CatalogoFactory.build(new ArrayList<ColorOro>());
@@ -138,27 +123,90 @@ public class ColorOroService {
     }
 
     /**
-     * Permite actualizar el elemento del catálogo que corresponde a la abreviatura indicada.
+     * Permite actualizar la abreviatura de un elemento del catálogo.
      *
-     * @param abreviatura La abreviatura actual del elemento.
-     * @param colorOro Elemento del catálogo con la información que se quiere actualizar.
-     * @return El elemento actualizado. NULL en caso de no poder realizar la actualización.
+     * @param abreviatura La abreviatura actual del elemento a actualizar.
+     * @param abreviaturaNueva La nueva abreviatura.
+     * @return El elemento actualizado.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
+     * @throws CatalogoDuplicateKeyException En caso de que se quiera registrar una abreviatura duplicada.
      */
-    public ColorOro update(String abreviatura, ColorOro colorOro) {
-        LOGGER.info(">> update: [{}]", abreviatura);
-        LOGGER.info(">> nueva abreviatura: [{}]", colorOro.getAbreviatura());
-        LOGGER.info(">> nueva etiqueta: [{}]", colorOro.getEtiqueta());
-        ColorOro colorOroOriginal = colorOroRepository.findByAbreviatura(abreviatura);
+    public ColorOro updateAbreviatura(String abreviatura, String abreviaturaNueva)
+            throws CatalogoNotFoundException, CatalogoDuplicateKeyException {
+        LOGGER.info(">> updateAbreviatura: [{}]", abreviatura);
+        LOGGER.info(">> nueva abreviatura: [{}]", abreviaturaNueva);
 
-        if (ObjectUtils.isEmpty(colorOroOriginal)) {
-            LOGGER.warn("No fue posible realizar la actualizacion. " +
-                    "El catalogo ColorOro no contiene un elemento con la abreviatura: [{}].", abreviatura);
-            return null;
+        // Se valida si no existe un elemento del catálogo con la misma abreviatura que la nueva.
+        validarAbreviaturaDuplicada(abreviaturaNueva);
+
+        ColorOro colorOro = obtenerElemento(abreviatura);
+        colorOro.setAbreviatura(abreviaturaNueva);
+        colorOro.getConfiguracion().setUltimaActualizacion(new DateTime());
+        return colorOroRepository.save(colorOro);
+    }
+
+    /**
+     * Permite actualizar la etiqueta de un elemento del catálogo.
+     *
+     * @param abreviatura La abreviatura del elemento a actualizar.
+     * @param etiquetaNueva La nueva etiqueta.
+     * @return El elemento actualizado.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
+     */
+    public ColorOro updateEtiqueta(String abreviatura, String etiquetaNueva)
+            throws CatalogoNotFoundException {
+        LOGGER.info(">> updateEtiqueta: [{}]", abreviatura);
+        LOGGER.info(">> nueva etiqueta: [{}]", etiquetaNueva);
+
+        ColorOro colorOro = obtenerElemento(abreviatura);
+        colorOro.setEtiqueta(etiquetaNueva);
+        colorOro.getConfiguracion().setUltimaActualizacion(new DateTime());
+        return colorOroRepository.save(colorOro);
+    }
+
+    /**
+     * Metodo auxiliar que factoriza la lógica de obtener un elemento del catálogo por abreviatura.
+     *
+     * @param abreviatura La abreviatura.
+     * @return El elemento obtenido.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
+     */
+    private ColorOro obtenerElemento(String abreviatura)
+            throws CatalogoNotFoundException {
+        LOGGER.info(">> obtenerElemento: [{}]", abreviatura);
+
+        ColorOro colorOro = colorOroRepository.findByAbreviatura(abreviatura);
+        if (ObjectUtils.isEmpty(colorOro)) {
+            String mensaje =
+                    "El catalogo ColorOro no contiene un elemento con la abreviatura: [" + abreviatura + "].";
+            LOGGER.warn(mensaje);
+            throw new CatalogoNotFoundException(mensaje, ColorOro.class);
         }
 
-        colorOroOriginal.setAbreviatura(colorOro.getAbreviatura());
-        colorOroOriginal.setEtiqueta(colorOro.getEtiqueta());
-        colorOroOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
-        return colorOroRepository.save(colorOroOriginal);
+        return colorOro;
     }
+
+    /**
+     * Metodo auxiliar utilizado para validar si ya existe o no un elemento del catálogo con la misma abreviatura.
+     *
+     * @param abreviatura La abreviatura.
+     * @throws CatalogoDuplicateKeyException En caso de que la abreviatura ya exista.
+     */
+    private void validarAbreviaturaDuplicada(String abreviatura)
+            throws CatalogoDuplicateKeyException {
+        LOGGER.info(">> validarAbreviaturaDuplicada: [{}]", abreviatura);
+
+        try {
+            ColorOro colorOro = obtenerElemento(abreviatura);
+            if (!ObjectUtils.isEmpty(colorOro)) {
+                String mensaje =
+                        "El catalogo ColorOro ya contiene un elemento con la abreviatura: [" + abreviatura + "].";
+                LOGGER.warn(mensaje);
+                throw new CatalogoDuplicateKeyException(mensaje, ColorOro.class);
+            }
+        } catch (CatalogoNotFoundException e) {
+            LOGGER.info("La abreviatura: [" + abreviatura + "] no esta duplicada.");
+        }
+    }
+
 }
