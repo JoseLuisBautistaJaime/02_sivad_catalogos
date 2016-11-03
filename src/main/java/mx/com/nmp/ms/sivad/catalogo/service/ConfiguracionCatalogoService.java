@@ -77,6 +77,8 @@ public class ConfiguracionCatalogoService {
         }
 
         configuracion.setUltimaActualizacion(DateTime.now());
+        LOGGER.info("Se actualiza fecha de ultima actualización UltimaActualizacion = {}",
+                configuracion.getUltimaActualizacion());
 
         return configuracion;
     }

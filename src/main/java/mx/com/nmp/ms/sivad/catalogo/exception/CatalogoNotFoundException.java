@@ -7,17 +7,15 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.exception;
 
-import javax.persistence.EntityNotFoundException;
-
 /**
  * Excepción que sera lanzada cudo no se encuetre la configuración de un catálogo.
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
-public class CatalogoNotFoundException extends EntityNotFoundException {
+public class CatalogoNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 827992683178785293L;
 
-    private Class<?> entidad;
+    private final Class<?> entidad;
 
     /**
      * Constructor.
