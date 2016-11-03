@@ -7,11 +7,15 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
+import com.codahale.metrics.annotation.Timed;
+import mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda;
 import mx.com.nmp.ms.sivad.catalogo.service.TipoPrendaService;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,23 +29,25 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
- * Controlador REST que nos permite consultar el catálogo {@link mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda}
+ * Controlador REST que nos permite consultar el catálogo {@link TipoPrenda}
  * <p>
  * Mapeos de solicitud:
  * <ul>
  *     <li>/catalogos/diamantes/alhajas/tipos: permite recuperar todos los elementos del catalogo.</li>
  *     <li>/catalogos/diamantes/alhajas/tipos?dependencias: operación no soportada ya que este catálogo no contiene
  *     dependencias.</li>
- *     <li>/catalogos/diamantes/alhajas/tipos?idElement: permite recuperar un elemento del catálogo.</li>
+ *     <li>/catalogos/diamantes/alhajas/tipos/{abreviatura} permite recuperar un elemento del catálogo.</li>
  * </ul>
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 @RestController
 @RequestMapping("/catalogos/diamantes/alhajas/tipos")
+@SuppressWarnings({"SpringAutowiredFieldsWarningInspection"})
 public class TipoPrendaResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(TipoPrendaResource.class);
 
+    @Inject
     private TipoPrendaService tipoPrendaService;
 
     /**
@@ -54,15 +60,16 @@ public class TipoPrendaResource {
     /**
      * GET /tipos : Recuperar todos los elementos del catalogo.
      *
-     * @return ResponseEntity con status 200 (OK) y el catálogo {@link mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda}
+     * @return ResponseEntity con status 200 (OK) y el catálogo {@link TipoPrenda}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
      */
+    @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> recuperarCatalogo() {
-        Catalogo catalogo = tipoPrendaService.recuperarCatalogo();
+    public ResponseEntity<Catalogo> getAll() {
+        Catalogo catalogo = tipoPrendaService.getAll();
 
-        if (null == catalogo) {
+        if (ObjectUtils.isEmpty(catalogo)) {
             LOGGER.warn("El catálogo no contiene elementos.");
             return new ResponseEntity<>(NOT_FOUND);
         } else {
@@ -76,53 +83,44 @@ public class TipoPrendaResource {
      *
      * @param dependencias Indica si deben recuperarse las dependecias del catálogo.
      *
-     * @return ResponseEntity con status 200 (OK) y el catálogo {@link mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda}
+     * @return ResponseEntity con status 200 (OK) y el catálogo {@link TipoPrenda}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
      *         ResponseEntity con status 406 (Not Acceptable) si {@code dependencias=true} ya que esté catálogo
-     *          no contiene dependencias.
+     *         no contiene dependencias.
      */
+    @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
             params = "dependencias")
-    public ResponseEntity<Catalogo> recuperarCatalogo(
-            @RequestParam("dependencias") Boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") boolean dependencias) {
         if (dependencias) {
             LOGGER.warn("El catálogo no contiene dependencias.");
             return new ResponseEntity<>(NOT_ACCEPTABLE);
         }
 
-        return recuperarCatalogo();
+        return getAll();
     }
 
     /**
-     * GET /tipos?abreviatura={@code abreviatura} : Recuperar un elemento del catalogo.
+     * GET /{abreviatura} : Recuperar un elemento del catalogo.
      *
      * @param abreviatura Abreviatura del elemento a recuperar.
      *
-     * @return ResponseEntity con status 200 (OK) y el elemento
-     *              del catálogo {@link mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda}
+     * @return ResponseEntity con status 200 (OK) y el elemento del catálogo {@link TipoPrenda}
      *         ResponseEntity con status 404 (Not Found) si el elemento del catálogo no existe.
      */
-    @RequestMapping(method = GET,
-            produces = APPLICATION_JSON_VALUE,
-            params = "abreviatura")
-    public ResponseEntity<Catalogo> recuperarElemento(@RequestParam("abreviatura") String abreviatura) {
-        Catalogo catalogo = tipoPrendaService.recuperarElemento(abreviatura);
-        if (null == catalogo) {
+    @Timed
+    @RequestMapping(value = "/{abreviatura}",
+            method = GET,
+            produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Catalogo> getOne(@PathVariable String abreviatura) {
+        Catalogo catalogo = tipoPrendaService.getOne(abreviatura);
+
+        if (ObjectUtils.isEmpty(catalogo)) {
             LOGGER.warn("El elemento del catálogo no existe.");
             return new ResponseEntity<>(NOT_FOUND);
         } else {
             return new ResponseEntity<>(catalogo, OK);
         }
-    }
-
-    /**
-     * Establce el valor de tipoPrendaService.
-     *
-     * @param tipoPrendaService Nuevo valor de tipoPrendaService.
-     */
-    @Inject
-    public void setTipoPrendaService(TipoPrendaService tipoPrendaService) {
-        this.tipoPrendaService = tipoPrendaService;
     }
 }

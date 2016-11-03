@@ -47,7 +47,7 @@ public final class CatalogoFactory {
      *
      * @param elemento Elemento del catálogo {@link CatalogoConfigurable}
      *
-     * Crear un objeto {@link Catalogo}
+     * @return Objeto {@link Catalogo}
      */
     public static Catalogo build(CatalogoConfigurable elemento) {
         return build(Collections.singletonList(elemento));

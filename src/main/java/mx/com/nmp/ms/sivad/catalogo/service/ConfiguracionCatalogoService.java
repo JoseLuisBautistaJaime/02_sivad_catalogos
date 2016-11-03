@@ -32,7 +32,7 @@ public class ConfiguracionCatalogoService {
     /**
      * Obtener entidad de tipo CondicionPrenda por id
      *
-     * @param id
+     * @param id Identificador
      * @return CondicionPrenda
      */
     @Transactional(readOnly=true)
@@ -61,6 +61,9 @@ public class ConfiguracionCatalogoService {
      * y {@link ConfiguracionCatalogo#tipo}
      * Actualiza la fecha de última actualización, establece la fecha y hora en la que se realiza la
      * invocación a éste método.
+     *
+     * @param dominio Nombre del dominio.
+     * @param tipo Nombre del tipo de Catálogo.
      *
      * @return Regresa el objeto {@link ConfiguracionCatalogo} modificado.
      *

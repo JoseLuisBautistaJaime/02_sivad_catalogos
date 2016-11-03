@@ -10,6 +10,7 @@ package mx.com.nmp.ms.sivad.catalogo.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import mx.com.nmp.ms.arquetipo.annotation.journal.JournalData;
 import mx.com.nmp.ms.arquetipo.journal.listener.JournalEntityListener;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
 
 /**
  * Entidad que representa los elementos del catálogo Tipos de prenda.
@@ -30,9 +32,10 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 @Entity
+@Cache(usage = NONSTRICT_READ_WRITE)
 @Table(name = "cat_diamante_tipo_prenda")
-@JsonIgnoreProperties({"idElemento", "configuracion"})
 @EntityListeners(JournalEntityListener.class)
+@JsonIgnoreProperties({"idElemento", "configuracion"})
 public class TipoPrenda implements CatalogoConfigurable {
     private static final long serialVersionUID = -2912682434670276479L;
 

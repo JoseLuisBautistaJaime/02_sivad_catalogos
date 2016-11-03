@@ -7,16 +7,16 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.service;
 
+import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
-import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.TipoPrendaRepository;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,11 +33,16 @@ import java.util.List;
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 @Service
+@Transactional
+@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class TipoPrendaService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TipoPrendaService.class);
 
+    @Inject
     private TipoPrendaRepository tipoPrendaRepository;
-    private ConfiguracionCatalogoRepository configuracionCatalogoRepository;
+
+    @Inject
+    private ConfiguracionCatalogoService configuracionCatalogoService;
 
     /**
      * Constructor.
@@ -50,13 +55,11 @@ public class TipoPrendaService {
      * Permite agregar un elemento nuevo al catálogo.
      *
      * @param elemento Elemento a guardar.
-     * @param idConfiguracion Identificador de la configuración del catálogo.
      *
-     * @return El objeto {@link Catalogo} que fue creado.
+     * @return El objeto {@link TipoPrenda} que fue creado.
      */
-    @Transactional
-    public TipoPrenda guardar(@Valid TipoPrenda elemento, @NotNull Long idConfiguracion) {
-        elemento.setConfiguracion(actualizarConfiguracion(idConfiguracion));
+    public TipoPrenda save(@Valid TipoPrenda elemento) {
+        elemento.setConfiguracion(actualizarConfiguracion());
 
         return tipoPrendaRepository.save(elemento);
     }
@@ -65,27 +68,27 @@ public class TipoPrendaService {
      * Permite modificar un elemento del catálogo.
      *
      * @param elemento Elemento modificado.
+     * @param abreviatura Abreviatura que identifica el elementos que será modificado.
      *
-     * @return El objeto {@link Catalogo} que fue actualizado.
+     * @return El objeto {@link TipoPrenda} que fue actualizado.
      */
-    public TipoPrenda actualizar(@NotNull TipoPrenda elemento, @HasText String abreviatura) {
+    public TipoPrenda update(@NotNull TipoPrenda elemento, @HasText String abreviatura) {
         TipoPrenda tp = obtenerElemento(abreviatura);
         actualizarCatalogo(tp, elemento);
 
-        return guardar(tp, tp.getConfiguracion().getId());
+        return save(tp);
     }
 
     /**
-     * Permite eleminar un elemento del catálogo.
+     * Permite eliminar un elemento del catálogo.
      *
      * @param abreviatura Abreviatura del elemento a eliminar.
      *
-     * @return El objeto {@link Catalogo} que fue eliminado.
+     * @return El objeto {@link TipoPrenda} que fue eliminado.
      */
-    @Transactional
-    public TipoPrenda eliminar(@HasText String abreviatura) {
+    public TipoPrenda delete(@HasText String abreviatura) {
         TipoPrenda tp = obtenerElemento(abreviatura);
-        actualizarConfiguracion(tp.getConfiguracion().getId());
+        actualizarConfiguracion();
         tipoPrendaRepository.delete(tp);
 
         return tp;
@@ -96,7 +99,9 @@ public class TipoPrendaService {
      *
      * @return Objeto {@link Catalogo} con todos los elementos.
      */
-    public Catalogo recuperarCatalogo() {
+    @Timed
+    @Transactional(readOnly = true)
+    public Catalogo getAll() {
         List<TipoPrenda> result = tipoPrendaRepository.findAll();
         Catalogo catalogo = null;
 
@@ -116,7 +121,9 @@ public class TipoPrendaService {
      *
      * @return Objeto {@link Catalogo} con el elemento especificado.
      */
-    public Catalogo recuperarElemento(@HasText String abreviatura) {
+    @Timed
+    @Transactional(readOnly = true)
+    public Catalogo getOne(@HasText String abreviatura) {
         TipoPrenda result = tipoPrendaRepository.findByAbreviatura(abreviatura);
         Catalogo catalogo = null;
 
@@ -130,27 +137,7 @@ public class TipoPrendaService {
     }
 
     /**
-     * Establece el repositprio para manejar el catálogo.
-     *
-     * @param tipoPrendaRepository Repositorio para manejar el catálogo.
-     */
-    @Inject
-    public void setTipoPrendaRepository(TipoPrendaRepository tipoPrendaRepository) {
-        this.tipoPrendaRepository = tipoPrendaRepository;
-    }
-
-    /**
-     * Establece el repositprio para manejar la configuracion del catálogo.
-     *
-     * @param configuracionCatalogoRepository Repositorio para manejar la configuracion del catálogo..
-     */
-    @Inject
-    public void setConfiguracionCatalogoRepository(ConfiguracionCatalogoRepository configuracionCatalogoRepository) {
-        this.configuracionCatalogoRepository = configuracionCatalogoRepository;
-    }
-
-    /**
-     * Actuliza un objeto {@link TipoPrenda} apartir de otro.
+     * Actualiza un objeto {@link TipoPrenda} apartir de otro.
      *
      * @param original Objeto original a ser actualizado.
      * @param nuevo Objeto con las modificaciones.
@@ -172,22 +159,11 @@ public class TipoPrendaService {
     /**
      * Actualiza la fecha de ultima actualización de la configuración del catálogo.
      *
-     * @param idConfiguracion Identificador de la configuración.
-     *
      * @return Regresa el objeto {@link ConfiguracionCatalogo} modificado.
      */
-    private ConfiguracionCatalogo actualizarConfiguracion(Long idConfiguracion) {
-        ConfiguracionCatalogo configuracion = configuracionCatalogoRepository.findOne(idConfiguracion);
-
-        if (ObjectUtils.isEmpty(configuracion)) {
-            String mensage = String.format("ConfiguracionCatalogo.id = %d, no existe.", idConfiguracion);
-            LOGGER.warn(mensage, idConfiguracion);
-            throw new CatalogoNotFoundException(mensage, ConfiguracionCatalogo.class);
-        }
-
-        configuracion.setUltimaActualizacion(DateTime.now());
-
-        return configuracion;
+    private ConfiguracionCatalogo actualizarConfiguracion() {
+        ConfiguracionCatalogoEnum config = ConfiguracionCatalogoEnum.TIPO_PRENDA;
+        return configuracionCatalogoService.getAndUpdateOperationDate(config.getDominioUnwrap(), config.getTipo());
     }
 
     /**
@@ -200,7 +176,7 @@ public class TipoPrendaService {
 
         if (ObjectUtils.isEmpty(tp)) {
             String mensage = String.format("El elemento con TipoPrenda.abreviatura = %s, no existe.", abreviatura);
-            LOGGER.warn(mensage, abreviatura);
+            LOGGER.warn(mensage);
             throw new CatalogoNotFoundException(mensage, TipoPrenda.class);
         }
 

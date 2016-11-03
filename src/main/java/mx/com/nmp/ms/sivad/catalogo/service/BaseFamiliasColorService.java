@@ -66,6 +66,7 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * Permite modificar un elemento del catálogo.
      *
      * @param elemento Elemento modificado.
+     * @param abreviatura Abreviatura que identifica el elementos que será modificado.
      *
      * @return El objeto {@link T} que fue actualizado.
      *
@@ -171,6 +172,21 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * @return Configuración del catálogo a utilizar
      */
     protected abstract ConfiguracionCatalogoEnum getConfiguracionCatalogo();
+
+    /**
+     * Verifica si el elemento recuperado es valido
+     *
+     * @param obj Elemento a validar.
+     * @param abreviaturaPadre Abreviatura del elemento.
+     * @param clazz Class del elemento.
+     */
+    protected static void validarElmento(Object obj, String abreviaturaPadre,  Class<?> clazz) {
+        if (ObjectUtils.isEmpty(obj)) {
+            String msj = String.format("No se encontro el elemento con abreviatura: %s", abreviaturaPadre);
+            LOGGER.warn(msj);
+            throw new CatalogoNotFoundException(msj, clazz);
+        }
+    }
 
     /**
      * Actualiza la fecha de ultima actualización de la configuración del catálogo.
