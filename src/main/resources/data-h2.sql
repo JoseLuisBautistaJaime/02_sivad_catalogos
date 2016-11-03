@@ -57,3 +57,38 @@ INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descrip
 INSERT INTO CAT_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('PL','Plata', 8);
 INSERT INTO CAT_CALIDAD_LEY(abreviatura, etiqueta, id_configuracion) VALUES ('SL','SegundaLey', 9);
 
+INSERT INTO CAT_MOTIVO_BAJA_PRESTAMO(abreviatura, etiqueta, id_configuracion) VALUES ('BAJ1','Motivo-Baja-1', 1);
+
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (10, 'Alhajas', 'RangoOro', 'Catálogo de Rango Oro');
+INSERT INTO CAT_RANGO_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('F1', 	'Pedaceria y Piezas Rotas', 10);
+INSERT INTO CAT_RANGO_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('F2', 	'Buen Estado Personalizadas', 10);
+INSERT INTO CAT_RANGO_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('F3', 	'Buen Estado Sin Personalizar', 10);
+INSERT INTO CAT_RANGO_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('F4', 	'Piezas Nuevas', 10);
+INSERT INTO CAT_RANGO_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('F5', 	'Marcas Comerciales', 10);
+INSERT INTO CAT_RANGO_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('F6',	'Alta Joyería', 10);
+
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (11, 'Alhajas', 'RangoMetal', 'Catálogo de Rango Metal');
+INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('F1', 'Factor 1', 11);
+INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('DE', 'Diseño y Estado', 11);
+INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('MC', 'Marca', 11);
+INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('MO', 'Monedas con Oro', 11);
+INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('MS', 'Monedas sin Oro', 11);
+INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('RF', 'RJ-Fundir', 11);
+INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('RM', 'RJ-Marca', 11);
+
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (12, 'Alhajas', 'Corte', 'Catálogo de Cortes Diamante');
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('BR', 'Brillante', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('PR', 'Princesa', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('OV', 'Oval', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('PE', 'Pera', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('RA', 'Radiant', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('BA', 'Baguette', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('FL', 'Flanders', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('MA', 'Marquesa', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('CO', 'Corazón', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('ES', 'Esmeralda', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('CJ', 'Cojin', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('AS', 'Asscher', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('TR', 'Trillion', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('AN', 'Antiguo', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('OT', 'Otro', 12);
