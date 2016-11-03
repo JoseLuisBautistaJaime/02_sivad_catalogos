@@ -53,11 +53,11 @@ public class CondicionPrendaService {
     }
 
     /**
-     * Actualiza elemento de catalogo de tipo MotivoBajaPrestamo.
+     * Actualiza elemento de catalogo de tipo CondicionPrenda.
      *
      * @param abreviatura abreviatura del elemento que sera modificado.
      * @param condicionPrenda objeto a modificar.
-     * @return MotivoBajaPrestamo
+     * @return CondicionPrenda
      */
     public CondicionPrenda update(@NotNull String abreviatura, @NotNull CondicionPrenda condicionPrenda){
         LOGGER.info(">> update({})",abreviatura);

@@ -16,6 +16,7 @@ public enum ConfiguracionCatalogoEnum {
 
     // Ordenar alfabéticamente.
 
+    CALIDAD_LEY("Calidad_Ley", DominioEnum.ALHAJAS),
     CERTIFICADO_DIAMANTES("CertificadoDiamantes", DominioEnum.DIAMANTES),
     CLARIDAD_DIAMANTE("ClaridadDiamante", DominioEnum.DIAMANTES),
     COLOR("Color", DominioEnum.DIAMANTES),
@@ -24,6 +25,7 @@ public enum ConfiguracionCatalogoEnum {
     ESCALA_COLOR("EscalaColor", DominioEnum.DIAMANTES),
     GRADO_COLOR("GradoColor", DominioEnum.DIAMANTES),
     GRUPO_COLOR("GrupoColor", DominioEnum.DIAMANTES),
+    METAL("Metal", DominioEnum.ALHAJAS),
     MOTIVO_BAJA_PRESTAMO("MotivoBajaPrestamo", DominioEnum.DIAMANTES),
     QUILATAJE_ORO("QuilatajeOro", DominioEnum.ALHAJAS),
     TIPO_PIEDRA_COMPLEMENTARIA("TipoPiedraComplementaria", DominioEnum.DIAMANTES),

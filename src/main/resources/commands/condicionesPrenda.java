@@ -2,7 +2,6 @@ package commands;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.CondicionPrenda;
 import mx.com.nmp.ms.sivad.catalogo.service.CondicionPrendaService;
-import mx.com.nmp.ms.sivad.catalogo.service.ConfiguracionCatalogoService;
 import org.crsh.cli.*;
 import org.crsh.command.BaseCommand;
 import org.crsh.command.InvocationContext;
@@ -17,7 +16,7 @@ import org.springframework.beans.factory.BeanFactory;
 
 import java.util.List;
 
-@Usage("Administra operaciones del cat\u00e1logo Condicion de Prenda.")
+@Usage("Administra operaciones del cat\u00e1logo Condiciones de Prenda.")
 public class condicionesPrenda extends BaseCommand {
 
     private TableElement table;
@@ -56,10 +55,8 @@ public class condicionesPrenda extends BaseCommand {
      * Modifica un elemento del catalogo.
      *
      * @param context coontexto del objeto.
-     * @param id identificador del elemento que sera eliminado.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
      * @param etiqueta nueva etiqueta que sera asignada al elemento.
-     * @param configuracion nueva configuracion que sera asignada al elemento.
      */
     @Command
     @Usage("Modifica los datos del elemento del cat\u00e1logo mediante la Abreviatura")
@@ -175,7 +172,6 @@ public class condicionesPrenda extends BaseCommand {
      * @param context contexto del objeto.
      * @param abreviatura abreviatura del elemento.
      * @param etiqueta etiqueta del elemento.
-     * @param configuracion configuracion del elemento.
      */
     @Command
     @Usage("Agrega un elemento al cat\u00e1logo de tipo CondicionPrenda.")

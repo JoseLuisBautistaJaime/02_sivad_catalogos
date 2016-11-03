@@ -23,11 +23,12 @@ INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('
 INSERT INTO CAT_QUILATAJE_ORO(abreviatura, etiqueta, id_configuracion) VALUES ('24_Q', '24', 4);
 UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = '14_Q' WHERE id = 4;
 
-INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (1,'Diamantes','CondicionPrenda','BN','Catálogo Condición de Prenda');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (1,'Diamantes','CondicionPrenda','BN','Catálogo de Condiciones de la Prenda');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (2,'Diamantes','CondicionPrenda','PSU','Catálogo Motivos de Baja de Prestamo');
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('BN','Buen Estado', 1);
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('RE','Regular', 1);
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('MA','Maltratada', 1);
-INSERT INTO CAT_MOTIVO_BAJA_PRESTAMO(abreviatura, etiqueta, id_configuracion) VALUES ('BAJ1','Motivo-Baja-1', 1);
+INSERT INTO CAT_MOTIVO_BAJA_PRESTAMO(abreviatura, etiqueta, id_configuracion) VALUES ('PSU','Prenda Sucia', 2);
 
 INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (5, 'Diamantes', 'TipoPiedraComplementaria', 'Catálogo piedra complementaria');
 INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (6, 'Diamantes', 'CertificadoDiamantes', 'Catálogo de certificados');
@@ -50,3 +51,9 @@ INSERT INTO CAT_CLARIDAD_DIAMANTE (abreviatura, etiqueta, id_configuracion) VALU
 INSERT INTO CAT_CLARIDAD_DIAMANTE (abreviatura, etiqueta, id_configuracion) VALUES ('VVS1','VVS1 desc', 7);
 INSERT INTO CAT_CLARIDAD_DIAMANTE (abreviatura, etiqueta, id_configuracion) VALUES ('VVS2','VVS2 desc', 7);
 UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = 'IF' WHERE id = 7;
+
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (8,'Alhajas','Metal','PL','Catálogo de Metales');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (9,'Alhajas','Calidad Ley','SL','Catálogo de Calidades Ley');
+INSERT INTO CAT_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('PL','Plata', 8);
+INSERT INTO CAT_CALIDAD_LEY(abreviatura, etiqueta, id_configuracion) VALUES ('SL','SegundaLey', 9);
+

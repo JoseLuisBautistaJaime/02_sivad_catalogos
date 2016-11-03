@@ -1,7 +1,6 @@
 package commands;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.MotivoBajaPrestamo;
-import mx.com.nmp.ms.sivad.catalogo.service.ConfiguracionCatalogoService;
 import mx.com.nmp.ms.sivad.catalogo.service.MotivoBajaPrestamoService;
 import org.crsh.cli.*;
 import org.crsh.command.BaseCommand;
@@ -33,7 +32,7 @@ public class motivosBajaPres extends BaseCommand {
      */
     private MotivoBajaPrestamoService getController() {
         BeanFactory factory = (BeanFactory) this.context.getAttributes().get("spring.beanfactory");
-        return (MotivoBajaPrestamoService) factory.getBean(MotivoBajaPrestamoService.class);
+        return factory.getBean(MotivoBajaPrestamoService.class);
     }
 
     /**
@@ -76,10 +75,10 @@ public class motivosBajaPres extends BaseCommand {
 
     /**
      * Agrega elemento de catalogo de tipo CondicionPrenda.
-     * @param context contexto del objeto
-     * @param abreviatura Abreviatura del elemento
-     * @param etiqueta Etiqueta del elemento
-     * @param configuracion Configuracion del elemento.
+     *
+     * @param context       contexto del objeto
+     * @param abreviatura   Abreviatura del elemento
+     * @param etiqueta      Etiqueta del elemento
      */
     @Command
     @Usage("Agrega un elemento al cat\u00e1logo.")
@@ -124,7 +123,7 @@ public class motivosBajaPres extends BaseCommand {
 
             table = getTable();
 
-            for (MotivoBajaPrestamo motivoBaja : lstMotivoBaja){
+            for (MotivoBajaPrestamo motivoBaja : lstMotivoBaja) {
                 table.row(
                         new LabelElement(motivoBaja.getElementoId()).style(Style.style(Color.cyan)),
                         new LabelElement(motivoBaja.getAbreviatura()).style(Style.style(Color.green)),
@@ -172,11 +171,9 @@ public class motivosBajaPres extends BaseCommand {
     /**
      * Modifica un elemento del catalogo.
      *
-     * @param context contexto del objeto.
-     * @param id identificador del elemento que sera eliminado.
-     * @param abreviatura nueva abreviatura que sera asignada al elemento.
-     * @param etiqueta nueva etiqueta que sera asignada al elemento.
-     * @param configuracion nueva configuracion que sera asignada al elemento.
+     * @param context       contexto del objeto.
+     * @param abreviatura   nueva abreviatura que sera asignada al elemento.
+     * @param etiqueta      nueva etiqueta que sera asignada al elemento.
      */
     @Command
     @Usage("Modifica los datos de un elemento del catalogo especidifcado por el identificador")
@@ -191,7 +188,7 @@ public class motivosBajaPres extends BaseCommand {
             motivoBajaModificar.setAbreviatura(abreviatura);
             motivoBajaModificar.setEtiqueta(etiqueta);
 
-            MotivoBajaPrestamo motivoBajaPrestamo = this.getController().update(elemento,motivoBajaModificar);
+            MotivoBajaPrestamo motivoBajaPrestamo = this.getController().update(elemento, motivoBajaModificar);
 
             table = getTable();
 
