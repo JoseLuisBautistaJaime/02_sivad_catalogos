@@ -118,7 +118,7 @@ class cat_color_oro {
                               @Usage("Abreviatura actual del elemento a actualizar")
                               @Option(names = ["a", "abreviatura"]) @Required String abreviatura,
                               @Usage("Abreviatura nueva")
-                              @Option(names = ["an", "abreviaturaNueva"]) @Required String abreviaturaNueva) {
+                              @Option(names = ["n", "abreviaturaNueva"]) @Required String abreviaturaNueva) {
         try {
             def elemento = getServicio(context).updateAbreviatura(abreviatura, abreviaturaNueva)
             out.println("La abreviatura fue actualizada correctamente.")
