@@ -84,7 +84,7 @@ public class CorteService {
     /**
      * Actualiza elemento de catálgo de tipo Corte Diamante.
      *
-     * @param Corte
+     * @param corte
      */
     public void saveAndFlush(Corte corte){
         LOGGER.info(">> save({})", corte);

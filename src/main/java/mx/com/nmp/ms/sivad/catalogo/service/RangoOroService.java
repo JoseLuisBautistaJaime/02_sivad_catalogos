@@ -79,7 +79,7 @@ public class RangoOroService {
     /**
      * Actualiza elemento de catálgo de tipo Rango Oro.
      *
-     * @param RangoOro
+     * @param rangoOro
      */
     public void saveAndFlush(RangoOro rangoOro){
         LOGGER.info(">> save({})",rangoOro);
