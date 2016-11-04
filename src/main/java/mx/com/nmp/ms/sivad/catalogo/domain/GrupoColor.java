@@ -26,9 +26,16 @@ import static javax.persistence.FetchType.EAGER;
 @Entity
 @Table(name = "cat_diamante_grupo_color")
 public class GrupoColor extends BaseColor {
+    private static final long serialVersionUID = -1147470982892950181L;
+
     /**
      * Elementos del catálogo {@link EscalaColor} padres de esté elemento del catálogo Grupo Color
      */
+    @ManyToMany(fetch = EAGER)
+    @JsonIgnoreProperties("etiqueta")
+    @JoinTable(name = "cat_diamante_escala_color_grupo_color",
+            joinColumns = @JoinColumn(name = "elemento_hijo"),
+            inverseJoinColumns = @JoinColumn(name = "elemento_padre"))
     private List<EscalaColor> padres;
 
     /**
@@ -43,11 +50,6 @@ public class GrupoColor extends BaseColor {
      *
      * @return Lista de padres de esté elemento.
      */
-    @ManyToMany(fetch = EAGER)
-    @JoinTable(name = "cat_diamante_escala_color_grupo_color",
-            joinColumns = @JoinColumn(name = "elemento_hijo"),
-            inverseJoinColumns = @JoinColumn(name = "elemento_padre"))
-    @JsonIgnoreProperties("etiqueta")
     public List<EscalaColor> getPadres() {
         return padres;
     }

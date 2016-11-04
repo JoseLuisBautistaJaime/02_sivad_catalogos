@@ -18,6 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cat_diamante_grado_color")
 public class GradoColor extends BaseColor {
+    private static final long serialVersionUID = -5886146222533921212L;
+
     /**
      * Constructor.
      */

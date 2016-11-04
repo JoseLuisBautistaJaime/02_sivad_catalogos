@@ -36,7 +36,7 @@ class color {
         def catalogo = getServicio(context).getAll()
 
         if (catalogo) {
-            mostrarTablaResultados(catalogo.elementos)
+            mostrarTablaResultados(catalogo)
         } else {
             "El catálogo no contiene elementos."
         }
@@ -50,7 +50,7 @@ class color {
         def catalogo = getServicio(context).getOne(abreviatura)
 
         if (catalogo) {
-            mostrarTablaResultados(catalogo.elementos)
+            mostrarTablaResultados(catalogo)
         } else {
             "El elemento del catálogo con Abreviatura ${abreviatura} no existe."
         }
@@ -65,7 +65,7 @@ class color {
 
         try {
             def elemento = getServicio(context).save(gc)
-            out.println("El elemeto fue agregado correctamente al catálogo.")
+            out.println("El elemento fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
@@ -89,7 +89,7 @@ class color {
 
         try {
             def elemento = getServicio(context).update(gc, abrAnterior)
-            out.println("El elemeto fue modificado correctamente.")
+            out.println("El elemento fue modificado correctamente.")
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
@@ -112,7 +112,7 @@ class color {
                  @Required @Argument String abreviatura) {
         try {
             def elemento = getServicio(context).delete(abreviatura)
-            out.println("El elemeto fue eliminado correctamente.")
+            out.println("El elemento fue eliminado correctamente.")
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)

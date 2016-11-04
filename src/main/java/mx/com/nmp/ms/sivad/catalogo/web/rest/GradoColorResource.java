@@ -10,6 +10,7 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.domain.GradoColor;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.GradoColorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -43,7 +46,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @RestController
 @RequestMapping("/catalogos/diamantes/colores")
-@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
+@SuppressWarnings({"SpringAutowiredFieldsWarningInspection", "WeakerAccess"})
 public class GradoColorResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(GradoColorResource.class);
 
@@ -67,14 +70,16 @@ public class GradoColorResource {
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Catalogo> getAll() {
-        Catalogo catalogo = gradoColorService.getAll();
+        List<GradoColor> result = gradoColorService.getAll();
+        Catalogo catalogo = null;
 
-        if (ObjectUtils.isEmpty(catalogo)) {
-            LOGGER.warn("El catálogo no contiene elementos.");
-            return new ResponseEntity<>(NOT_FOUND);
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo Grado Color no contiene elementos.");
         } else {
-            return new ResponseEntity<>(catalogo, OK);
+            catalogo = CatalogoFactory.build(result);
         }
+
+        return new ResponseEntity<>(catalogo, OK);
     }
 
     /**
@@ -114,13 +119,13 @@ public class GradoColorResource {
             method = GET,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Catalogo> getOne(@PathVariable String abreviatura) {
-        Catalogo catalogo = gradoColorService.getOne(abreviatura);
+        GradoColor result = gradoColorService.getOne(abreviatura);
 
-        if (ObjectUtils.isEmpty(catalogo)) {
-            LOGGER.warn("El elemento del catálogo no existe.");
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El elemento del catálogo Grado Color con abreviatura = {}, no existe.", abreviatura);
             return new ResponseEntity<>(NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(catalogo, OK);
         }
+
+        return new ResponseEntity<>(CatalogoFactory.build(result), OK);
     }
 }

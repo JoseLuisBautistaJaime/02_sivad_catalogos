@@ -40,29 +40,41 @@ public abstract class BaseColor implements CatalogoConfigurable {
     /**
      * Identificador del registro.
      */
+    @Id
     @JournalData
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "elemento_id", nullable = false)
     private Long idElemento;
 
     /**
      * Es el nombre que cualquier sistema de cara al usuario podría utilizar para presentar el elemento.
      */
+    @NotNull
     @JournalData
+    @Size(min = 1, max = 20)
+    @Column(name = "abreviatura", length = 20, nullable = false, unique = true)
     private String abreviatura;
 
     /**
      * Es el nombre que cualquier sistema de cara al usuario podría utilizar para presentar el elemento.
      */
+    @NotNull
     @JournalData
+    @Size(min = 1, max = 150)
+    @Column(name = "etiqueta", length = 150, nullable = false)
     private String etiqueta;
 
     /**
      * Metadata del catálogo. Contiene la definición del catálogo en sí.
      */
+    @ManyToOne
+    @JoinColumn(name = "id_configuracion")
     private ConfiguracionCatalogo configuracion;
 
     /**
      * Constructor
      */
+    @SuppressWarnings("WeakerAccess")
     protected BaseColor() {
         super();
     }
@@ -72,9 +84,6 @@ public abstract class BaseColor implements CatalogoConfigurable {
      *
      * @return Valor de {@code idElemento}.
      */
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "elemento_id", nullable = false)
     public Long getIdElemento() {
         return idElemento;
     }
@@ -84,6 +93,7 @@ public abstract class BaseColor implements CatalogoConfigurable {
      *
      * @param idElemento Nuevo valor de {@code idElemento}.
      */
+    @SuppressWarnings("unused")
     public void setIdElemento(Long idElemento) {
         this.idElemento = idElemento;
     }
@@ -93,9 +103,6 @@ public abstract class BaseColor implements CatalogoConfigurable {
      *
      * @return Valor de {@code abreviatura}.
      */
-    @NotNull
-    @Size(min = 1)
-    @Column(name = "abreviatura", length = 20, nullable = false)
     public String getAbreviatura() {
         return abreviatura;
     }
@@ -114,9 +121,6 @@ public abstract class BaseColor implements CatalogoConfigurable {
      *
      * @return Valor de {@code etiqueta}.
      */
-    @NotNull
-    @Size(min = 1)
-    @Column(name = "etiqueta", length = 150, nullable = false)
     public String getEtiqueta() {
         return etiqueta;
     }
@@ -136,8 +140,6 @@ public abstract class BaseColor implements CatalogoConfigurable {
      * @return Valor de {@code configuracion}.
      */
     @Override
-    @ManyToOne
-    @JoinColumn(name = "id_configuracion")
     public ConfiguracionCatalogo getConfiguracion() {
         return configuracion;
     }

@@ -7,7 +7,6 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.service;
 
-import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
@@ -15,7 +14,6 @@ import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.GradoColor;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.GradoColorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,19 +102,9 @@ public class GradoColorService {
      *
      * @return Objeto {@link Catalogo} con todos los elementos.
      */
-    @Timed
     @Transactional(readOnly = true)
-    public Catalogo getAll() {
-        List<GradoColor> result = gradoColorRepository.findAll();
-        Catalogo catalogo = null;
-
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catálogo GradoColor no contiene elementos.");
-        } else {
-            catalogo = CatalogoFactory.build(result);
-        }
-
-        return catalogo;
+    public List<GradoColor> getAll() {
+        return gradoColorRepository.findAll();
     }
 
     /**
@@ -126,19 +114,9 @@ public class GradoColorService {
      *
      * @return Objeto {@link Catalogo} con el elemento especificado.
      */
-    @Timed
     @Transactional(readOnly = true)
-    public Catalogo getOne(@HasText String abreviatura) {
-        GradoColor result = gradoColorRepository.findByAbreviatura(abreviatura);
-        Catalogo catalogo = null;
-
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El elemento con GradoColor.abreviatura = {}, no existe.", abreviatura);
-        } else {
-            catalogo = CatalogoFactory.build(result);
-        }
-
-        return catalogo;
+    public GradoColor getOne(@HasText String abreviatura) {
+        return gradoColorRepository.findByAbreviatura(abreviatura);
     }
 
     /**
@@ -163,9 +141,9 @@ public class GradoColorService {
         GradoColor gc = gradoColorRepository.findByAbreviatura(abreviatura);
 
         if (ObjectUtils.isEmpty(gc)) {
-            String mensage = String.format("El elemento con GradoColor.abreviatura = %s, no existe.", abreviatura);
-            LOGGER.warn(mensage);
-            throw new CatalogoNotFoundException(mensage, GradoColor.class);
+            String mensaje = String.format("El elemento con GradoColor.abreviatura = %s, no existe.", abreviatura);
+            LOGGER.warn(mensaje);
+            throw new CatalogoNotFoundException(mensaje, GradoColor.class);
         }
 
         return gc;
