@@ -54,36 +54,37 @@ public class condicionesPrenda extends BaseCommand {
     /**
      * Modifica un elemento del catalogo.
      *
-     * @param context coontexto del objeto.
+     * @param context     coontexto del objeto.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
-     * @param etiqueta nueva etiqueta que sera asignada al elemento.
+     * @param etiqueta    nueva etiqueta que sera asignada al elemento.
      */
     @Command
     @Usage("Modifica los datos del elemento del cat\u00e1logo mediante la Abreviatura")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("Elemento a Modificar") @Required @Option(names = {"m", "elemento"}) String elemento,
+                          @Usage("Elemento a Modificar") @Required @Option(names = {"m", "elemento"}) String abrevModificar,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
                           @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
-
         try {
-
             CondicionPrenda condicionPrendaModificar = new CondicionPrenda();
-            condicionPrendaModificar.setAbreviatura(abreviatura);
-            condicionPrendaModificar.setEtiqueta(etiqueta);
 
-            CondicionPrenda condicionPrenda = this.getController().update(elemento,condicionPrendaModificar);
+            if (this.getController().findbyAbreviatura(abrevModificar) == null) {
+                context.provide(new LabelElement("\nEl elemento a modificar con abrevitura " + abrevModificar + " no existe.\n"));
+            } else {
+                condicionPrendaModificar.setAbreviatura(abreviatura);
+                condicionPrendaModificar.setEtiqueta(etiqueta);
 
-            table = getTable();
+                CondicionPrenda condicionPrenda = this.getController().update(abrevModificar, condicionPrendaModificar);
 
-            table.row(
-                    new LabelElement(condicionPrenda.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(condicionPrenda.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(condicionPrenda.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(condicionPrenda.getConfiguracion().getId().toString())
-            );
-
-            context.provide(new LabelElement("\nEl elemento modificado es:\n"));
-            context.provide(table);
+                table = getTable();
+                table.row(
+                        new LabelElement(condicionPrenda.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(condicionPrenda.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(condicionPrenda.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(condicionPrenda.getConfiguracion().getId().toString())
+                );
+                context.provide(new LabelElement("\nEl elemento modificado es:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -103,7 +104,7 @@ public class condicionesPrenda extends BaseCommand {
 
             table = getTable();
 
-            for (CondicionPrenda condicionPrenda : lstCondicionPrenda){
+            for (CondicionPrenda condicionPrenda : lstCondicionPrenda) {
                 table.row(
                         new LabelElement(condicionPrenda.getElementoId()).style(Style.style(Color.cyan)),
                         new LabelElement(condicionPrenda.getAbreviatura()).style(Style.style(Color.green)),
@@ -127,51 +128,55 @@ public class condicionesPrenda extends BaseCommand {
     @Command
     @Usage("Muestra un elemento del cat\u00e1logo.")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("Identificador del elemento.") @Required @Argument String id) {
+                         @Usage("Abreviatura del elemento.") @Required @Argument String abreviatura) {
 
         try {
-            CondicionPrenda condicionPrenda = this.getController().findOne(Long.parseLong(id));
+            CondicionPrenda condicionPrenda = this.getController().findbyAbreviatura(abreviatura);
 
-            table = getTable();
-
-            table.row(
-                    new LabelElement(condicionPrenda.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(condicionPrenda.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(condicionPrenda.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(condicionPrenda.getConfiguracion().getId().toString())
-            );
-
-            context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
-            context.provide(table);
+            if (condicionPrenda == null) {
+                context.provide(new LabelElement("\nEl elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n"));
+            } else {
+                table = getTable();
+                table.row(
+                        new LabelElement(condicionPrenda.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(condicionPrenda.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(condicionPrenda.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(condicionPrenda.getConfiguracion().getId().toString())
+                );
+                context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     /**
-     * Elimina elemento del catalogo por identificador.
+     * Elimina elemento del catalogo por abreviatura.
      *
-     * @param id identificador de elemento a eliminar.
+     * @param abreviatura del elemento a eliminar.
      * @return String.
      */
     @Command
-    @Usage("Elimina un elemento del cat\u00e1go por el identificador.")
+    @Usage("Elimina un elemento del cat\u00e1go por abreviatura.")
     public String eliminar(
-            @Usage("identificador de la entrada del cat\u00e1logo.")
-            @Required
-            @Argument String id) {
+            @Usage("Abreviatura del cat\u00e1logo.") @Required @Argument String abreviatura) {
 
-        this.getController().delete(Long.parseLong(id));
-
-        return "El elemento con identificador " + id + " fue eliminado exitosamente!";
+        if (this.getController().findbyAbreviatura(abreviatura) == null) {
+            return "El elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n";
+        } else {
+            this.getController().delete(abreviatura);
+            return "El elemento con abreviatura " + abreviatura + " fue eliminado exitosamente.";
+        }
     }
 
 
     /**
      * Agrega elemento de catalogo de tipo CondicionPrenda.
-     * @param context contexto del objeto.
+     *
+     * @param context     contexto del objeto.
      * @param abreviatura abreviatura del elemento.
-     * @param etiqueta etiqueta del elemento.
+     * @param etiqueta    etiqueta del elemento.
      */
     @Command
     @Usage("Agrega un elemento al cat\u00e1logo de tipo CondicionPrenda.")
@@ -181,22 +186,25 @@ public class condicionesPrenda extends BaseCommand {
         try {
             CondicionPrenda condicionPrenda = new CondicionPrenda();
 
-            condicionPrenda.setAbreviatura(abreviatura);
-            condicionPrenda.setEtiqueta(etiqueta);
+            if (this.getController().findbyAbreviatura(abreviatura) != null) {
+                context.provide(new LabelElement("\nEl elemento con Abrevitura " + abreviatura + " ya existe.\n"));
+            } else {
+                condicionPrenda.setAbreviatura(abreviatura);
+                condicionPrenda.setEtiqueta(etiqueta);
 
-            this.getController().save(condicionPrenda);
+                this.getController().save(condicionPrenda);
 
-            table = getTable();
+                table = getTable();
+                table.row(
+                        new LabelElement(condicionPrenda.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(condicionPrenda.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(condicionPrenda.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(condicionPrenda.getConfiguracion().getId().toString())
+                );
 
-            table.row(
-                    new LabelElement(condicionPrenda.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(condicionPrenda.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(condicionPrenda.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(condicionPrenda.getConfiguracion().getId().toString())
-            );
-
-            context.provide(new LabelElement("\nEl elemento agregado es:\n"));
-            context.provide(table);
+                context.provide(new LabelElement("\nEl elemento agregado es:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

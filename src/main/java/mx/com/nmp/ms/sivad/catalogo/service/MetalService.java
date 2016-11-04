@@ -1,5 +1,6 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
+import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
@@ -42,7 +43,9 @@ public class MetalService {
      * @return Metal objeto que es guardado.
      */
     public Metal save(@NotNull Metal metal) {
-        LOGGER.info(">> save({})", metal);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> save({})", metal);
+        }
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.METAL.getDominioUnwrap(),
                 ConfiguracionCatalogoEnum.METAL.getTipo());
@@ -60,13 +63,13 @@ public class MetalService {
      * @return Metal
      */
     public Metal update(@NotNull String abreviatura, @NotNull Metal metal) {
-        LOGGER.info(">> update({})", abreviatura);
-
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> update({})", abreviatura);
+        }
         Metal metalActual = metalRepository.findByAbreviatura(abreviatura);
         metalActual.setEtiqueta(metal.getEtiqueta());
         metalActual.setAbreviatura(metal.getAbreviatura());
         metalActual.getConfiguracion().setUltimaActualizacion(new DateTime());
-
         return metalRepository.save(metalActual);
     }
 
@@ -78,20 +81,38 @@ public class MetalService {
      */
     @Transactional(readOnly = true)
     public Metal findOne(@NotNull Long id) {
-        LOGGER.info(">> findOne({})", id);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> findOne({})", id);
+        }
         return metalRepository.findOne(id);
     }
 
     /**
-     * Elimina elemento del catalogo de tipo Metal por identificador.
+     * Obtiene entidad de tipo Metal por abreviatura.
      *
-     * @param id del elemento que sera eliminado
+     * @param abreviatura identificador de elemento que sera buscado
+     * @return Metal
      */
-    public void delete(@NotNull Long id) {
-        LOGGER.info(">> delete({})", id);
-        Metal metal = metalRepository.findOne(id);
+    @Transactional(readOnly = true)
+    public Metal findbyAbreviatura(@NotNull String abreviatura) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> findbyAbreviatura({})", abreviatura);
+        }
+        return metalRepository.findByAbreviatura(abreviatura);
+    }
+
+    /**
+     * Elimina elemento del catalogo de tipo Metal por abreviatura.
+     *
+     * @param abreviatura del elemento que sera eliminado
+     */
+    public void delete(@NotNull String abreviatura) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> delete({})", abreviatura);
+        }
+        Metal metal = metalRepository.findByAbreviatura(abreviatura);
         metal.getConfiguracion().setUltimaActualizacion(new DateTime());
-        metalRepository.delete(id);
+        metalRepository.delete(metal);
     }
 
     /**
@@ -103,7 +124,9 @@ public class MetalService {
     public List<Metal> findAll() {
         LOGGER.info(">> findAll()");
         List<Metal> result = metalRepository.findAll();
-        LOGGER.debug("<< findAll(): {}", result);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("<< findAll(): {}", result);
+        }
         return result;
     }
 
@@ -114,14 +137,35 @@ public class MetalService {
      */
     @Transactional(readOnly = true)
     public Catalogo getAll() {
+        LOGGER.info(">> getAll()");
         List<Metal> result = metalRepository.findAll();
         Catalogo catalogo = null;
         if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catalogo Metal no contiene elementos.");
+            LOGGER.warn("<< El catalogo Metal no contiene elementos.");
         } else {
             catalogo = CatalogoFactory.build(result);
         }
         return catalogo;
     }
 
+    /**
+     * Obtiene un elemento del catalogo especificado por abreviatura.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @return Catalogo.
+     */
+    public Catalogo recuperarElemento(@HasText String abreviatura) {
+        Metal result = metalRepository.findByAbreviatura(abreviatura);
+        Catalogo catalogo = null;
+
+        if (ObjectUtils.isEmpty(result)) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("<< El elemento con abreviatura {}, no existe.", abreviatura);
+            }
+        } else {
+            catalogo = CatalogoFactory.build(result);
+        }
+
+        return catalogo;
+    }
 }

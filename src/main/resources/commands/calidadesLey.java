@@ -54,9 +54,9 @@ public class calidadesLey extends BaseCommand {
     /**
      * Modifica un elemento del catalogo.
      *
-     * @param context       coontexto del objeto.
-     * @param abreviatura   nueva abreviatura que sera asignada al elemento.
-     * @param etiqueta      nueva etiqueta que sera asignada al elemento.
+     * @param context     coontexto del objeto.
+     * @param abreviatura nueva abreviatura que sera asignada al elemento.
+     * @param etiqueta    nueva etiqueta que sera asignada al elemento.
      */
     @Command
     @Usage("Modifica los datos del elemento del cat\u00e1logo mediante la Abreviatura")
@@ -64,26 +64,28 @@ public class calidadesLey extends BaseCommand {
                           @Usage("Elemento a Modificar") @Required @Option(names = {"m", "elemento"}) String elemento,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
                           @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
-
         try {
-
             CalidadLey calidadLeyModificar = new CalidadLey();
-            calidadLeyModificar.setAbreviatura(abreviatura);
-            calidadLeyModificar.setEtiqueta(etiqueta);
 
-            CalidadLey calidadLey = this.getController().update(elemento, calidadLeyModificar);
+            if (this.getController().findbyAbreviatura(elemento) == null) {
+                context.provide(new LabelElement("\nEl elemento a modificar con abrevitura " + elemento + " no existe.\n"));
+            } else {
+                calidadLeyModificar.setAbreviatura(abreviatura);
+                calidadLeyModificar.setEtiqueta(etiqueta);
 
-            table = getTable();
+                CalidadLey calidadLey = this.getController().update(elemento, calidadLeyModificar);
 
-            table.row(
-                    new LabelElement(calidadLey.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(calidadLey.getConfiguracion().getId().toString())
-            );
+                table = getTable();
+                table.row(
+                        new LabelElement(calidadLey.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(calidadLey.getConfiguracion().getId().toString())
+                );
 
-            context.provide(new LabelElement("\nEl elemento modificado es:\n"));
-            context.provide(table);
+                context.provide(new LabelElement("\nEl elemento modificado es:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -102,7 +104,6 @@ public class calidadesLey extends BaseCommand {
             List<CalidadLey> lstCalidadLey = this.getController().findAll();
 
             table = getTable();
-
             for (CalidadLey calidadLey : lstCalidadLey) {
                 table.row(
                         new LabelElement(calidadLey.getElementoId()).style(Style.style(Color.cyan)),
@@ -127,52 +128,54 @@ public class calidadesLey extends BaseCommand {
     @Command
     @Usage("Muestra un elemento del cat\u00e1logo.")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("Identificador del elemento.") @Required @Argument String id) {
+                         @Usage("Abreviatura del elemento.") @Required @Argument String abreviatura) {
 
         try {
-            CalidadLey calidadLey = this.getController().findOne(Long.parseLong(id));
+            CalidadLey calidadLey = this.getController().findbyAbreviatura(abreviatura);
 
-            table = getTable();
-
-            table.row(
-                    new LabelElement(calidadLey.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(calidadLey.getConfiguracion().getId().toString())
-            );
-
-            context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
-            context.provide(table);
+            if (calidadLey == null) {
+                context.provide(new LabelElement("\nEl elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n"));
+            } else {
+                table = getTable();
+                table.row(
+                        new LabelElement(calidadLey.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(calidadLey.getConfiguracion().getId().toString())
+                );
+                context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     /**
-     * Elimina elemento del catalogo por identificador.
+     * Elimina elemento del catalogo por abreviatura.
      *
-     * @param id identificador de elemento a eliminar.
+     * @param abreviatura del elemento a eliminar.
      * @return String.
      */
     @Command
-    @Usage("Elimina un elemento del cat\u00e1go por el identificador.")
+    @Usage("Elimina un elemento del cat\u00e1go por abreviatura.")
     public String eliminar(
-            @Usage("identificador de la entrada del cat\u00e1logo.")
-            @Required
-            @Argument String id) {
+            @Usage("Abreviatura del cat\u00e1logo.") @Required @Argument String abreviatura) {
 
-        this.getController().delete(Long.parseLong(id));
-
-        return "El elemento con identificador " + id + " fue eliminado exitosamente!";
+        if (this.getController().findbyAbreviatura(abreviatura) == null) {
+            return "El elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n";
+        } else {
+            this.getController().delete(abreviatura);
+            return "El elemento con abreviatura " + abreviatura + " fue eliminado exitosamente.";
+        }
     }
-
 
     /**
      * Agrega elemento de catalogo de tipo CalidadLey.
      *
-     * @param context       contexto del objeto.
-     * @param abreviatura   abreviatura del elemento.
-     * @param etiqueta      etiqueta del elemento.
+     * @param context     contexto del objeto.
+     * @param abreviatura abreviatura del elemento.
+     * @param etiqueta    etiqueta del elemento.
      */
     @Command
     @Usage("Agrega un elemento al cat\u00e1logo de tipo CondicionPrenda.")
@@ -182,22 +185,25 @@ public class calidadesLey extends BaseCommand {
         try {
             CalidadLey calidadLey = new CalidadLey();
 
-            calidadLey.setAbreviatura(abreviatura);
-            calidadLey.setEtiqueta(etiqueta);
+            if (this.getController().findbyAbreviatura(abreviatura) != null) {
+                context.provide(new LabelElement("\nEl elemento con Abrevitura " + abreviatura + " ya existe.\n"));
+            } else {
+                calidadLey.setAbreviatura(abreviatura);
+                calidadLey.setEtiqueta(etiqueta);
 
-            this.getController().save(calidadLey);
+                this.getController().save(calidadLey);
 
-            table = getTable();
+                table = getTable();
+                table.row(
+                        new LabelElement(calidadLey.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(calidadLey.getConfiguracion().getId().toString())
+                );
 
-            table.row(
-                    new LabelElement(calidadLey.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(calidadLey.getConfiguracion().getId().toString())
-            );
-
-            context.provide(new LabelElement("\nEl elemento agregado es:\n"));
-            context.provide(table);
+                context.provide(new LabelElement("\nEl elemento agregado es:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

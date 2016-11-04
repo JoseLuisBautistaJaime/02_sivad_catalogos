@@ -1,5 +1,6 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
+import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.CalidadLey;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
@@ -42,7 +43,9 @@ public class CalidadLeyService {
      * @return CalidadLey objeto que es guardado.
      */
     public CalidadLey save(@NotNull CalidadLey calidadLey) {
-        LOGGER.info(">> save({})", calidadLey);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> save({})", calidadLey);
+        }
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.CALIDAD_LEY.getDominioUnwrap(),
                 ConfiguracionCatalogoEnum.CALIDAD_LEY.getTipo());
@@ -60,8 +63,9 @@ public class CalidadLeyService {
      * @return CalidadLey
      */
     public CalidadLey update(@NotNull String abreviatura, @NotNull CalidadLey calidadLey) {
-        LOGGER.info(">> update({})", abreviatura);
-
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> update({})", abreviatura);
+        }
         CalidadLey calidadLeyActual = calidadLeyRepository.findByAbreviatura(abreviatura);
         calidadLeyActual.setEtiqueta(calidadLey.getEtiqueta());
         calidadLeyActual.setAbreviatura(calidadLey.getAbreviatura());
@@ -78,20 +82,38 @@ public class CalidadLeyService {
      */
     @Transactional(readOnly = true)
     public CalidadLey findOne(@NotNull Long id) {
-        LOGGER.info(">> findOne({})", id);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> findOne({})", id);
+        }
         return calidadLeyRepository.findOne(id);
     }
 
     /**
-     * Elimina elemento del catalogo de tipo CalidadLey por identificador.
+     * Obtiene entidad de tipo CalidadLey por abreviatura.
      *
-     * @param id del elemento que sera eliminado
+     * @param abreviatura identificador de elemento que sera buscado
+     * @return CalidadLey
      */
-    public void delete(@NotNull Long id) {
-        LOGGER.info(">> delete({})", id);
-        CalidadLey calidadLey = calidadLeyRepository.findOne(id);
+    @Transactional(readOnly = true)
+    public CalidadLey findbyAbreviatura(@NotNull String abreviatura) {
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(">> findbyAbreviatura({})", abreviatura);
+        }
+        return calidadLeyRepository.findByAbreviatura(abreviatura);
+    }
+
+    /**
+     * Elimina elemento del catalogo de tipo CalidadLey por abreviatura.
+     *
+     * @param abreviatura del elemento que sera eliminado
+     */
+    public void delete(@NotNull String abreviatura) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> delete({})", abreviatura);
+        }
+        CalidadLey calidadLey = calidadLeyRepository.findByAbreviatura(abreviatura);
         calidadLey.getConfiguracion().setUltimaActualizacion(new DateTime());
-        calidadLeyRepository.delete(id);
+        calidadLeyRepository.delete(calidadLey);
     }
 
     /**
@@ -103,7 +125,9 @@ public class CalidadLeyService {
     public List<CalidadLey> findAll() {
         LOGGER.info(">> findAll()");
         List<CalidadLey> result = calidadLeyRepository.findAll();
-        LOGGER.debug("<< findAll(): {}", result);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("<< findAll(): {}", result);
+        }
         return result;
     }
 
@@ -114,13 +138,35 @@ public class CalidadLeyService {
      */
     @Transactional(readOnly = true)
     public Catalogo getAll() {
+        LOGGER.info(">> getAll()");
         List<CalidadLey> result = calidadLeyRepository.findAll();
         Catalogo catalogo = null;
         if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catalogo CalidadLey no contiene elementos.");
+            LOGGER.warn("<< El catalogo CalidadLey no contiene elementos.");
         } else {
             catalogo = CatalogoFactory.build(result);
         }
+        return catalogo;
+    }
+
+    /**
+     * Obtiene un elemento del catalogo especificado por abreviatura.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @return Catalogo.
+     */
+    public Catalogo recuperarElemento(@HasText String abreviatura) {
+        CalidadLey result = calidadLeyRepository.findByAbreviatura(abreviatura);
+        Catalogo catalogo = null;
+
+        if (ObjectUtils.isEmpty(result)) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("<< El elemento con abreviatura {}, no existe.", abreviatura);
+            }
+        } else {
+            catalogo = CatalogoFactory.build(result);
+        }
+
         return catalogo;
     }
 

@@ -1,9 +1,6 @@
 package commands;
 
-import mx.com.nmp.ms.sivad.catalogo.domain.CondicionPrenda;
 import mx.com.nmp.ms.sivad.catalogo.domain.Metal;
-import mx.com.nmp.ms.sivad.catalogo.service.CondicionPrendaService;
-import mx.com.nmp.ms.sivad.catalogo.service.ConfiguracionCatalogoService;
 import mx.com.nmp.ms.sivad.catalogo.service.MetalService;
 import org.crsh.cli.*;
 import org.crsh.command.BaseCommand;
@@ -57,36 +54,40 @@ public class metales extends BaseCommand {
     /**
      * Modifica un elemento del catalogo.
      *
-     * @param context coontexto del objeto.
+     * @param context     coontexto del objeto.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
-     * @param etiqueta nueva etiqueta que sera asignada al elemento.
+     * @param etiqueta    nueva etiqueta que sera asignada al elemento.
      */
     @Command
     @Usage("Modifica los datos del elemento del cat\u00e1logo mediante la Abreviatura")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("Elemento a Modificar") @Required @Option(names = {"m", "elemento"}) String elemento,
+                          @Usage("Elemento a Modificar") @Required @Option(names = {"m", "elemento"}) String abrevModificar,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
                           @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
 
         try {
-
             Metal metalModificar = new Metal();
-            metalModificar.setAbreviatura(abreviatura);
-            metalModificar.setEtiqueta(etiqueta);
 
-            Metal metal = this.getController().update(elemento,metalModificar);
+            if (this.getController().findbyAbreviatura(abrevModificar) == null) {
+                context.provide(new LabelElement("\nEl elemento a modificar con abrevitura " + abrevModificar + " no existe.\n"));
+            } else {
+                metalModificar.setAbreviatura(abreviatura);
+                metalModificar.setEtiqueta(etiqueta);
 
-            table = getTable();
+                Metal metal = this.getController().update(abrevModificar, metalModificar);
 
-            table.row(
-                    new LabelElement(metal.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(metal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(metal.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(metal.getConfiguracion().getId().toString())
-            );
+                table = getTable();
 
-            context.provide(new LabelElement("\nEl elemento modificado es:\n"));
-            context.provide(table);
+                table.row(
+                        new LabelElement(metal.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(metal.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(metal.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(metal.getConfiguracion().getId().toString())
+                );
+
+                context.provide(new LabelElement("\nEl elemento modificado es:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -106,7 +107,7 @@ public class metales extends BaseCommand {
 
             table = getTable();
 
-            for (Metal metal : lstMetal){
+            for (Metal metal : lstMetal) {
                 table.row(
                         new LabelElement(metal.getElementoId()).style(Style.style(Color.cyan)),
                         new LabelElement(metal.getAbreviatura()).style(Style.style(Color.green)),
@@ -125,57 +126,63 @@ public class metales extends BaseCommand {
     /**
      * Obtiene los elementos del catalogo.
      *
-     * @param context contexto del objeto.
+     * @param context     contexto del objeto.
+     * @param abreviatura del elemento.
      */
     @Command
     @Usage("Muestra un elemento del cat\u00e1logo.")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("Identificador del elemento.") @Required @Argument String id) {
+                         @Usage("Abreviatura del elemento.") @Required @Argument String abreviatura) {
 
         try {
-            Metal metal = this.getController().findOne(Long.parseLong(id));
+            Metal metal = this.getController().findbyAbreviatura(abreviatura);
 
-            table = getTable();
+            if (metal == null) {
+                context.provide(new LabelElement("\nEl elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n"));
+            } else {
+                table = getTable();
 
-            table.row(
-                    new LabelElement(metal.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(metal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(metal.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(metal.getConfiguracion().getId().toString())
-            );
+                table.row(
+                        new LabelElement(metal.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(metal.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(metal.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(metal.getConfiguracion().getId().toString())
+                );
 
-            context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
-            context.provide(table);
+                context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     /**
-     * Elimina elemento del catalogo por identificador.
+     * Elimina elemento del catalogo por abreviatura.
      *
-     * @param id identificador de elemento a eliminar.
+     * @param abreviatura identificador de elemento a eliminar.
      * @return String.
      */
     @Command
-    @Usage("Elimina un elemento del cat\u00e1go por el identificador.")
+    @Usage("Elimina un elemento del cat\u00e1go por la abreviatura")
     public String eliminar(
-            @Usage("identificador de la entrada del cat\u00e1logo.")
-            @Required
-            @Argument String id) {
+            @Usage("Abreviatura del cat\u00e1logo.") @Required @Argument String abreviatura) {
 
-        this.getController().delete(Long.parseLong(id));
-
-        return "El elemento con identificador " + id + " fue eliminado exitosamente!";
+        if (this.getController().findbyAbreviatura(abreviatura) == null) {
+            return "El elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n";
+        } else {
+            this.getController().delete(abreviatura);
+            return "El elemento con abreviatura " + abreviatura + " fue eliminado exitosamente!";
+        }
     }
 
 
     /**
-     * Agrega elemento de catalogo de tipo CondicionPrenda.
-     * @param context contexto del objeto.
+     * Agrega elemento de catalogo de tipo Metales.
+     *
+     * @param context     contexto del objeto.
      * @param abreviatura abreviatura del elemento.
-     * @param etiqueta etiqueta del elemento.
-     * @param configuracion configuracion del elemento.
+     * @param etiqueta    etiqueta del elemento.
      */
     @Command
     @Usage("Agrega un elemento al cat\u00e1logo de tipo CondicionPrenda.")
@@ -185,22 +192,26 @@ public class metales extends BaseCommand {
         try {
             Metal metal = new Metal();
 
-            metal.setAbreviatura(abreviatura);
-            metal.setEtiqueta(etiqueta);
+            if (this.getController().findbyAbreviatura(abreviatura) != null) {
+                context.provide(new LabelElement("\nEl elemento con Abrevitura " + abreviatura + " ya existe.\n"));
+            } else {
+                metal.setAbreviatura(abreviatura);
+                metal.setEtiqueta(etiqueta);
 
-            this.getController().save(metal);
+                this.getController().save(metal);
 
-            table = getTable();
+                table = getTable();
 
-            table.row(
-                    new LabelElement(metal.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(metal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(metal.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(metal.getConfiguracion().getId().toString())
-            );
+                table.row(
+                        new LabelElement(metal.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(metal.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(metal.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(metal.getConfiguracion().getId().toString())
+                );
 
-            context.provide(new LabelElement("\nEl elemento agregado es:\n"));
-            context.provide(table);
+                context.provide(new LabelElement("\nEl elemento agregado es:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

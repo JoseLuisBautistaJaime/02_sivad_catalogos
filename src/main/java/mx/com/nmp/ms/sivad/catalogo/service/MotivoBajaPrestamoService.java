@@ -1,5 +1,6 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
+import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
@@ -40,8 +41,10 @@ public class MotivoBajaPrestamoService {
      * @param motivoBajaPrestamo elemento que sera guardado.
      * @return MotivoBajaPrestamo
      */
-    public MotivoBajaPrestamo save(@NotNull MotivoBajaPrestamo motivoBajaPrestamo){
-        LOGGER.info(">> save({})",motivoBajaPrestamo);
+    public MotivoBajaPrestamo save(@NotNull MotivoBajaPrestamo motivoBajaPrestamo) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> save({})", motivoBajaPrestamo);
+        }
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.CONDICION_PRENDA.getDominioUnwrap(),
                 ConfiguracionCatalogoEnum.CONDICION_PRENDA.getTipo());
@@ -54,13 +57,14 @@ public class MotivoBajaPrestamoService {
     /**
      * Actualiza elemento de catalogo de tipo MotivoBajaPrestamo.
      *
-     * @param abreviatura abreviatura del elemento que sera modificado.
+     * @param abreviatura        abreviatura del elemento que sera modificado.
      * @param motivoBajaPrestamo objeto a modificar.
      * @return MotivoBajaPrestamo
      */
-    public MotivoBajaPrestamo update(@NotNull String abreviatura, @NotNull MotivoBajaPrestamo motivoBajaPrestamo){
-        LOGGER.info(">> update({})",abreviatura);
-
+    public MotivoBajaPrestamo update(@NotNull String abreviatura, @NotNull MotivoBajaPrestamo motivoBajaPrestamo) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> update({})", abreviatura);
+        }
         MotivoBajaPrestamo motivoBajaPrestamoActual = motivoBajaPrestamoRepository.findByAbreviatura(abreviatura);
         motivoBajaPrestamoActual.setEtiqueta(motivoBajaPrestamo.getEtiqueta());
         motivoBajaPrestamoActual.setAbreviatura(motivoBajaPrestamo.getAbreviatura());
@@ -75,22 +79,40 @@ public class MotivoBajaPrestamoService {
      * @param id identificador del elemento
      * @return MotivoBajaPrestamo
      */
-    @Transactional(readOnly=true)
-    public MotivoBajaPrestamo findOne(@NotNull Long id){
-        LOGGER.info(">> findOne({})",id);
+    @Transactional(readOnly = true)
+    public MotivoBajaPrestamo findOne(@NotNull Long id) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> findOne({})", id);
+        }
         return motivoBajaPrestamoRepository.findOne(id);
     }
 
     /**
-     * Borrar elemento de tipo MotivoBajaPrestamo por id
+     * Obtiene entidad de tipo MotivoBajaPrestamo por abreviatura.
      *
-     * @param id identificador que del elemento.
+     * @param abreviatura identificador de elemento que sera buscado
+     * @return MotivoBajaPrestamo
      */
-    public void delete(Long id){
-        LOGGER.info(">> delete({})",id);
-        MotivoBajaPrestamo motivoBajaPrestamo = motivoBajaPrestamoRepository.findOne(id);
+    @Transactional(readOnly = true)
+    public MotivoBajaPrestamo findbyAbreviatura(@NotNull String abreviatura) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> findbyAbreviatura({})", abreviatura);
+        }
+        return motivoBajaPrestamoRepository.findByAbreviatura(abreviatura);
+    }
+
+    /**
+     * Borrar elemento de tipo MotivoBajaPrestamo por abreviatura
+     *
+     * @param abreviatura identificador que del elemento.
+     */
+    public void delete(@NotNull String abreviatura) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">> delete({})", abreviatura);
+        }
+        MotivoBajaPrestamo motivoBajaPrestamo = motivoBajaPrestamoRepository.findByAbreviatura(abreviatura);
         motivoBajaPrestamo.getConfiguracion().setUltimaActualizacion(new DateTime());
-        motivoBajaPrestamoRepository.delete(id);
+        motivoBajaPrestamoRepository.delete(motivoBajaPrestamo);
     }
 
     /**
@@ -102,7 +124,9 @@ public class MotivoBajaPrestamoService {
     public List<MotivoBajaPrestamo> findAll() {
         LOGGER.info(">> findAll()");
         List<MotivoBajaPrestamo> result = motivoBajaPrestamoRepository.findAll();
-        LOGGER.debug("<< findAll(): {}", result);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("<< findAll(): {}", result);
+        }
         return result;
     }
 
@@ -111,15 +135,36 @@ public class MotivoBajaPrestamoService {
      *
      * @return List MotivoBajaPrestamo
      */
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public Catalogo getAll() {
         List<MotivoBajaPrestamo> result = motivoBajaPrestamoRepository.findAll();
         Catalogo catalogo = null;
         if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catálogo TipoPrenda no contiene elementos.");
+            LOGGER.warn("<< El catalogo TipoPrenda no contiene elementos.");
         } else {
             catalogo = CatalogoFactory.build(result);
         }
+        return catalogo;
+    }
+
+    /**
+     * Obtiene un elemento del catalogo especificado por abreviatura.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @return Catalogo.
+     */
+    public Catalogo recuperarElemento(@HasText String abreviatura) {
+        MotivoBajaPrestamo result = motivoBajaPrestamoRepository.findByAbreviatura(abreviatura);
+        Catalogo catalogo = null;
+
+        if (ObjectUtils.isEmpty(result)) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("<< El elemento con abreviatura {}, no existe.", abreviatura);
+            }
+        } else {
+            catalogo = CatalogoFactory.build(result);
+        }
+
         return catalogo;
     }
 

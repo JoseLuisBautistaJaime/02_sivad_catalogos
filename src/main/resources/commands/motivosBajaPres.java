@@ -56,29 +56,30 @@ public class motivosBajaPres extends BaseCommand {
     }
 
     /**
-     * Elimina elemento del catalogo por identificador.
+     * Elimina elemento del catalogo por abreviatura.
      *
-     * @param id identificador de elemento a eliminar.
+     * @param abreviatura del elemento a eliminar.
      * @return String.
      */
     @Command
-    @Usage("Elimina un elemento del cat\u00e1logo por el identificador.")
+    @Usage("Elimina un elemento del cat\u00e1logo por la abreviatura.")
     public String eliminar(
-            @Usage("identificador del elemento.")
-            @Required
-            @Argument String id) {
+            @Usage("Abreviatura del elemento.") @Required @Argument String abreviatura) {
 
-        this.getController().delete(Long.parseLong(id));
-
-        return "El elemento con identificador " + id + " fue eliminado exitosamente!";
+        if (this.getController().findbyAbreviatura(abreviatura) == null) {
+            return "El elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n";
+        } else {
+            this.getController().delete(abreviatura);
+            return "El elemento con identificador " + abreviatura + " fue eliminado exitosamente.";
+        }
     }
 
     /**
      * Agrega elemento de catalogo de tipo CondicionPrenda.
      *
-     * @param context       contexto del objeto
-     * @param abreviatura   Abreviatura del elemento
-     * @param etiqueta      Etiqueta del elemento
+     * @param context     contexto del objeto
+     * @param abreviatura Abreviatura del elemento
+     * @param etiqueta    Etiqueta del elemento
      */
     @Command
     @Usage("Agrega un elemento al cat\u00e1logo.")
@@ -88,22 +89,26 @@ public class motivosBajaPres extends BaseCommand {
 
         try {
             MotivoBajaPrestamo motivoBaja = new MotivoBajaPrestamo();
-            motivoBaja.setAbreviatura(abreviatura);
-            motivoBaja.setEtiqueta(etiqueta);
 
-            this.getController().save(motivoBaja);
+            if (this.getController().findbyAbreviatura(abreviatura) != null) {
+                context.provide(new LabelElement("\nEl elemento con Abrevitura " + abreviatura + " ya existe.\n"));
+            } else {
+                motivoBaja.setAbreviatura(abreviatura);
+                motivoBaja.setEtiqueta(etiqueta);
 
-            table = getTable();
+                this.getController().save(motivoBaja);
 
-            table.row(
-                    new LabelElement(motivoBaja.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(motivoBaja.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(motivoBaja.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(motivoBaja.getConfiguracion().getId().toString())
-            );
+                table = getTable();
+                table.row(
+                        new LabelElement(motivoBaja.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(motivoBaja.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(motivoBaja.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(motivoBaja.getConfiguracion().getId().toString())
+                );
 
-            context.provide(new LabelElement("\nEl elemento agregado es:\n"));
-            context.provide(table);
+                context.provide(new LabelElement("\nEl elemento agregado es:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -145,24 +150,27 @@ public class motivosBajaPres extends BaseCommand {
      * @param context contexto del objeto
      */
     @Command
-    @Usage("Muestra un elemento del cat\u00e1logo por identificador.")
+    @Usage("Muestra un elemento del cat\u00e1logo por abreviatura.")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("identificador del elemento.") @Required @Argument String id) {
+                         @Usage("Abreviatura del elemento.") @Required @Argument String abreviatura) {
 
         try {
-            MotivoBajaPrestamo motBajaPrestamo = this.getController().findOne(Long.parseLong(id));
 
-            table = getTable();
+            MotivoBajaPrestamo motBajaPrestamo = this.getController().findbyAbreviatura(abreviatura);
 
-            table.row(
-                    new LabelElement(motBajaPrestamo.getElementoId()).style(Style.style(Color.cyan)),
-                    new LabelElement(motBajaPrestamo.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(motBajaPrestamo.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(motBajaPrestamo.getConfiguracion().getId().toString())
-            );
-
-            context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
-            context.provide(table);
+            if (motBajaPrestamo == null) {
+                context.provide(new LabelElement("\nEl elemento del cat\u00e1logo con abreviatura " + abreviatura + " no existe.\n"));
+            } else {
+                table = getTable();
+                table.row(
+                        new LabelElement(motBajaPrestamo.getElementoId()).style(Style.style(Color.cyan)),
+                        new LabelElement(motBajaPrestamo.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(motBajaPrestamo.getEtiqueta()).style(Style.style(Color.yellow)),
+                        new LabelElement(motBajaPrestamo.getConfiguracion().getId().toString())
+                );
+                context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
+                context.provide(table);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -171,9 +179,9 @@ public class motivosBajaPres extends BaseCommand {
     /**
      * Modifica un elemento del catalogo.
      *
-     * @param context       contexto del objeto.
-     * @param abreviatura   nueva abreviatura que sera asignada al elemento.
-     * @param etiqueta      nueva etiqueta que sera asignada al elemento.
+     * @param context     contexto del objeto.
+     * @param abreviatura nueva abreviatura que sera asignada al elemento.
+     * @param etiqueta    nueva etiqueta que sera asignada al elemento.
      */
     @Command
     @Usage("Modifica los datos de un elemento del catalogo especidifcado por el identificador")

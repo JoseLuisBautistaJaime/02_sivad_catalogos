@@ -16,7 +16,7 @@ public enum ConfiguracionCatalogoEnum {
 
     // Ordenar alfabéticamente.
 
-    CALIDAD_LEY("Calidad_Ley", DominioEnum.ALHAJAS),
+    CALIDAD_LEY("CalidadLey", DominioEnum.ALHAJAS),
     CERTIFICADO_DIAMANTES("CertificadoDiamantes", DominioEnum.DIAMANTES),
     CLARIDAD_DIAMANTE("ClaridadDiamante", DominioEnum.DIAMANTES),
     COLOR("Color", DominioEnum.DIAMANTES),
