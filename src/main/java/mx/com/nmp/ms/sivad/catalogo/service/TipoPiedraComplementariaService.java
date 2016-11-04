@@ -5,11 +5,11 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
+import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.TipoPiedraComplementaria;
-import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.TipoPiedraComplementariaRepository;
 import org.joda.time.DateTime;
@@ -57,16 +57,8 @@ public class TipoPiedraComplementariaService {
      * @param tipoPiedraComplementaria Elemento del catálogo que se quiere guardar.
      * @return El elemento guardado.
      */
-    public TipoPiedraComplementaria save(TipoPiedraComplementaria tipoPiedraComplementaria){
-        LOGGER.info(">> save");
-        TipoPiedraComplementaria result =  tipoPiedraComplementariaRepository.findByAbreviatura(tipoPiedraComplementaria.getAbreviatura());
-
-        if(!ObjectUtils.isEmpty(result)){
-            LOGGER.error("No fue posible realizar el guardado. " +
-                            "El catalogo TipoPiedraComplementaria ya contiene un elemento con la abreviatura: [{}].",
-                    tipoPiedraComplementaria.getAbreviatura());
-            return null;
-        }
+    public TipoPiedraComplementaria save(@NotNull TipoPiedraComplementaria tipoPiedraComplementaria) {
+        LOGGER.info(">> save: [{}]", tipoPiedraComplementaria.toString());
 
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.TIPO_PIEDRA_COMPLEMENTARIA.getDominioUnwrap(),
@@ -81,58 +73,57 @@ public class TipoPiedraComplementariaService {
      * Permite eliminar el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
-     * @return TRUE si se eliminó el elemento del catálogo y FALSE en caso contrario.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public boolean delete(@HasText String abreviatura){
+    public void delete(@HasText String abreviatura) throws CatalogoNotFoundException {
         LOGGER.info(">> delete: [{}]", abreviatura);
         TipoPiedraComplementaria result = tipoPiedraComplementariaRepository.findByAbreviatura(abreviatura);
 
-        if(ObjectUtils.isEmpty(result)){
-            LOGGER.warn("No fue posible realizar la eliminacion. " +
-                    "El catalogo TipoPiedraComplementaria no contiene un elemento con la abreviatura [{}]", abreviatura);
-            return false;
-        }
+            if(ObjectUtils.isEmpty(result)){
+                    String mensaje = "El catalogo TipoPiedraComplementaria no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, TipoPiedraComplementaria.class);
+            }
 
         result.getConfiguracion().setUltimaActualizacion(new DateTime());
         tipoPiedraComplementariaRepository.delete(result);
-        return true;
     }
 
     /**
      * Permite obtener el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
-     * @return Objeto {@link Catalogo} con el elemento que coincida con la abreviatura indicada.
-     * NULL en caso de no existir coincidencia.
+     * @return Objeto {@link TipoPiedraComplementaria} con el elemento que coincida con la abreviatura indicada.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public Catalogo get(@HasText String abreviatura){
+    @Transactional(readOnly = true)
+    public TipoPiedraComplementaria get(@HasText String abreviatura) throws CatalogoNotFoundException {
         LOGGER.info(">> get: [{}]", abreviatura);
         TipoPiedraComplementaria result = tipoPiedraComplementariaRepository.findByAbreviatura(abreviatura);
 
-        if(ObjectUtils.isEmpty(result)){
-            LOGGER.warn("No fue posible realizar la consulta. " +
-                    "El catalogo TipoPiedraComplementaria no contiene un elemento con la abreviatura: [{}].", abreviatura);
-            return null;
-        }
+            if(ObjectUtils.isEmpty(result)){
+                String mensaje = "El catalogo TipoPiedraComplementaria no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, TipoPiedraComplementaria.class);
+            }
 
-        return CatalogoFactory.build(result);
+        return result;
     }
 
     /**
      * Permite obtener todos los elementos del catálogo.
      *
-     * @return Objeto {@link Catalogo} con la lista de elementos del catálogo.
+     * @return List TipoPiedraComplementaria con la lista de elementos
      */
-    public Catalogo getAll(){
+    @Transactional(readOnly = true)
+    public List<TipoPiedraComplementaria> getAll(){
         LOGGER.info(">> getAll");
         List<TipoPiedraComplementaria> result = tipoPiedraComplementariaRepository.findAll();
 
-        if(ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catalogo TipoPiedraComplementaria no contiene elementos.");
-            return CatalogoFactory.build(new ArrayList<TipoPiedraComplementaria>());
-        }
+            if(ObjectUtils.isEmpty(result)) {
+                LOGGER.warn("El catalogo TipoPiedraComplementaria no contiene elementos.");
+                return new ArrayList<>();
+            }
 
-        return CatalogoFactory.build(result);
+        return result;
     }
 
     /**
@@ -140,27 +131,36 @@ public class TipoPiedraComplementariaService {
      *
      * @param abreviatura La abreviatura actual del elemento.
      * @param tipoPiedraComplementaria Elemento del catálogo con la información que se quiere actualizar.
-     * @return El elemento actualizado o NULL en caso de no poder realizar la actualización.
+     * @return El elemento actualizado.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public TipoPiedraComplementaria update(String abreviatura, TipoPiedraComplementaria tipoPiedraComplementaria){
+    public TipoPiedraComplementaria update(@HasText String abreviatura, @NotNull TipoPiedraComplementaria tipoPiedraComplementaria)
+            throws CatalogoNotFoundException {
         LOGGER.info(">> update: [{}]", abreviatura);
         LOGGER.info(">> nueva abreviatura: [{}]", tipoPiedraComplementaria.getAbreviatura());
         LOGGER.info(">> nueva etiqueta: [{}]", tipoPiedraComplementaria.getEtiqueta());
         TipoPiedraComplementaria tipoPiedraComplementariaOriginal = tipoPiedraComplementariaRepository.findByAbreviatura(abreviatura);
 
             if(ObjectUtils.isEmpty(tipoPiedraComplementariaOriginal)){
-                LOGGER.warn("No fue posible realizar la consulta. " +
-                        "El catalogo TipoPiedraComplementaria no contiene un elemento con la abreviatura: [{}].", abreviatura);
-                return null;
+                String mensaje = "El catalogo TipoPiedraComplementaria no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, TipoPiedraComplementaria.class);
             }
-        tipoPiedraComplementariaOriginal.setAbreviatura(tipoPiedraComplementaria.getAbreviatura());
-        tipoPiedraComplementariaOriginal.setEtiqueta(tipoPiedraComplementaria.getEtiqueta());
+
+            if (ObjectUtils.isEmpty(tipoPiedraComplementaria.getAbreviatura())) {
+                LOGGER.warn("No se definio nueva abreviatura. Se conserva la abreviatura actual [{}].", tipoPiedraComplementariaOriginal.getAbreviatura());
+            } else {
+                tipoPiedraComplementariaOriginal.setAbreviatura(tipoPiedraComplementaria.getAbreviatura());
+            }
+
+            if (ObjectUtils.isEmpty(tipoPiedraComplementaria.getEtiqueta())) {
+                LOGGER.warn("No se definio nueva etiqueta. Se conserva la etiqueta actual [{}].", tipoPiedraComplementariaOriginal.getEtiqueta());
+            } else {
+                tipoPiedraComplementariaOriginal.setEtiqueta(tipoPiedraComplementaria.getEtiqueta());
+            }
+
         tipoPiedraComplementariaOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
         return tipoPiedraComplementariaRepository.save(tipoPiedraComplementariaOriginal);
 
     }
-
-
-
 
 }

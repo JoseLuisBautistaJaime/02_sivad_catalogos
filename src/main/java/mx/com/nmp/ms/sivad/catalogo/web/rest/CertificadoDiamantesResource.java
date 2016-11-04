@@ -6,13 +6,14 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
+import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.CertificadoDiamantesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -47,8 +48,7 @@ public class CertificadoDiamantesResource {
     @Timed
     public ResponseEntity<Catalogo> getAll() {
         LOGGER.info(">> getAll");
-        Catalogo catalogo = certificadoDiamantesService.getAll();
-        return new ResponseEntity<>(catalogo, HttpStatus.OK);
+        return new ResponseEntity<>(CatalogoFactory.build(certificadoDiamantesService.getAll()), HttpStatus.OK);
     }
 
     /**
@@ -87,13 +87,11 @@ public class CertificadoDiamantesResource {
     @Timed
     public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
         LOGGER.info(">> get: [{}]", abreviatura);
-        Catalogo catalogo = certificadoDiamantesService.get(abreviatura);
-
-        if (ObjectUtils.isEmpty(catalogo)) {
+        try {
+            return new ResponseEntity<>(CatalogoFactory.build(certificadoDiamantesService.get(abreviatura)), HttpStatus.OK);
+        } catch (CatalogoNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(catalogo, HttpStatus.OK);
     }
 
 }

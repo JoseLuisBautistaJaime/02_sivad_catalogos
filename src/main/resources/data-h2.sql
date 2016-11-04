@@ -38,19 +38,16 @@ INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (7
 INSERT INTO CAT_TIPO_PIEDRA_COMPLEMENTARIA (abreviatura, etiqueta, id_configuracion) VALUES ('RB','Ruby', 5);
 INSERT INTO CAT_TIPO_PIEDRA_COMPLEMENTARIA (abreviatura, etiqueta, id_configuracion) VALUES ('ES','Esmeralda', 5);
 INSERT INTO CAT_TIPO_PIEDRA_COMPLEMENTARIA (abreviatura, etiqueta, id_configuracion) VALUES ('ZF','Zafiro', 5);
-UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = 'RB' WHERE id = 5;
 
 
 INSERT INTO CAT_CERTIFICADO_DIAMANTES (abreviatura, etiqueta, id_configuracion) VALUES ('MK','MK desc', 6);
 INSERT INTO CAT_CERTIFICADO_DIAMANTES (abreviatura, etiqueta, id_configuracion) VALUES ('EGL','EGL desc', 6);
 INSERT INTO CAT_CERTIFICADO_DIAMANTES (abreviatura, etiqueta, id_configuracion) VALUES ('EGEL','EGEL desc', 6);
-UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = 'MK' WHERE id = 6;
 
 
 INSERT INTO CAT_CLARIDAD_DIAMANTE (abreviatura, etiqueta, id_configuracion) VALUES ('IF','IF desc', 7);
 INSERT INTO CAT_CLARIDAD_DIAMANTE (abreviatura, etiqueta, id_configuracion) VALUES ('VVS1','VVS1 desc', 7);
 INSERT INTO CAT_CLARIDAD_DIAMANTE (abreviatura, etiqueta, id_configuracion) VALUES ('VVS2','VVS2 desc', 7);
-UPDATE CNF_CONFIGURACION_CATALOGO SET valor_default = 'IF' WHERE id = 7;
 
 INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (8,'Alhajas','Metal','AU','Catálogo de Metales');
 INSERT INTO CAT_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('AU','Oro', 8);

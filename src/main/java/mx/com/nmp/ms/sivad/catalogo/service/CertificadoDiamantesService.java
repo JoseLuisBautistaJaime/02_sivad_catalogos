@@ -5,11 +5,12 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
+import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.CertificadoDiamantes;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.CertificadoDiamantesRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
@@ -56,22 +57,16 @@ public class CertificadoDiamantesService {
      * @param certificadoDiamantes Elemento del catálogo que se quiere guardar.
      * @return El elemento guardado.
      */
-    public CertificadoDiamantes save(CertificadoDiamantes certificadoDiamantes){
-        LOGGER.info(">> save");
-        CertificadoDiamantes result =  certificadoDiamantesRepository.findByAbreviatura(certificadoDiamantes.getAbreviatura());
+    public CertificadoDiamantes save(@NotNull CertificadoDiamantes certificadoDiamantes) {
+        LOGGER.info(">> save: [{}]", certificadoDiamantes.toString());
 
-            if(!ObjectUtils.isEmpty(result)){
-                LOGGER.error("No fue posible realizar el guardado. " +
-                        "El catalogo CertificadoDiamantes ya contiene un elemento con la abreviatura: [{}].",
-                        certificadoDiamantes.getAbreviatura());
-                return null;
-            }
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.CERTIFICADO_DIAMANTES.getDominioUnwrap(),
                 ConfiguracionCatalogoEnum.CERTIFICADO_DIAMANTES.getTipo());
 
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         certificadoDiamantes.setConfiguracion(configuracionCatalogo);
+
         return certificadoDiamantesRepository.save(certificadoDiamantes);
     }
 
@@ -79,58 +74,57 @@ public class CertificadoDiamantesService {
      * Permite eliminar el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
-     * @return TRUE si se eliminó el elemento del catálogo y FALSE en caso contrario.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public boolean delete(@HasText String abreviatura){
+    public void delete(@HasText String abreviatura) throws CatalogoNotFoundException {
         LOGGER.info(">> delete: [{}]", abreviatura);
         CertificadoDiamantes result = certificadoDiamantesRepository.findByAbreviatura(abreviatura);
 
             if(ObjectUtils.isEmpty(result)){
-                LOGGER.warn("No fue posible realizar la eliminacion. "  +
-                        "El catalogo CertificadoDiamantes no contiene un elemento con la abreviatura [{}]", abreviatura);
-                return false;
+                String mensaje = "El catalogo CertificadoDiamantes no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, CertificadoDiamantes.class);
             }
 
         result.getConfiguracion().setUltimaActualizacion(new DateTime());
         certificadoDiamantesRepository.delete(result);
-        return true;
     }
 
     /**
      * Permite obtener el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
-     * @return Objeto {@link Catalogo} con el elemento que coincida con la abreviatura indicada.
-     * NULL en caso de no existir coincidencia.
+     * @return Objeto {@link CertificadoDiamantes} con el elemento que coincida con la abreviatura indicada.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public Catalogo get(@HasText String abreviatura){
+    @Transactional(readOnly = true)
+    public CertificadoDiamantes get(@HasText String abreviatura){
         LOGGER.info(">> get: [{}]", abreviatura);
         CertificadoDiamantes result = certificadoDiamantesRepository.findByAbreviatura(abreviatura);
 
             if(ObjectUtils.isEmpty(result)){
-                LOGGER.warn("No fue posible realizar la consulta. " +
-                        "El catalogo CertificadoDiamantes no contiene un elemento con la abreviatura: [{}].", abreviatura);
-                return null;
+                String mensaje = "El catalogo CertificadoDiamantes no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, CertificadoDiamantes.class);
             }
 
-        return CatalogoFactory.build(result);
+        return result;
     }
 
     /**
      * Permite obtener todos los elementos del catálogo.
      *
-     * @return Objeto {@link Catalogo} con la lista de elementos del catálogo.
+     * @return List CertificadoDiamantes con la lista de elementos
      */
-    public Catalogo getAll(){
+    @Transactional(readOnly = true)
+    public List<CertificadoDiamantes> getAll(){
         LOGGER.info(">> getAll");
         List<CertificadoDiamantes> result = certificadoDiamantesRepository.findAll();
 
             if(ObjectUtils.isEmpty(result)) {
                 LOGGER.warn("El catalogo CertificadoDiamantes no contiene elementos.");
-                return CatalogoFactory.build(new ArrayList<CertificadoDiamantes>());
+                return new ArrayList<>();
             }
 
-        return CatalogoFactory.build(result);
+        return result;
     }
 
     /**
@@ -138,22 +132,33 @@ public class CertificadoDiamantesService {
      *
      * @param abreviatura La abreviatura actual del elemento.
      * @param certificadoDiamantes Elemento del catálogo con la información que se quiere actualizar.
-     * @return El elemento actualizado o NULL en caso de no poder realizar la actualización.
+     * @return El elemento actualizado.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public CertificadoDiamantes update(String abreviatura, CertificadoDiamantes certificadoDiamantes){
+    public CertificadoDiamantes update(String abreviatura, CertificadoDiamantes certificadoDiamantes)
+            throws CatalogoNotFoundException {
         LOGGER.info(">> update: [{}]", abreviatura);
         LOGGER.info(">> nueva abreviatura: [{}]", certificadoDiamantes.getAbreviatura());
         LOGGER.info(">> nueva etiqueta: [{}]", certificadoDiamantes.getEtiqueta());
         CertificadoDiamantes certificadoDiamantesOriginal = certificadoDiamantesRepository.findByAbreviatura(abreviatura);
 
             if(ObjectUtils.isEmpty(certificadoDiamantesOriginal)){
-                LOGGER.warn("No fue posible realizar la actualizacion. " +
-                        "El catalogo CertificadoDiamantes no contiene un elemento con la abreviatura: [{}].", abreviatura);
-                return null;
+                String mensaje = "El catalogo CertificadoDiamantes no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, CertificadoDiamantes.class);
             }
 
-        certificadoDiamantesOriginal.setAbreviatura(certificadoDiamantes.getAbreviatura());
-        certificadoDiamantesOriginal.setEtiqueta(certificadoDiamantes.getEtiqueta());
+            if (ObjectUtils.isEmpty(certificadoDiamantes.getAbreviatura())) {
+                LOGGER.warn("No se definio nueva abreviatura. Se conserva la abreviatura actual [{}].", certificadoDiamantesOriginal.getAbreviatura());
+            } else {
+                certificadoDiamantesOriginal.setAbreviatura(certificadoDiamantes.getAbreviatura());
+            }
+
+            if (ObjectUtils.isEmpty(certificadoDiamantes.getEtiqueta())) {
+                LOGGER.warn("No se definio nueva etiqueta. Se conserva la etiqueta actual [{}].", certificadoDiamantesOriginal.getEtiqueta());
+            } else {
+                certificadoDiamantesOriginal.setEtiqueta(certificadoDiamantes.getEtiqueta());
+            }
+
         certificadoDiamantesOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
         return certificadoDiamantesRepository.save(certificadoDiamantesOriginal);
 

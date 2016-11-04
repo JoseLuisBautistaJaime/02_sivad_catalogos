@@ -82,7 +82,7 @@ public class TipoPiedraComplementaria implements CatalogoConfigurable {
                 "idElemento=" + idElemento +
                 ", abreviatura='" + abreviatura + '\'' +
                 ", etiqueta='" + etiqueta + '\'' +
-                ", configuracion=" + configuracion +
+                ", configuracion=" + ((configuracion != null) ? configuracion.toString() : "null") +
                 '}';
     }
 

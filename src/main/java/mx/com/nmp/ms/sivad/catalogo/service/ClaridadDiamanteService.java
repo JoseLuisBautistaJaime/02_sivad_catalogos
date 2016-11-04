@@ -5,11 +5,12 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
+import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ClaridadDiamante;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ClaridadDiamanteRespository;
 
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
@@ -58,16 +59,8 @@ public class ClaridadDiamanteService {
      * @param claridadDiamante Elemento del catálogo que se quiere guardar.
      * @return El elemento guardado.
      */
-    public ClaridadDiamante save(ClaridadDiamante claridadDiamante){
-        LOGGER.info(">> save");
-        ClaridadDiamante result =  claridadDiamanteRespository.findByAbreviatura(claridadDiamante.getAbreviatura());
-
-            if(!ObjectUtils.isEmpty(result)){
-                LOGGER.error("No fue posible realizar el guardado. " +
-                                "El catalogo ClaridadDiamnte ya contiene un elemento con la abreviatura: [{}].",
-                        claridadDiamante.getAbreviatura());
-                return null;
-            }
+    public ClaridadDiamante save(@NotNull ClaridadDiamante claridadDiamante){
+        LOGGER.info(">> save: [{}]", claridadDiamante.toString());
 
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
                 ConfiguracionCatalogoEnum.CLARIDAD_DIAMANTE.getDominioUnwrap(),
@@ -75,6 +68,7 @@ public class ClaridadDiamanteService {
 
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         claridadDiamante.setConfiguracion(configuracionCatalogo);
+
         return claridadDiamanteRespository.save(claridadDiamante);
     }
 
@@ -82,58 +76,56 @@ public class ClaridadDiamanteService {
      * Permite eliminar el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
-     * @return TRUE si se eliminó el elemento del catálogo y FALSE en caso contrario.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public boolean delete(@HasText String abreviatura){
+    public void delete(@HasText String abreviatura) throws CatalogoNotFoundException {
         LOGGER.info(">> delete: [{}]", abreviatura);
         ClaridadDiamante result = claridadDiamanteRespository.findByAbreviatura(abreviatura);
 
             if(ObjectUtils.isEmpty(result)){
-                LOGGER.warn("No fue posible realizar la eliminacion. " +
-                        "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [{}]", abreviatura);
-                return false;
+                String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
             }
 
         result.getConfiguracion().setUltimaActualizacion(new DateTime());
         claridadDiamanteRespository.delete(result);
-        return true;
     }
 
     /**
      * Permite obtener el elemento del catálogo que coincida con la abreviatura indicada.
      *
-     * @param abreviatura La abreviatura.
-     * @return Objeto {@link Catalogo} con el elemento que coincida con la abreviatura indicada.
-     * NULL en caso de no existir coincidencia.
+     * @param abreviatura La abreviatura
+     * @return Objeto {@link ClaridadDiamante} con el elemento que coincida con la abreviatura indicada.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public Catalogo get(@HasText String abreviatura){
+    @Transactional(readOnly = true)
+    public ClaridadDiamante get(@HasText String abreviatura) throws CatalogoNotFoundException{
         LOGGER.info(">> get: [{}]", abreviatura);
         ClaridadDiamante result = claridadDiamanteRespository.findByAbreviatura(abreviatura);
 
             if(ObjectUtils.isEmpty(result)){
-                LOGGER.warn("No fue posible realizar la consulta. " +
-                        "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura: [{}].", abreviatura);
-                return null;
+                String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
             }
 
-        return CatalogoFactory.build(result);
+        return result;
     }
 
     /**
      * Permite obtener todos los elementos del catálogo.
-     *
-     * @return Objeto {@link Catalogo} con la lista de elementos del catálogo.
+     * @return List ClaridadDiamante con la lista de elementos
      */
-    public Catalogo getAll(){
+    @Transactional(readOnly = true)
+    public List<ClaridadDiamante> getAll(){
         LOGGER.info(">> getAll");
         List<ClaridadDiamante> result = claridadDiamanteRespository.findAll();
 
             if(ObjectUtils.isEmpty(result)) {
                 LOGGER.warn("El catalogo ClaridadDiamante no contiene elementos.");
-                return CatalogoFactory.build(new ArrayList<ClaridadDiamante>());
+                return new ArrayList<>();
             }
 
-        return CatalogoFactory.build(result);
+        return result;
     }
 
     /**
@@ -141,22 +133,33 @@ public class ClaridadDiamanteService {
      *
      * @param abreviatura La abreviatura actual del elemento.
      * @param claridadDiamante Elemento del catálogo con la información que se quiere actualizar.
-     * @return El elemento actualizado o NULL en caso de no poder realizar la actualización.
+     * @return El elemento actualizado.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public ClaridadDiamante update(String abreviatura, ClaridadDiamante claridadDiamante){
+    public ClaridadDiamante update(@HasText String abreviatura, @NotNull ClaridadDiamante claridadDiamante)
+            throws CatalogoNotFoundException {
         LOGGER.info(">> update: [{}]", abreviatura);
         LOGGER.info(">> nueva abreviatura: [{}]", claridadDiamante.getAbreviatura());
         LOGGER.info(">> nueva etiqueta: [{}]", claridadDiamante.getEtiqueta());
         ClaridadDiamante claridadDiamanteOriginal = claridadDiamanteRespository.findByAbreviatura(abreviatura);
 
             if(ObjectUtils.isEmpty(claridadDiamanteOriginal)){
-                LOGGER.warn("No fue posible realizar la actualizacion. " +
-                        "El catalogo ClaridadDiamantes no contiene un elemento con la abreviatura: [{}].", abreviatura);
-                return null;
+                String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
             }
 
-        claridadDiamanteOriginal.setAbreviatura(claridadDiamante.getAbreviatura());
-        claridadDiamanteOriginal.setEtiqueta(claridadDiamante.getEtiqueta());
+            if (ObjectUtils.isEmpty(claridadDiamante.getAbreviatura())) {
+                LOGGER.warn("No se definio nueva abreviatura. Se conserva la abreviatura actual [{}].", claridadDiamanteOriginal.getAbreviatura());
+            } else {
+                claridadDiamanteOriginal.setAbreviatura(claridadDiamante.getAbreviatura());
+            }
+
+            if (ObjectUtils.isEmpty(claridadDiamante.getEtiqueta())) {
+                LOGGER.warn("No se definio nueva etiqueta. Se conserva la etiqueta actual [{}].", claridadDiamante.getEtiqueta());
+            } else {
+                claridadDiamanteOriginal.setEtiqueta(claridadDiamante.getEtiqueta());
+            }
+
         claridadDiamanteOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
         return claridadDiamanteRespository.save(claridadDiamanteOriginal);
 
