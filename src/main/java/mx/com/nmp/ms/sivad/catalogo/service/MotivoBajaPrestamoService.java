@@ -46,8 +46,8 @@ public class MotivoBajaPrestamoService {
             LOGGER.info(">> save({})", motivoBajaPrestamo);
         }
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
-                ConfiguracionCatalogoEnum.CONDICION_PRENDA.getDominioUnwrap(),
-                ConfiguracionCatalogoEnum.CONDICION_PRENDA.getTipo());
+                ConfiguracionCatalogoEnum.MOTIVO_BAJA_PRESTAMO.getDominioUnwrap(),
+                ConfiguracionCatalogoEnum.MOTIVO_BAJA_PRESTAMO.getTipo());
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         motivoBajaPrestamo.setConfiguracion(configuracionCatalogo);
 
