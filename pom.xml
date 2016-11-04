@@ -33,7 +33,7 @@
         <java.version>1.7</java.version>
         <!-- IMPORTANTE: Se debe definir como propiedad para que pueda ser inyectada
             en configuración de Spring y ser utilizada para su publicación -->
-        <nmp.arquetipo.version>0.8.8-SNAPSHOT</nmp.arquetipo.version>
+        <nmp.arquetipo.version>0.8.10-SNAPSHOT</nmp.arquetipo.version>
 
         <!-- ordenar alfabéticamente -->
         <hazelcast.version>3.6.5</hazelcast.version>
@@ -88,11 +88,6 @@
         <dependency>
             <groupId>mx.com.nmp.ms</groupId>
             <artifactId>arquetipo-starter</artifactId>
-            <version>${nmp.arquetipo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>mx.com.nmp.ms</groupId>
-            <artifactId>arquetipo-mail-starter</artifactId>
             <version>${nmp.arquetipo.version}</version>
         </dependency>
         <dependency>
@@ -185,11 +180,6 @@
             <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
         <!-- starter de Spring Boot 1.4 que pone en deprecated el starter "-ws" -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
