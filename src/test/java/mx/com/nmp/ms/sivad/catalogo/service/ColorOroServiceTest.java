@@ -38,7 +38,7 @@ public class ColorOroServiceTest {
 
     private static final String CAT_ABREVIATURA_AGREGAR = "VD";
     private static final String CAT_ABREVIATURA_DEFAULT = "BL";
-    private static final String CAT_ABREVIATURA_DEFAULT_MODIFICAR = "MO";
+    private static final String CAT_ABREVIATURA_DEFAULT_MODIFICAR = "AM";
     private static final String CAT_ABREVIATURA_MODIFICAR = "AZ";
     private static final String CAT_ABREVIATURA_NO_EXISTE = "XX";
 
