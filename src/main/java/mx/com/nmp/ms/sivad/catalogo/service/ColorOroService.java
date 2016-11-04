@@ -10,7 +10,6 @@ import mx.com.nmp.ms.sivad.catalogo.domain.ColorOro;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
-import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoDuplicateKeyException;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ColorOroRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
@@ -61,9 +60,8 @@ public class ColorOroService {
      *
      * @param colorOro Elemento del catálogo que se quiere guardar.
      * @return El elemento guardado.
-     * @throws CatalogoDuplicateKeyException En caso de que la abreviatura ya exista.
      */
-    public ColorOro save(@NotNull ColorOro colorOro) throws CatalogoDuplicateKeyException {
+    public ColorOro save(@NotNull ColorOro colorOro) {
         LOGGER.info(">> save: [{}]", colorOro.toString());
 
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
@@ -79,7 +77,7 @@ public class ColorOroService {
             String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo ColorOro ya " +
                     "contiene un elemento con la abreviatura: [" + colorOro.getAbreviatura() + "].";
             LOGGER.warn(mensaje);
-            throw new CatalogoDuplicateKeyException(mensaje, ColorOro.class);
+            throw e;
         }
     }
 
@@ -87,9 +85,8 @@ public class ColorOroService {
      * Permite eliminar el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
-     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public void delete(@HasText String abreviatura) throws CatalogoNotFoundException {
+    public void delete(@HasText String abreviatura) {
         LOGGER.info(">> delete: [{}]", abreviatura);
 
         ColorOro colorOro = obtenerElemento(abreviatura);
@@ -102,10 +99,9 @@ public class ColorOroService {
      *
      * @param abreviatura La abreviatura.
      * @return Objeto {@link Catalogo} con el elemento que coincida con la abreviatura indicada.
-     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
     @Transactional(readOnly = true)
-    public ColorOro get(@HasText String abreviatura) throws CatalogoNotFoundException {
+    public ColorOro get(@HasText String abreviatura) {
         LOGGER.info(">> get: [{}]", abreviatura);
 
         return obtenerElemento(abreviatura);
@@ -135,10 +131,8 @@ public class ColorOroService {
      * @param abreviatura La abreviatura actual del elemento a actualizar.
      * @param colorOro Elemento del catálogo con la nueva información.
      * @return El elemento actualizado.
-     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public ColorOro update(@HasText String abreviatura, @NotNull ColorOro colorOro)
-            throws CatalogoNotFoundException {
+    public ColorOro update(@HasText String abreviatura, @NotNull ColorOro colorOro) {
         LOGGER.info(">> update: [{}], [{}]", abreviatura, colorOro.toString());
 
         ColorOro colorOroOriginal = obtenerElemento(abreviatura);
@@ -164,7 +158,7 @@ public class ColorOroService {
             String mensaje = "No fue posible realizar la actualizacion de la entidad. El catalogo ColorOro ya " +
                     "contiene un elemento con la abreviatura: [" + colorOro.getAbreviatura() + "].";
             LOGGER.warn(mensaje);
-            throw new CatalogoDuplicateKeyException(mensaje, ColorOro.class);
+            throw e;
         }
     }
 
@@ -173,10 +167,8 @@ public class ColorOroService {
      *
      * @param abreviatura La abreviatura.
      * @return El elemento obtenido.
-     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    private ColorOro obtenerElemento(String abreviatura)
-            throws CatalogoNotFoundException {
+    private ColorOro obtenerElemento(String abreviatura) {
         LOGGER.info(">> obtenerElemento: [{}]", abreviatura);
 
         ColorOro colorOro = colorOroRepository.findByAbreviatura(abreviatura);

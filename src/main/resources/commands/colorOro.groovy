@@ -5,13 +5,13 @@
 package commands
 
 import mx.com.nmp.ms.sivad.catalogo.domain.ColorOro
-import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoDuplicateKeyException
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException
 import mx.com.nmp.ms.sivad.catalogo.service.ColorOroService
 import org.crsh.cli.*
 import org.crsh.command.InvocationContext
 import org.crsh.text.ui.Overflow
 import org.crsh.text.ui.UIBuilder
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.util.ObjectUtils
 
 /**
@@ -44,7 +44,7 @@ class colorOro {
             def elemento = getServicio(context).save(colorOro)
             out.println("El elemento con abreviatura [${abreviatura}] fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
-        } catch (CatalogoDuplicateKeyException e) {
+        } catch (DataIntegrityViolationException e) {
             out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
         }
     }
@@ -134,7 +134,7 @@ class colorOro {
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
                 out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
-            } catch (CatalogoDuplicateKeyException e) {
+            } catch (DataIntegrityViolationException e) {
                 out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
             }
         }

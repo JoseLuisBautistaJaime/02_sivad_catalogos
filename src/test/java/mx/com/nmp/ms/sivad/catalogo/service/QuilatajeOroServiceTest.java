@@ -5,7 +5,7 @@
 package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
-import mx.com.nmp.ms.sivad.catalogo.domain.ColorOro;
+import mx.com.nmp.ms.sivad.catalogo.domain.QuilatajeOro;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,33 +23,33 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Utilizada para probar la lógica de ColorOroService.
+ * Utilizada para probar la lógica de QuilatajeOroService.
  *
  * @author ngonzalez
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CatalogosApplication.class)
-public class ColorOroServiceTest {
+public class QuilatajeOroServiceTest {
 
     /**
      * Utilizada para manipular los mensajes informativos y de error.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ColorOroServiceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuilatajeOroServiceTest.class);
 
-    private static final String CAT_ABREVIATURA_AGREGAR = "VD";
-    private static final String CAT_ABREVIATURA_DEFAULT = "BL";
-    private static final String CAT_ABREVIATURA_MODIFICAR = "AZ";
-    private static final String CAT_ABREVIATURA_NO_EXISTE = "XX";
+    private static final String CAT_ABREVIATURA_AGREGAR = "24_Q";
+    private static final String CAT_ABREVIATURA_DEFAULT = "14_Q";
+    private static final String CAT_ABREVIATURA_MODIFICAR = "18_Q";
+    private static final String CAT_ABREVIATURA_NO_EXISTE = "30_Q";
 
-    private static final String CAT_ETIQUETA_AGREGAR = "Verde";
-    private static final String CAT_ETIQUETA_DEFAULT = "Blanco";
-    private static final String CAT_ETIQUETA_MODIFICAR = "Azul";
+    private static final String CAT_ETIQUETA_AGREGAR = "24_Q";
+    private static final String CAT_ETIQUETA_DEFAULT = "14";
+    private static final String CAT_ETIQUETA_MODIFICAR = "18";
 
     /**
-     * Referencia al servicio ColorOroService.
+     * Referencia al servicio QuilatajeOroService.
      */
     @Inject
-    private ColorOroService colorOroService;
+    private QuilatajeOroService quilatajeOroService;
 
 
 
@@ -60,15 +60,15 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testAgregarElementoCatalogo_1() {
         LOGGER.info(">> testAgregarElementoCatalogo_1");
 
         try {
-            ColorOro colorOro = crearColorOro(CAT_ABREVIATURA_AGREGAR, CAT_ETIQUETA_AGREGAR);
-            List<ColorOro> resultListActual = colorOroService.getAll();
-            ColorOro result = colorOroService.save(colorOro);
-            List<ColorOro> resultListNuevo = colorOroService.getAll();
+            QuilatajeOro quilatajeOro = crearQuilatajeOro(CAT_ABREVIATURA_AGREGAR, CAT_ETIQUETA_AGREGAR);
+            List<QuilatajeOro> resultListActual = quilatajeOroService.getAll();
+            QuilatajeOro result = quilatajeOroService.save(quilatajeOro);
+            List<QuilatajeOro> resultListNuevo = quilatajeOroService.getAll();
 
             assertNotNull(result);
             assertNotNull(result.getIdElemento());
@@ -87,15 +87,15 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testAgregarElementoCatalogo_2() {
         LOGGER.info(">> testAgregarElementoCatalogo_2");
 
-        String etiqueta_2 = "Magenta";
+        String etiqueta_2 = "10";
 
         try {
-            ColorOro colorOroDuplicado = crearColorOro(CAT_ABREVIATURA_DEFAULT, etiqueta_2);
-            colorOroService.save(colorOroDuplicado);
+            QuilatajeOro quilatajeOroDuplicado = crearQuilatajeOro(CAT_ABREVIATURA_DEFAULT, etiqueta_2);
+            quilatajeOroService.save(quilatajeOroDuplicado);
             fail();
         } catch (DataIntegrityViolationException e) {
             assertNotNull(e);
@@ -110,12 +110,12 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testEliminarElementoCatalogo_1() {
         LOGGER.info(">> testEliminarElementoCatalogo_1");
 
         try {
-            colorOroService.delete(CAT_ABREVIATURA_DEFAULT);
+            quilatajeOroService.delete(CAT_ABREVIATURA_DEFAULT);
             assertTrue(true);
         } catch (Exception e) {
             LOGGER.error("Ocurrio una excepcion inesperada realizar la operacion. {}", e.getMessage());
@@ -128,16 +128,16 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testEliminarElementoCatalogo_2() {
         LOGGER.info(">> testEliminarElementoCatalogo_2");
 
         try {
-            colorOroService.delete(CAT_ABREVIATURA_NO_EXISTE);
+            quilatajeOroService.delete(CAT_ABREVIATURA_NO_EXISTE);
             fail();
         } catch (CatalogoNotFoundException e) {
             assertNotNull(e);
-            assertEquals("El catalogo ColorOro no contiene un elemento con la " +
+            assertEquals("El catalogo QuilatajeOro no contiene un elemento con la " +
                     "abreviatura: [" + CAT_ABREVIATURA_NO_EXISTE + "].", e.getMessage());
         } catch (Exception e) {
             LOGGER.error("Ocurrio una excepcion inesperada realizar la operacion. {}", e.getMessage());
@@ -150,13 +150,13 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testModificarElementoCatalogo_1() {
         LOGGER.info(">> testModificarElementoCatalogo_1");
 
         try {
-            ColorOro colorOroMod = crearColorOro(CAT_ABREVIATURA_MODIFICAR, CAT_ETIQUETA_MODIFICAR);
-            ColorOro resultMod = colorOroService.update(CAT_ABREVIATURA_DEFAULT, colorOroMod);
+            QuilatajeOro quilatajeOroMod = crearQuilatajeOro(CAT_ABREVIATURA_MODIFICAR, CAT_ETIQUETA_MODIFICAR);
+            QuilatajeOro resultMod = quilatajeOroService.update(CAT_ABREVIATURA_DEFAULT, quilatajeOroMod);
             assertNotNull(resultMod);
             assertNotNull(resultMod.getIdElemento());
             assertEquals(CAT_ABREVIATURA_MODIFICAR, resultMod.getAbreviatura());
@@ -173,13 +173,13 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testModificarElementoCatalogo_2() {
         LOGGER.info(">> testModificarElementoCatalogo_2");
 
         try {
-            ColorOro colorOroMod = crearColorOro(null, CAT_ETIQUETA_MODIFICAR);
-            ColorOro resultMod = colorOroService.update(CAT_ABREVIATURA_DEFAULT, colorOroMod);
+            QuilatajeOro quilatajeOroMod = crearQuilatajeOro(null, CAT_ETIQUETA_MODIFICAR);
+            QuilatajeOro resultMod = quilatajeOroService.update(CAT_ABREVIATURA_DEFAULT, quilatajeOroMod);
             assertNotNull(resultMod);
             assertNotNull(resultMod.getIdElemento());
             assertEquals(CAT_ABREVIATURA_DEFAULT, resultMod.getAbreviatura());
@@ -196,13 +196,13 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testModificarElementoCatalogo_3() {
         LOGGER.info(">> testModificarElementoCatalogo_3");
 
         try {
-            ColorOro colorOroMod = crearColorOro(CAT_ABREVIATURA_MODIFICAR, null);
-            ColorOro resultMod = colorOroService.update(CAT_ABREVIATURA_DEFAULT, colorOroMod);
+            QuilatajeOro quilatajeOroMod = crearQuilatajeOro(CAT_ABREVIATURA_MODIFICAR, null);
+            QuilatajeOro resultMod = quilatajeOroService.update(CAT_ABREVIATURA_DEFAULT, quilatajeOroMod);
             assertNotNull(resultMod);
             assertNotNull(resultMod.getIdElemento());
             assertEquals(CAT_ABREVIATURA_MODIFICAR, resultMod.getAbreviatura());
@@ -219,12 +219,12 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testObtenerElementoCatalogo_1() {
         LOGGER.info(">> testObtenerElementoCatalogo_1");
 
         try {
-            ColorOro result = colorOroService.get(CAT_ABREVIATURA_DEFAULT);
+            QuilatajeOro result = quilatajeOroService.get(CAT_ABREVIATURA_DEFAULT);
             assertNotNull(result);
             assertNotNull(result.getIdElemento());
             assertEquals(CAT_ABREVIATURA_DEFAULT, result.getAbreviatura());
@@ -241,16 +241,16 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testObtenerElementoCatalogo_2() {
         LOGGER.info(">> testObtenerElementoCatalogo_2");
 
         try {
-            colorOroService.get(CAT_ABREVIATURA_NO_EXISTE);
+            quilatajeOroService.get(CAT_ABREVIATURA_NO_EXISTE);
             fail();
         } catch (CatalogoNotFoundException e) {
             assertNotNull(e);
-            assertEquals("El catalogo ColorOro no contiene un elemento con la " +
+            assertEquals("El catalogo QuilatajeOro no contiene un elemento con la " +
                     "abreviatura: [" + CAT_ABREVIATURA_NO_EXISTE + "].", e.getMessage());
         } catch (Exception e) {
             LOGGER.error("Ocurrio una excepcion inesperada realizar la operacion. {}", e.getMessage());
@@ -263,11 +263,11 @@ public class ColorOroServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-color-oro-h2.sql")
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
     public void testObtenerTodosElementosCatalogo_1() {
         LOGGER.info(">> testObtenerTodosElementosCatalogo_1");
 
-        List<ColorOro> result = colorOroService.getAll();
+        List<QuilatajeOro> result = quilatajeOroService.getAll();
         assertNotNull(result);
         assertTrue(result.size() > 0);
 
@@ -285,23 +285,23 @@ public class ColorOroServiceTest {
     public void testObtenerTodosElementosCatalogo_2() {
         LOGGER.info(">> testObtenerTodosElementosCatalogo_2");
 
-        List<ColorOro> result = colorOroService.getAll();
+        List<QuilatajeOro> result = quilatajeOroService.getAll();
         assertNotNull(result);
         assertTrue(result.size() == 0);
     }
 
     /**
-     * Metodo auxiliar utilizado para crear una instancia de la clase ColorOro.
+     * Metodo auxiliar utilizado para crear una instancia de la clase QuilatajeOro.
      *
      * @param abreviatura La abreviatura.
      * @param etiqueta La etiqueta.
      * @return La instancia creada.
      */
-    private ColorOro crearColorOro(String abreviatura, String etiqueta) {
-        ColorOro colorOro = new ColorOro();
-        colorOro.setAbreviatura(abreviatura);
-        colorOro.setEtiqueta(etiqueta);
-        return colorOro;
+    private QuilatajeOro crearQuilatajeOro(String abreviatura, String etiqueta) {
+        QuilatajeOro quilatajeOro = new QuilatajeOro();
+        quilatajeOro.setAbreviatura(abreviatura);
+        quilatajeOro.setEtiqueta(etiqueta);
+        return quilatajeOro;
     }
 
 }
