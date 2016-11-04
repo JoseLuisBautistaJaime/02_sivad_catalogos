@@ -68,7 +68,7 @@ public class CacheConfiguration {
     public HazelcastInstance hazelcastInstance(AppProperties appProperties) {
         LOGGER.debug("Configurando Hazelcast");
         Config config = new Config();
-        config.setInstanceName("microservicioX");
+        config.setInstanceName("sivad-catalogos");
         // serviceId is por default el nombre de la aplicación, ver propiedad Spring Boot's eureka.instance.appname
         String serviceId = discoveryClient.getLocalServiceInstance().getServiceId();
         LOGGER.debug("Configurando cluster Hazelcast para instanceId: {}", serviceId);
