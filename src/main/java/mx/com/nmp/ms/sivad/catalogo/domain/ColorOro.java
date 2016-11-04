@@ -43,7 +43,7 @@ public class ColorOro implements CatalogoConfigurable {
      */
     @NotNull
     @Size(min = 1)
-    @Column(name = "abreviatura", length = 20, nullable = false)
+    @Column(name = "abreviatura", length = 20, nullable = false, unique = true)
     @JournalData
     private String abreviatura;
 
