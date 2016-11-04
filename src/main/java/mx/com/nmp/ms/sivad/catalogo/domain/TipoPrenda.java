@@ -42,24 +42,35 @@ public class TipoPrenda implements CatalogoConfigurable {
     /**
      * Identificador del registro.
      */
+    @Id
     @JournalData
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "elemento_id", nullable = false)
     private Long idElemento;
 
     /**
      * Nombre reconocible de este elemento orientado a uso interno de los sistemas.
      */
+    @NotNull
     @JournalData
+    @Size(min = 1)
+    @Column(name = "abreviatura", length = 20, nullable = false, unique = true)
     private String abreviatura;
 
     /**
      * Es el nombre que cualquier sistema de cara al usuario podría utilizar para presentar el elemento.
      */
+    @NotNull
     @JournalData
+    @Size(min = 1)
+    @Column(name = "etiqueta", length = 150, nullable = false)
     private String etiqueta;
 
     /**
      * Metadata del catálogo. Contiene la definición del catálogo en sí.
      */
+    @ManyToOne
+    @JoinColumn(name = "id_configuracion")
     private ConfiguracionCatalogo configuracion;
 
     /**
@@ -74,9 +85,6 @@ public class TipoPrenda implements CatalogoConfigurable {
      *
      * @return Valor de idElemento.
      */
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "elemento_id", nullable = false)
     public Long getIdElemento() {
         return idElemento;
     }
@@ -95,9 +103,6 @@ public class TipoPrenda implements CatalogoConfigurable {
      *
      * @return Valor de abreviatura.
      */
-    @NotNull
-    @Size(min = 1)
-    @Column(name = "abreviatura", length = 20, nullable = false)
     public String getAbreviatura() {
         return abreviatura;
     }
@@ -116,9 +121,6 @@ public class TipoPrenda implements CatalogoConfigurable {
      *
      * @return Valor de etiqueta.
      */
-    @NotNull
-    @Size(min = 1)
-    @Column(name = "etiqueta", length = 150, nullable = false)
     public String getEtiqueta() {
         return etiqueta;
     }
@@ -137,8 +139,6 @@ public class TipoPrenda implements CatalogoConfigurable {
      *
      * @return Valor de configuracion.
      */
-    @ManyToOne
-    @JoinColumn(name = "id_configuracion")
     @Override
     public ConfiguracionCatalogo getConfiguracion() {
         return configuracion;

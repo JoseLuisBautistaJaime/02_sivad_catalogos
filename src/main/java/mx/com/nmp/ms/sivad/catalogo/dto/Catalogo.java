@@ -50,6 +50,7 @@ public class Catalogo implements Serializable {
     /**
      * Fecha de última actualización del catálogo.
      */
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
     private DateTime ultimaActualizacion;
 
     /**
@@ -142,7 +143,6 @@ public class Catalogo implements Serializable {
      *
      * @return Valor de fechaUltimaActualizacion.
      */
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
     public DateTime getUltimaActualizacion() {
         return ultimaActualizacion;
     }

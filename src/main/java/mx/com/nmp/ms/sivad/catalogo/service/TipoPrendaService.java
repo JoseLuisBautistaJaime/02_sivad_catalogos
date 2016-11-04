@@ -7,14 +7,12 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.service;
 
-import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.TipoPrendaRepository;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import org.slf4j.Logger;
@@ -99,19 +97,9 @@ public class TipoPrendaService {
      *
      * @return Objeto {@link Catalogo} con todos los elementos.
      */
-    @Timed
     @Transactional(readOnly = true)
-    public Catalogo getAll() {
-        List<TipoPrenda> result = tipoPrendaRepository.findAll();
-        Catalogo catalogo = null;
-
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catálogo TipoPrenda no contiene elementos.");
-        } else {
-            catalogo = CatalogoFactory.build(result);
-        }
-
-        return catalogo;
+    public List<TipoPrenda> getAll() {
+        return tipoPrendaRepository.findAll();
     }
 
     /**
@@ -121,19 +109,9 @@ public class TipoPrendaService {
      *
      * @return Objeto {@link Catalogo} con el elemento especificado.
      */
-    @Timed
     @Transactional(readOnly = true)
-    public Catalogo getOne(@HasText String abreviatura) {
-        TipoPrenda result = tipoPrendaRepository.findByAbreviatura(abreviatura);
-        Catalogo catalogo = null;
-
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El elemento con TipoPrenda.abreviatura = {}, no existe.", abreviatura);
-        } else {
-            catalogo = CatalogoFactory.build(result);
-        }
-
-        return catalogo;
+    public TipoPrenda getOne(@HasText String abreviatura) {
+        return tipoPrendaRepository.findByAbreviatura(abreviatura);
     }
 
     /**

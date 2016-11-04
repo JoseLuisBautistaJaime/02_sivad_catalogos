@@ -9,6 +9,7 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda;
+import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.TipoPrendaService;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -43,7 +46,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @RestController
 @RequestMapping("/catalogos/diamantes/alhajas/tipos")
-@SuppressWarnings({"SpringAutowiredFieldsWarningInspection"})
+@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class TipoPrendaResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(TipoPrendaResource.class);
 
@@ -53,6 +56,7 @@ public class TipoPrendaResource {
     /**
      * Constructor.
      */
+    @SuppressWarnings("WeakerAccess")
     public TipoPrendaResource() {
         super();
     }
@@ -60,21 +64,22 @@ public class TipoPrendaResource {
     /**
      * GET /tipos : Recuperar todos los elementos del catalogo.
      *
-     * @return ResponseEntity con status 200 (OK) y el catálogo {@link TipoPrenda}
-     *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
+     * @return ResponseEntity con status 200 (OK) y el catálogo {@link TipoPrenda}.
      */
     @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Catalogo> getAll() {
-        Catalogo catalogo = tipoPrendaService.getAll();
+        List<TipoPrenda> result = tipoPrendaService.getAll();
+        Catalogo catalogo = null;
 
-        if (ObjectUtils.isEmpty(catalogo)) {
-            LOGGER.warn("El catálogo no contiene elementos.");
-            return new ResponseEntity<>(NOT_FOUND);
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo Tipo Prenda no contiene elementos.");
         } else {
-            return new ResponseEntity<>(catalogo, OK);
+            catalogo = CatalogoFactory.build(result);
         }
+
+        return new ResponseEntity<>(catalogo, OK);
     }
 
     /**
@@ -84,7 +89,6 @@ public class TipoPrendaResource {
      * @param dependencias Indica si deben recuperarse las dependecias del catálogo.
      *
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link TipoPrenda}
-     *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
      *         ResponseEntity con status 406 (Not Acceptable) si {@code dependencias=true} ya que esté catálogo
      *         no contiene dependencias.
      */
@@ -114,13 +118,13 @@ public class TipoPrendaResource {
             method = GET,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Catalogo> getOne(@PathVariable String abreviatura) {
-        Catalogo catalogo = tipoPrendaService.getOne(abreviatura);
+        TipoPrenda result = tipoPrendaService.getOne(abreviatura);
 
-        if (ObjectUtils.isEmpty(catalogo)) {
-            LOGGER.warn("El elemento del catálogo no existe.");
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El elemento del catálogo Tipo Prenda con abreviatura = {}, no existe.", abreviatura);
             return new ResponseEntity<>(NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(catalogo, OK);
         }
+
+        return new ResponseEntity<>(CatalogoFactory.build(result), OK);
     }
 }
