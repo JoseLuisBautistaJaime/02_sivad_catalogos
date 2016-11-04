@@ -38,6 +38,7 @@ public class QuilatajeOroServiceTest {
 
     private static final String CAT_ABREVIATURA_AGREGAR = "24_Q";
     private static final String CAT_ABREVIATURA_DEFAULT = "14_Q";
+    private static final String CAT_ABREVIATURA_DEFAULT_MODIFICAR = "12_Q";
     private static final String CAT_ABREVIATURA_MODIFICAR = "18_Q";
     private static final String CAT_ABREVIATURA_NO_EXISTE = "30_Q";
 
@@ -215,6 +216,32 @@ public class QuilatajeOroServiceTest {
     }
 
     /**
+     * Utilizado para actualizar un elemento del catálogo de forma exitosa (abreviatura existente).
+     */
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-quilataje-oro-h2.sql")
+    public void testModificarElementoCatalogo_4() {
+        LOGGER.info(">> testModificarElementoCatalogo_4");
+
+        try {
+            QuilatajeOro quilatajeOroMod = crearQuilatajeOro(CAT_ABREVIATURA_DEFAULT_MODIFICAR, null);
+            quilatajeOroService.update(CAT_ABREVIATURA_DEFAULT, quilatajeOroMod);
+            List<QuilatajeOro> result = quilatajeOroService.getAll();
+            for (int x = 0; x < result.size(); x++) {
+                LOGGER.debug("Abreviatura: [{}]", result.get(x).getAbreviatura());
+                LOGGER.debug("Etiqueta: [{}]", result.get(x).getEtiqueta());
+            }
+            fail();
+        } catch (DataIntegrityViolationException e) {
+            assertNotNull(e);
+        } catch (Exception e) {
+            LOGGER.error("Ocurrio una excepcion inesperada realizar la operacion. {}", e.getMessage());
+            fail();
+        }
+    }
+
+    /**
      * Utilizado para obtener un elemento del catálogo de forma exitosa.
      */
     @Test
@@ -272,8 +299,8 @@ public class QuilatajeOroServiceTest {
         assertTrue(result.size() > 0);
 
         for (int x = 0; x < result.size(); x++) {
-            LOGGER.debug(">>>>>>>>>>>>>>> ABR: [{}]", result.get(x).getAbreviatura());
-            LOGGER.debug(">>>>>>>>>>>>>>> ETI: [{}]", result.get(x).getEtiqueta());
+            LOGGER.debug("Abreviatura: [{}]", result.get(x).getAbreviatura());
+            LOGGER.debug("Etiqueta: [{}]", result.get(x).getEtiqueta());
         }
     }
 

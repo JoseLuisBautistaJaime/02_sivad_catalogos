@@ -38,6 +38,7 @@ public class ColorOroServiceTest {
 
     private static final String CAT_ABREVIATURA_AGREGAR = "VD";
     private static final String CAT_ABREVIATURA_DEFAULT = "BL";
+    private static final String CAT_ABREVIATURA_DEFAULT_MODIFICAR = "MO";
     private static final String CAT_ABREVIATURA_MODIFICAR = "AZ";
     private static final String CAT_ABREVIATURA_NO_EXISTE = "XX";
 
@@ -215,6 +216,32 @@ public class ColorOroServiceTest {
     }
 
     /**
+     * Utilizado para actualizar un elemento del catálogo de forma exitosa (abreviatura existente).
+     */
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-color-oro-h2.sql")
+    public void testModificarElementoCatalogo_4() {
+        LOGGER.info(">> testModificarElementoCatalogo_4");
+
+        try {
+            ColorOro colorOroMod = crearColorOro(CAT_ABREVIATURA_DEFAULT_MODIFICAR, null);
+            colorOroService.update(CAT_ABREVIATURA_DEFAULT, colorOroMod);
+            List<ColorOro> result = colorOroService.getAll();
+            for (int x = 0; x < result.size(); x++) {
+                LOGGER.debug("Abreviatura: [{}]", result.get(x).getAbreviatura());
+                LOGGER.debug("Etiqueta: [{}]", result.get(x).getEtiqueta());
+            }
+            fail();
+        } catch (DataIntegrityViolationException e) {
+            assertNotNull(e);
+        } catch (Exception e) {
+            LOGGER.error("Ocurrio una excepcion inesperada realizar la operacion. {}", e.getMessage());
+            fail();
+        }
+    }
+
+    /**
      * Utilizado para obtener un elemento del catálogo de forma exitosa.
      */
     @Test
@@ -272,8 +299,8 @@ public class ColorOroServiceTest {
         assertTrue(result.size() > 0);
 
         for (int x = 0; x < result.size(); x++) {
-            LOGGER.debug(">>>>>>>>>>>>>>> ABR: [{}]", result.get(x).getAbreviatura());
-            LOGGER.debug(">>>>>>>>>>>>>>> ETI: [{}]", result.get(x).getEtiqueta());
+            LOGGER.debug("Abreviatura: [{}]", result.get(x).getAbreviatura());
+            LOGGER.debug("Etiqueta: [{}]", result.get(x).getEtiqueta());
         }
     }
 
