@@ -76,7 +76,7 @@ public class QuilatajeOroService {
         } catch (DataIntegrityViolationException e) {
             String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo QuilatajeOro ya " +
                     "contiene un elemento con la abreviatura: [" + quilatajeOro.getAbreviatura() + "].";
-            LOGGER.warn(mensaje + " Excepcion: [{}]", e.getMessage());
+            LOGGER.warn(mensaje + " Excepcion: [{}]", e);
             throw e;
         }
     }
@@ -157,7 +157,7 @@ public class QuilatajeOroService {
         } catch (DataIntegrityViolationException e) {
             String mensaje = "No fue posible realizar la actualizacion de la entidad. El catalogo QuilatajeOro ya " +
                     "contiene un elemento con la abreviatura: [" + quilatajeOro.getAbreviatura() + "].";
-            LOGGER.warn(mensaje + " Excepcion: [{}]", e.getMessage());
+            LOGGER.warn(mensaje + " Excepcion: [{}]", e);
             throw e;
         }
     }

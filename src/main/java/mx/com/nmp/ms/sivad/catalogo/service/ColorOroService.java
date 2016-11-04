@@ -76,7 +76,7 @@ public class ColorOroService {
         } catch (DataIntegrityViolationException e) {
             String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo ColorOro ya " +
                     "contiene un elemento con la abreviatura: [" + colorOro.getAbreviatura() + "].";
-            LOGGER.warn(mensaje + " Excepcion: [{}]", e.getMessage());
+            LOGGER.warn(mensaje + " Excepcion: [{}]", e);
             throw e;
         }
     }
@@ -157,7 +157,7 @@ public class ColorOroService {
         } catch (DataIntegrityViolationException e) {
             String mensaje = "No fue posible realizar la actualizacion de la entidad. El catalogo ColorOro ya " +
                     "contiene un elemento con la abreviatura: [" + colorOro.getAbreviatura() + "].";
-            LOGGER.warn(mensaje + " Excepcion: [{}]", e.getMessage());
+            LOGGER.warn(mensaje + " Excepcion: [{}]", e);
             throw e;
         }
     }
