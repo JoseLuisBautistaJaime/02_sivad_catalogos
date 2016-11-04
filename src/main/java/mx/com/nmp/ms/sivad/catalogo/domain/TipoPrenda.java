@@ -53,7 +53,7 @@ public class TipoPrenda implements CatalogoConfigurable {
      */
     @NotNull
     @JournalData
-    @Size(min = 1)
+    @Size(min = 1, max = 20)
     @Column(name = "abreviatura", length = 20, nullable = false, unique = true)
     private String abreviatura;
 
@@ -62,7 +62,7 @@ public class TipoPrenda implements CatalogoConfigurable {
      */
     @NotNull
     @JournalData
-    @Size(min = 1)
+    @Size(min = 1, max = 150)
     @Column(name = "etiqueta", length = 150, nullable = false)
     private String etiqueta;
 
@@ -94,6 +94,7 @@ public class TipoPrenda implements CatalogoConfigurable {
      *
      * @param idElemento Nuevo valor de idElemento.
      */
+    @SuppressWarnings("unused")
     public void setIdElemento(Long idElemento) {
         this.idElemento = idElemento;
     }

@@ -153,9 +153,9 @@ public class TipoPrendaService {
         TipoPrenda tp = tipoPrendaRepository.findByAbreviatura(abreviatura);
 
         if (ObjectUtils.isEmpty(tp)) {
-            String mensage = String.format("El elemento con TipoPrenda.abreviatura = %s, no existe.", abreviatura);
-            LOGGER.warn(mensage);
-            throw new CatalogoNotFoundException(mensage, TipoPrenda.class);
+            String mensaje = String.format("El elemento con TipoPrenda.abreviatura = %s, no existe.", abreviatura);
+            LOGGER.warn(mensaje);
+            throw new CatalogoNotFoundException(mensaje, TipoPrenda.class);
         }
 
         return tp;

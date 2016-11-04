@@ -73,10 +73,10 @@ public class ConfiguracionCatalogoService {
         ConfiguracionCatalogo configuracion = configuracionCatalogoRepository.findByDominioAndTipo(dominio, tipo);
 
         if (ObjectUtils.isEmpty(configuracion)) {
-            String mensage = String.format("ConfiguracionCatalogo[dominio = %s, tipo = %s], no existe.",
+            String mensaje = String.format("ConfiguracionCatalogo[dominio = %s, tipo = %s], no existe.",
                     dominio, tipo);
-            LOGGER.warn(mensage);
-            throw new CatalogoNotFoundException(mensage, ConfiguracionCatalogo.class);
+            LOGGER.warn(mensaje);
+            throw new CatalogoNotFoundException(mensaje, ConfiguracionCatalogo.class);
         }
 
         configuracion.setUltimaActualizacion(DateTime.now());

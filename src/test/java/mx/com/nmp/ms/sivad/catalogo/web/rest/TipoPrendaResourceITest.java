@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -41,8 +42,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CatalogosApplication.class)
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class TipoPrendaResourceITest {
+    private static final String DOMINIO_PATH = "$.dominio";
+    private static final String TIPO_PATH = "$.tipo";
+
+    private static final String ABREVIATURA_PATH = "$.listaValores[*].abreviatura";
+    private static final String ETIQUETA_PATH = "$.listaValores[*].etiqueta";
+
+    private static final String ABREVIATURA_ANILLO = "ANILLO";
+    private static final String ETIQUETA_ANILLO = "Anillo";
+
+    private static final String ABREVIATURA_PULSERA = "PULSERA";
+    private static final String ETIQUETA_PULSERA = "Pulsera";
+
     @Inject
-    TipoPrendaService tipoPrendaService;
+    private TipoPrendaService tipoPrendaService;
 
     private MockMvc test;
 
@@ -55,6 +68,11 @@ public class TipoPrendaResourceITest {
         test = MockMvcBuilders.standaloneSetup(tpr).build();
     }
 
+    /**
+     * Prueba recuperar elementos con catálogo vacío
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
     public void getAllSinDatosTest() throws Exception {
         test.perform(get("/catalogos/diamantes/alhajas/tipos"))
@@ -62,6 +80,11 @@ public class TipoPrendaResourceITest {
             .andExpect(content().bytes(new byte[0]));
     }
 
+    /**
+     * Prueba recuperar elementos
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_tipo_prenda-h2.sql")
@@ -71,14 +94,19 @@ public class TipoPrendaResourceITest {
         test.perform(get("/catalogos/diamantes/alhajas/tipos"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(tpe.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(tpe.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("ANILLO"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("Anillo"))
-                .andExpect(jsonPath("$.listaValores[1].abreviatura").value("PULSERA"))
-                .andExpect(jsonPath("$.listaValores[1].etiqueta").value("Pulsera"));
+                .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
+                .andExpect(jsonPath(TIPO_PATH).value(tpe.getTipo()))
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_ANILLO)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_ANILLO)))
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_PULSERA)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_PULSERA)));
     }
 
+    /**
+     * Prueba recuperar elementos con parametro {@code dependencias=false} con catálogo vacío
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
     public void getAllSinDatosDependenciasFalseTest() throws Exception {
         test.perform(get("/catalogos/diamantes/alhajas/tipos?dependencias=false"))
@@ -86,6 +114,11 @@ public class TipoPrendaResourceITest {
                 .andExpect(content().bytes(new byte[0]));
     }
 
+    /**
+     * Prueba recuperar elementos con parametro {@code dependencias=true} con catálogo vacío
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
     public void getAllSinDatosDependenciasTrueTest() throws Exception {
         test.perform(get("/catalogos/diamantes/alhajas/tipos?dependencias=true"))
@@ -93,30 +126,59 @@ public class TipoPrendaResourceITest {
                 .andExpect(content().bytes(new byte[0]));
     }
 
+    /**
+     * Prueba recuperar elementos con parametro {@code dependencias=true} con catálogo vacío
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
-    public void getAllSinDatosDependenciasSinValorTest() throws Exception {
+    @Transactional
+    @Sql("/bd/test-data-diamante_tipo_prenda-h2.sql")
+    public void getAllDependenciasTrueTest() throws Exception {
+        test.perform(get("/catalogos/diamantes/alhajas/tipos?dependencias=true"))
+                .andExpect(status().isNotAcceptable())
+                .andExpect(content().bytes(new byte[0]));
+    }
+
+    /**
+     * * Prueba recuperar elementos con parametro {@code dependencias=} sin valor
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
+    @Test
+    public void getAllDependenciasSinValorTest() throws Exception {
         test.perform(get("/catalogos/diamantes/alhajas/tipos?dependencias="))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().bytes(new byte[0]));
     }
 
+    /**
+     * Prueba recuperar elementos con parametro {@code dependencias=false}
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_tipo_prenda-h2.sql")
-    public void getAllDependenciasFalseTestTest() throws Exception {
+    public void getAllDependenciasFalseTest() throws Exception {
         ConfiguracionCatalogoEnum tpe = ConfiguracionCatalogoEnum.TIPO_PRENDA;
 
-        test.perform(get("/catalogos/diamantes/alhajas/tipos"))
+        test.perform(get("/catalogos/diamantes/alhajas/tipos?dependencias=false"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(tpe.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(tpe.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("ANILLO"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("Anillo"))
-                .andExpect(jsonPath("$.listaValores[1].abreviatura").value("PULSERA"))
-                .andExpect(jsonPath("$.listaValores[1].etiqueta").value("Pulsera"));
+                .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
+                .andExpect(jsonPath(TIPO_PATH).value(tpe.getTipo()))
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_ANILLO)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_ANILLO)))
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_PULSERA)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_PULSERA)));
     }
 
+    /**
+     * Prueba recuperar un elemento con catálogo vacío
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
     public void getOneSinDatosTest() throws Exception {
         test.perform(get("/catalogos/diamantes/alhajas/tipos/ANILLO"))
@@ -124,13 +186,37 @@ public class TipoPrendaResourceITest {
                 .andExpect(content().bytes(new byte[0]));
     }
 
+    /**
+     * Prueba recuperar un elemento no valido con catálogo vacío
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
+    public void getOneSinDatosNoElementoTest() throws Exception {
+        test.perform(get("/catalogos/diamantes/alhajas/tipos/xXx"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().bytes(new byte[0]));
+    }
+
+    /**
+     * Prueba recuperar un elemento no valido
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-diamante_tipo_prenda-h2.sql")
     public void getOneNoElementoTest() throws Exception {
         test.perform(get("/catalogos/diamantes/alhajas/tipos/xXx"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().bytes(new byte[0]));
     }
 
+    /**
+     * Prueba recuperar un elemento
+     *
+     * @throws Exception Cuando ocurre una error en la prueba.
+     */
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_tipo_prenda-h2.sql")
@@ -140,9 +226,9 @@ public class TipoPrendaResourceITest {
         test.perform(get("/catalogos/diamantes/alhajas/tipos/ANILLO"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(tpe.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(tpe.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("ANILLO"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("Anillo"));
+                .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
+                .andExpect(jsonPath(TIPO_PATH).value(tpe.getTipo()))
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_ANILLO)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_ANILLO)));
     }
 }

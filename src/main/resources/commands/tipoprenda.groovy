@@ -37,7 +37,7 @@ class tipoprenda {
         def catalogo = getServicio(context).getAll()
 
         if (catalogo) {
-            mostrarTablaResultados(catalogo.elementos)
+            mostrarTablaResultados(catalogo)
         } else {
             "El catálogo no contiene elementos."
         }
@@ -51,7 +51,7 @@ class tipoprenda {
         def catalogo = getServicio(context).getOne(abreviatura)
 
         if (catalogo) {
-            mostrarTablaResultados(catalogo.elementos)
+            mostrarTablaResultados(catalogo)
         } else {
             "El elemento del catálogo con Abreviatura ${abreviatura} no existe."
         }
