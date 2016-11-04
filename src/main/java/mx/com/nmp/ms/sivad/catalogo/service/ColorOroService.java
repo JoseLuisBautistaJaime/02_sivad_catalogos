@@ -153,7 +153,7 @@ public class ColorOroService {
         colorOroOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
 
         try {
-            return colorOroRepository.save(colorOroOriginal);
+            return colorOroRepository.saveAndFlush(colorOroOriginal);
         } catch (DataIntegrityViolationException e) {
             String mensaje = "No fue posible realizar la actualizacion de la entidad. El catalogo ColorOro ya " +
                     "contiene un elemento con la abreviatura: [" + colorOro.getAbreviatura() + "].";

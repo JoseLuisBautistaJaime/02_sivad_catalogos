@@ -153,7 +153,7 @@ public class QuilatajeOroService {
         quilatajeOroOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
 
         try {
-            return quilatajeOroRepository.save(quilatajeOroOriginal);
+            return quilatajeOroRepository.saveAndFlush(quilatajeOroOriginal);
         } catch (DataIntegrityViolationException e) {
             String mensaje = "No fue posible realizar la actualizacion de la entidad. El catalogo QuilatajeOro ya " +
                     "contiene un elemento con la abreviatura: [" + quilatajeOro.getAbreviatura() + "].";

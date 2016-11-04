@@ -227,11 +227,6 @@ public class ColorOroServiceTest {
         try {
             ColorOro colorOroMod = crearColorOro(CAT_ABREVIATURA_DEFAULT_MODIFICAR, null);
             colorOroService.update(CAT_ABREVIATURA_DEFAULT, colorOroMod);
-            List<ColorOro> result = colorOroService.getAll();
-            for (int x = 0; x < result.size(); x++) {
-                LOGGER.debug("Abreviatura: [{}]", result.get(x).getAbreviatura());
-                LOGGER.debug("Etiqueta: [{}]", result.get(x).getEtiqueta());
-            }
             fail();
         } catch (DataIntegrityViolationException e) {
             assertNotNull(e);

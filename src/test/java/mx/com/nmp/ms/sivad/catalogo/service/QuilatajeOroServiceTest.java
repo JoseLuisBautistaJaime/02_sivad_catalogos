@@ -227,11 +227,6 @@ public class QuilatajeOroServiceTest {
         try {
             QuilatajeOro quilatajeOroMod = crearQuilatajeOro(CAT_ABREVIATURA_DEFAULT_MODIFICAR, null);
             quilatajeOroService.update(CAT_ABREVIATURA_DEFAULT, quilatajeOroMod);
-            List<QuilatajeOro> result = quilatajeOroService.getAll();
-            for (int x = 0; x < result.size(); x++) {
-                LOGGER.debug("Abreviatura: [{}]", result.get(x).getAbreviatura());
-                LOGGER.debug("Etiqueta: [{}]", result.get(x).getEtiqueta());
-            }
             fail();
         } catch (DataIntegrityViolationException e) {
             assertNotNull(e);
