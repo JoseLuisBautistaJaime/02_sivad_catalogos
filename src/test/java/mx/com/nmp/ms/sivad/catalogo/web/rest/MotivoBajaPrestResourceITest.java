@@ -32,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CatalogosApplication.class)
-@WebAppConfiguration
 public class MotivoBajaPrestResourceITest {
 
     private static final String DOMINIO_PRUEBA = "Alhajas";
