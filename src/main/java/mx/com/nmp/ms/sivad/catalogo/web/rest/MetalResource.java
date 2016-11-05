@@ -65,6 +65,7 @@ public class MetalResource {
     /**
      * GET  /catalogos : obtiene un elemento del CalidadLey correspondiente con la abreviatura.
      *
+     * @param abreviatura abreviatura del elemento a buscar.
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
@@ -82,7 +83,7 @@ public class MetalResource {
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {
             LOGGER.warn("<< El elemento no existe.");
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(catalogo, headers, HttpStatus.OK);
     }

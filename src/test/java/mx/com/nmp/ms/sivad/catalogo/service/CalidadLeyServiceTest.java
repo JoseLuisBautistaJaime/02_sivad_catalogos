@@ -54,6 +54,7 @@ public class CalidadLeyServiceTest {
      */
     @Before
     public void setUp() {
+
         ConfiguracionCatalogo configuracionCatalogoPrueba = new ConfiguracionCatalogo();
         configuracionCatalogoPrueba.setTipo(TIPO_PRUEBA);
         configuracionCatalogoPrueba.setDescripcion(DESCRIPCION_PRUEBA);
@@ -135,4 +136,16 @@ public class CalidadLeyServiceTest {
 
     }
 
+    @Test
+    @Transactional
+    public void testFind() {
+        LOGGER.info(">> testFind");
+
+
+        CalidadLey calidadLeyAdd = calidadLeyService.findbyAbreviatura("BJ");
+
+        assertNull(calidadLeyAdd);
+        //assertEquals(ETIQUETA_PRUEBA, calidadLeyAdd.getEtiqueta());
+        //assertTrue(ULTIMA_ACTUALIZACION_PRUEBA.toLocalDateTime().isBefore(calidadLeyAdd.getConfiguracion().getUltimaActualizacion().toLocalDateTime()));
+    }
 }

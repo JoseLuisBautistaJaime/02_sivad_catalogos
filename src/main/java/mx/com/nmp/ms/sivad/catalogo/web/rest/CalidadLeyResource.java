@@ -56,17 +56,18 @@ public class CalidadLeyResource {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {
-            LOGGER.warn("El catalogo no contiene valores.");
+            LOGGER.warn("<< El catalogo no contiene valores.");
             return new ResponseEntity<>(headers, HttpStatus.OK);
         }
         return new ResponseEntity<>(catalogo, headers, HttpStatus.OK);
     }
 
     /**
-     * GET  /catalogos : obtiene un elemento del CalidadLey correspondiente con la abreviatura.
+     * GET  /catalogos : obtiene los elementos del catalogo CalidadLey.
      *
+     * @param abreviatura abreviatura del elemento a buscar.
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
-     * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
+     * @throws URISyntaxException si hay un error al generar en la invocación de headers.
      */
     @RequestMapping(value = "/diamantes/calidades_ley/{abreviatura}",
             method = RequestMethod.GET,
@@ -82,7 +83,7 @@ public class CalidadLeyResource {
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {
             LOGGER.warn("<< El elemento no existe.");
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(catalogo, headers, HttpStatus.OK);
     }

@@ -45,6 +45,7 @@ public class CondicionPrendaResource {
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
+
     @RequestMapping(value = "/diamantes/condiciones",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,7 +57,7 @@ public class CondicionPrendaResource {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {
-            LOGGER.warn("El catalogo no contiene elementos");
+            LOGGER.warn("<< El catalogo no contiene elementos");
             return new ResponseEntity<>(headers, HttpStatus.OK);
         }
         return new ResponseEntity<>(catalogo, headers, HttpStatus.OK);
@@ -65,6 +66,7 @@ public class CondicionPrendaResource {
     /**
      * GET  /catalogos : obtiene un elemento del CalidadLey correspondiente con la abreviatura.
      *
+     * @param abreviatura abreviatura del elemento a buscar.
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
@@ -82,7 +84,7 @@ public class CondicionPrendaResource {
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {
             LOGGER.warn("El elemento no existe.");
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(catalogo, headers, HttpStatus.OK);
     }
