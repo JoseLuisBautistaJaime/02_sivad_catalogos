@@ -5,6 +5,7 @@
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import mx.com.nmp.ms.sivad.catalogo.domain.CertificadoDiamantes;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
@@ -14,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Controlador REST utilizado para obtener la información del catálogo Claridad Diamante.
@@ -48,7 +51,13 @@ public class CertificadoDiamantesResource {
     @Timed
     public ResponseEntity<Catalogo> getAll() {
         LOGGER.info(">> getAll");
-        return new ResponseEntity<>(CatalogoFactory.build(certificadoDiamantesService.getAll()), HttpStatus.OK);
+        List<CertificadoDiamantes> result = certificadoDiamantesService.getAll();
+
+            if(ObjectUtils.isEmpty(result)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(CatalogoFactory.build(certificadoDiamantesService.getAll()), HttpStatus.OK);
+            }
     }
 
     /**
@@ -64,7 +73,7 @@ public class CertificadoDiamantesResource {
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = "dependencias")
     @Timed
-    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") Boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") boolean dependencias) {
         if (dependencias) {
             LOGGER.warn("El catalogo CertificadoDiamantes no contiene dependencias.");
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
