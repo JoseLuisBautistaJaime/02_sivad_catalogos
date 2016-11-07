@@ -60,7 +60,7 @@ public abstract class BaseColor implements CatalogoConfigurable {
      */
     @NotNull
     @JournalData
-    @Size(min = 1, max = 150)
+    @Size(max = 150)
     @Column(name = "etiqueta", length = 150, nullable = false)
     private String etiqueta;
 

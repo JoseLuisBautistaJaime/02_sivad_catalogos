@@ -15,7 +15,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DataIntegrityViolationException
 
-@Usage("Agrupa la funcionalidad en común para los catálogos familias de color.")
+/**
+ * Agrupa la funcionalidad en común para los catálogos familias de color.
+ *
+ * @param <T> Tipo de catálogo soportados debe ser un subtipo de {@link BaseColor}
+ */
 abstract class basefamiliascolor<T extends BaseColor> {
     Logger LOGGER = LoggerFactory.getLogger(basefamiliascolor.class)
 
@@ -25,7 +29,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
         def catalogo = getServicio(context).getAllWithoutDependencies()
 
         if (catalogo) {
-            mostrarTablaResultados(catalogo.elementos)
+            mostrarTablaResultados(catalogo)
         } else {
             "El catálogo no contiene elementos."
         }
@@ -39,7 +43,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
         def catalogo = getServicio(context).getOne(abreviatura)
 
         if (catalogo) {
-            mostrarTablaResultados(catalogo.elementos)
+            mostrarTablaResultados(catalogo)
         } else {
             "El elemento del catálogo con Abreviatura ${abreviatura} no existe."
         }
@@ -54,13 +58,13 @@ abstract class basefamiliascolor<T extends BaseColor> {
 
         try {
             def elemento = getServicio(context).save(tp)
-            out.println("El elemeto fue agregado correctamente al catálogo.")
+            out.println("El elemento fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             """Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta}).
-               No se cumplió con la restricción ${getGenericClass().simpleName}.abreviatura única.
-               La abreviatura ${abreviatura} ya existe."""
+No se cumplió con la restricción ${getGenericClass().simpleName}.abreviatura única.
+La abreviatura ${abreviatura} ya existe."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             "Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta})."
@@ -78,7 +82,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
 
         try {
             def elemento = getServicio(context).update(tp, abrAnterior)
-            out.println("El elemeto fue modificado correctamente.")
+            out.println("El elemento fue modificado correctamente.")
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
@@ -86,8 +90,8 @@ abstract class basefamiliascolor<T extends BaseColor> {
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
             """Ocurrió un error al actualizar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta}).
-               No se cumplió con la restricción ${getGenericClass().simpleName}.abreviatura única.
-               La abreviatura ${abreviatura} ya existe."""
+No se cumplió con la restricción ${getGenericClass().simpleName}.abreviatura única.
+La abreviatura ${abreviatura} ya existe."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
             "Ocurrió un error al actualizar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta})."
@@ -101,7 +105,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
                  @Required @Argument String abreviatura) {
         try {
             def elemento = getServicio(context).delete(abreviatura)
-            out.println("El elemeto fue eliminado correctamente.")
+            out.println("El elemento fue eliminado correctamente.")
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
@@ -109,14 +113,134 @@ abstract class basefamiliascolor<T extends BaseColor> {
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
             """Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}
-               Violación de integridad referencial.
-               Existen referencias a éste elemento del catálogo."""
+Violación de integridad referencial.
+Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()}."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
             "Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}"
         }
     }
 
+    @Usage("Muestra graficamente la relación del elemento con sus padres. Relación Hijo Padre")
+    @Command
+    def relacion(InvocationContext context,
+                 @Usage("Abreviatura del elemento a recuperar.")
+                 @Required @Argument String abreviatura) {
+        def elemento = getServicio(context).getOne(abreviatura)
+
+        if (elemento) {
+            def arbol = new UIBuilder()
+            mostrarArbolPadres(arbol, elemento)
+            arbol
+        } else {
+            "El elemento del catálogo con Abreviatura ${abreviatura} no existe."
+        }
+    }
+
+    /**
+     * Permite agregar padres a un elemento del catálogo
+     *
+     * @param context Contexto.
+     * @param elemento Abreviatura del elemento al cual se le agregaran los padres.
+     * @param padres Lista con las abreviaturas de los elementos que serán padres.
+     *
+     * @return Mensaje con el estado de la operación
+     */
+    protected void agregarPadres(InvocationContext context, String elemento, List<String> padres) {
+        try {
+            def result = getServicio(context).addPadres(elemento, padres);
+            List<String> pAgregados = [];
+
+            result.padres.each { p ->
+                if ((i = padres.indexOf(p.abreviatura)) >= 0) {
+                    pAgregados.add(padres.get(i))
+                }
+            }
+
+            padres.removeAll(pAgregados)
+
+            if (padres) {
+                out.println("No se encontraron los padres con abreviatura: ${padres}", red)
+            }
+
+            out.println("""Asignacion ejecutada correctamente.
+Se agregaron los padres: ${pAgregados} al elemento con abreviatura: ${elemento}.""");
+        } catch (DataIntegrityViolationException e) {
+            LOGGER.error("Ocurrió un error al agregar el padre al elemento", e)
+            String msj = ""
+            padres.each {p ->
+                msj += "${getGenericClass().simpleName}(${p}, ${elemento})\n"
+            }
+            out.println("""Ocurrió un error al agregar los padres: ${padres} al elemento con abreviatura: ${elemento}
+Violación de integridad referencial, la clave primaria ya existe
+Alguna clave primaria ya existe.
+${msj}""", red);
+        } catch (CatalogoNotFoundException e) {
+            String msj
+            if (getGenericClass().isAssignableFrom(e.entidad)) {
+                msj = "No se encontro el elemento hijo con abreviatura: ${elemento}"
+            } else {
+                msj = "No se encontraron los padres con abreviatura: ${padres}"
+            }
+
+            out.println(msj, red)
+        }
+    }
+
+    /**
+     * Permite desasignar un padre al elemento del catálogo.
+     *
+     * @param context Contexto.
+     * @param elemento Abreviatura del elemento al cual se le eliminara el padre.
+     * @param padre Abreviaturas del elemento padre.
+     *
+     * @return Mensaje con el estado de la operación
+     */
+    protected void eliminarPadre(InvocationContext context, String elemento, String padre) {
+        try {
+            getServicio(context).removePadre(elemento, padre)
+            out.println("""Desasignacion ejecutada correctamente.
+Se desasigno el padre: ${padre} del elemento con abreviatura: ${elemento}.""");
+        } catch (CatalogoNotFoundException e) {
+            String msj
+            if (getGenericClass().isAssignableFrom(e.entidad)) {
+                msj = "No se encontro el elemento hijo con abreviatura: ${elemento}"
+            } else {
+                msj = "No se encontro el padre con abreviatura: ${padre}"
+            }
+
+            out.println(msj, red)
+        } catch (IndexOutOfBoundsException e) {
+            out.println("El elemento con abreviatura ${elemento} no tiene relación con el padre ${padre}", red)
+        }
+    }
+
+    /**
+     * Recupera el tipo ParameterizedType.
+     *
+     * @return Tipo ParameterizedType
+     */
+    @SuppressWarnings("GroovyAssignabilityCheck")
+    protected Class<T> getGenericClass() {
+        (Class<T>) getClass().getGenericSuperclass().getActualTypeArguments()[0]
+    }
+
+    /**
+     * Regresa el servicio a utilizar segun el valor el contexto
+     *
+     * @return Servicio a utilizar.
+     */
+    protected abstract BaseFamiliasColorService getServicio(InvocationContext context)
+
+    protected abstract String buscarReferencias();
+
+    /**
+     * Genera la tabla para mostrar los resultados.
+     *
+     * @param elementos Elementos a incluir en la tabla
+     *
+     * @return Tabla a mostrar con los elementos
+     */
     private def mostrarTablaResultados(elementos) {
         new UIBuilder().table(separator: dashed, overflow: Overflow.HIDDEN, rightCellPadding: 1) {
             header(decoration: bold, foreground: black, background: white) {
@@ -133,9 +257,21 @@ abstract class basefamiliascolor<T extends BaseColor> {
         }
     }
 
-    protected abstract BaseFamiliasColorService getServicio(InvocationContext context)
-
-    private Class<T> getGenericClass() {
-        (Class<T>) getClass().getGenericSuperclass().getActualTypeArguments()[0]
+    /**
+     * Genera el arbol para mostrar las relaciones de un elemento.
+     *
+     * @param builder Objeto que contendra la información a mostrar.
+     * @param elemento Elemento a representar.
+     *
+     * @return Arbol con las relaciones.
+     */
+    protected void mostrarArbolPadres(UIBuilder builder, BaseColor elemento) {
+        builder.node("${elemento.class.simpleName}(${elemento.abreviatura})") {
+            if (elemento.hasProperty("padres") && elemento.padres) {
+                elemento.padres.each { p ->
+                    mostrarArbolPadres(builder, p)
+                }
+            }
+        }
     }
 }

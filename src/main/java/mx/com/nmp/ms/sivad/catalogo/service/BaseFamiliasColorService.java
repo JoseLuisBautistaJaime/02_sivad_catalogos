@@ -7,16 +7,13 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.service;
 
-import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.BaseColor;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
-import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
-import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.BaseFamiliasColorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +73,7 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
         T cc = obtenerElemento(abreviatura);
         actualizarCatalogo(cc, elemento);
 
-        return save(cc);
+        return getRepository().saveAndFlush(cc);
     }
 
     /**
@@ -99,41 +96,21 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
     /**
      * Permite recuperar todos los elementos del catálogo. Se incluyen dependencias.
      *
-     * @return Objeto {@link Catalogo} con todos los elementos.
+     * @return Objeto {@link T} con todos los elementos.
      */
-    @Timed
     @Transactional(readOnly = true)
-    public Catalogo getAll() {
-        List<T> result = getRepository().findAll();
-        Catalogo catalogo = null;
-
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catálogo {} no contiene elementos.", getGenericClass().getSimpleName());
-        } else {
-            catalogo = CatalogoFactory.build(result);
-        }
-
-        return catalogo;
+    public List<T> getAll() {
+        return getRepository().findAll();
     }
 
     /**
      * Permite recuperar todos los elementos del catálogo, sin las dependencias.
      *
-     * @return Objeto {@link Catalogo} con todos los elementos.
+     * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
      */
-    @Timed
     @Transactional(readOnly = true)
-    public Catalogo getAllWithoutDependencies() {
-        List<FCWithoutDependenciesProjection> result = getRepository().findAllWithoutDependenciesBy();
-        Catalogo catalogo = null;
-
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El catálogo {} no contiene elementos.", getGenericClass().getSimpleName());
-        } else {
-            catalogo = CatalogoFactory.build(result.get(0).getConfiguracion(), result);
-        }
-
-        return catalogo;
+    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies() {
+        return getRepository().findAllWithoutDependenciesBy();
     }
 
     /**
@@ -141,22 +118,11 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @param abreviatura Abreviatura del elemento a recuperar.
      *
-     * @return Objeto {@link Catalogo} con el elemento especificado.
+     * @return Objeto {@link T} con el elemento especificado.
      */
-    @Timed
     @Transactional(readOnly = true)
-    public Catalogo getOne(@HasText String abreviatura) {
-        T result = getRepository().findByAbreviatura(abreviatura);
-        Catalogo catalogo = null;
-
-        if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("El elemento con {}.abreviatura = {}, no existe.",
-                    abreviatura, getGenericClass().getSimpleName());
-        } else {
-            catalogo = CatalogoFactory.build(result);
-        }
-
-        return catalogo;
+    public T getOne(@HasText String abreviatura) {
+        return getRepository().findByAbreviatura(abreviatura);
     }
 
     /**
@@ -177,12 +143,11 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * Verifica si el elemento recuperado es valido
      *
      * @param obj Elemento a validar.
-     * @param abreviaturaPadre Abreviatura del elemento.
      * @param clazz Class del elemento.
      */
-    protected static void validarElmento(Object obj, String abreviaturaPadre,  Class<?> clazz) {
+    protected static void validarPadres(Object obj, Class<?> clazz) {
         if (ObjectUtils.isEmpty(obj)) {
-            String msj = String.format("No se encontro el elemento con abreviatura: %s", abreviaturaPadre);
+            String msj = "No se encontro la lista de padres.";
             LOGGER.warn(msj);
             throw new CatalogoNotFoundException(msj, clazz);
         }
@@ -193,7 +158,7 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @return Regresa el objeto {@link ConfiguracionCatalogo} modificado.
      */
-    private ConfiguracionCatalogo actualizarConfiguracion() {
+    protected ConfiguracionCatalogo actualizarConfiguracion() {
         ConfiguracionCatalogoEnum config = getConfiguracionCatalogo();
 
         return configuracionCatalogoService.getAndUpdateOperationDate(config.getDominioUnwrap(), config.getTipo());
@@ -207,14 +172,14 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a recuperar.
      */
-    private T obtenerElemento(String abreviatura) {
+    protected T obtenerElemento(String abreviatura) {
         T cc = getRepository().findByAbreviatura(abreviatura);
 
         if (ObjectUtils.isEmpty(cc)) {
-            String mensage = String.format("El elemento con %s.abreviatura = %s, no existe.",
+            String mensaje = String.format("El elemento con %s.abreviatura = %s, no existe.",
                     getGenericClass().getSimpleName(), abreviatura);
-            LOGGER.warn(mensage);
-            throw new CatalogoNotFoundException(mensage, getGenericClass());
+            LOGGER.warn(mensaje);
+            throw new CatalogoNotFoundException(mensaje, getGenericClass());
         }
 
         return cc;

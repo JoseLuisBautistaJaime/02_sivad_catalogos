@@ -7,6 +7,7 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
+import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.domain.EscalaColor;
 import mx.com.nmp.ms.sivad.catalogo.domain.GrupoColor;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
@@ -56,9 +57,10 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link GrupoColor}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
      */
+    @Timed
+    @Override
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
-    @Override
     public ResponseEntity<Catalogo> getAll() {
         return super.getAllWithoutDependencies();
     }
@@ -73,6 +75,7 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link GrupoColor}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
      */
+    @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
             params = "dependencias")

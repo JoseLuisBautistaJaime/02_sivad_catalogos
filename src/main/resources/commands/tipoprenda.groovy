@@ -70,8 +70,8 @@ class tipoprenda {
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             """Ocurrió un error al guardar el elemento TipoPrenda(${abreviatura}, ${etiqueta}).
-               No se cumplió con la restricción TipoPrenda.abreviatura única.
-               La abreviatura ${abreviatura} ya existe."""
+No se cumplió con la restricción TipoPrenda.abreviatura única.
+La abreviatura ${abreviatura} ya existe."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             "Ocurrió un error al guardar el elemento TipoPrenda(${abreviatura}, ${etiqueta})."
@@ -96,8 +96,8 @@ class tipoprenda {
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
             """Ocurrió un error al actualizar el elemento TipoPrenda(${abreviatura}, ${etiqueta}).
-               No se cumplió con la restricción TipoPrenda.abreviatura única.
-               La abreviatura ${abreviatura} ya existe."""
+No se cumplió con la restricción TipoPrenda.abreviatura única.
+La abreviatura ${abreviatura} ya existe."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
             "Ocurrió un error al actualizar el elemento TipoPrenda(${abreviatura}, ${etiqueta})."
@@ -121,6 +121,13 @@ class tipoprenda {
         }
     }
 
+    /**
+     * Genera la tabla para mostrar los resultados.
+     *
+     * @param elementos Elementos a incluir en la tabla
+     *
+     * @return Tabla a mostrar con los elementos
+     */
     private def mostrarTablaResultados(elementos) {
         new UIBuilder().table(separator: dashed, overflow: Overflow.HIDDEN, rightCellPadding: 1) {
             header(decoration: bold, foreground: black, background: white) {
@@ -137,6 +144,11 @@ class tipoprenda {
         }
     }
 
+    /**
+     * Regresa el servicio a utilizar segun el valor el contexto
+     *
+     * @return Servicio a utilizar.
+     */
     private static TipoPrendaService getServicio(InvocationContext context) {
         context.attributes['spring.beanfactory'].getBean(TipoPrendaService)
     }

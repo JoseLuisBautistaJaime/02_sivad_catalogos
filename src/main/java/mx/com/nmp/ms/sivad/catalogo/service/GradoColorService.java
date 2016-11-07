@@ -77,7 +77,7 @@ public class GradoColorService {
         GradoColor gc = obtenerElemento(abreviatura);
         actualizarCatalogo(gc, elemento);
 
-        return save(gc);
+        return gradoColorRepository.saveAndFlush(gc);
     }
 
     /**

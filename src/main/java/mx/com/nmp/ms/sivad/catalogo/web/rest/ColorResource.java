@@ -39,7 +39,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @RestController
 @RequestMapping("/catalogos/diamantes/color/familia1")
-@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
+@SuppressWarnings({"SpringAutowiredFieldsWarningInspection", "WeakerAccess"})
 public class ColorResource extends BaseFamiliasColorResource<Color> {
     @Inject
     private ColorService colorService;

@@ -8,14 +8,18 @@
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.BaseColor;
+import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.BaseFamiliasColorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -41,14 +45,16 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      * @return ResponseEntity
      */
     public ResponseEntity<Catalogo> getAll() {
-        Catalogo catalogo = getService().getAll();
+        List<T> result = getService().getAll();
+        Catalogo catalogo = null;
 
-        if (ObjectUtils.isEmpty(catalogo)) {
-            LOGGER.warn("El catálogo no contiene elementos.");
-            return new ResponseEntity<>(NOT_FOUND);
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo {} no contiene elementos.", getGenericClass().getSimpleName());
         } else {
-            return new ResponseEntity<>(catalogo, OK);
+            catalogo = CatalogoFactory.build(result);
         }
+
+        return new ResponseEntity<>(catalogo, OK);
     }
 
 
@@ -57,15 +63,18 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      *
      * @return ResponseEntity
      */
+    @SuppressWarnings("WeakerAccess")
     public ResponseEntity<Catalogo> getAllWithoutDependencies() {
-        Catalogo catalogo = getService().getAllWithoutDependencies();
+        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependencies();
+        Catalogo catalogo = null;
 
-        if (ObjectUtils.isEmpty(catalogo)) {
-            LOGGER.warn("El catálogo no contiene elementos.");
-            return new ResponseEntity<>(NOT_FOUND);
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo {} no contiene elementos.", getGenericClass().getSimpleName());
         } else {
-            return new ResponseEntity<>(catalogo, OK);
+            catalogo = CatalogoFactory.build(result.get(0).getConfiguracion(), result);
         }
+
+        return new ResponseEntity<>(catalogo, OK);
     }
 
     /**
@@ -74,4 +83,16 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      * @return Servicio a utilizar.
      */
     protected abstract BaseFamiliasColorService<T> getService();
+
+    /**
+     * Recupera el tipo ParameterizedType.
+     *
+     * @return Tipo ParameterizedType
+     */
+    @SuppressWarnings("unchecked")
+    private Class<T> getGenericClass() {
+        ParameterizedType pt = (ParameterizedType) getClass().getGenericSuperclass();
+
+        return (Class<T>) pt.getActualTypeArguments()[0];
+    }
 }

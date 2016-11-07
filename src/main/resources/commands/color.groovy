@@ -70,8 +70,8 @@ class color {
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             """Ocurrió un error al guardar el elemento GradoColor(${abreviatura}, ${etiqueta}).
-               No se cumplió con la restricción GradoColor.abreviatura única.
-               La abreviatura ${abreviatura} ya existe."""
+No se cumplió con la restricción GradoColor.abreviatura única.
+La abreviatura ${abreviatura} ya existe."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             "Ocurrió un error al guardar el elemento GradoColor(${abreviatura}, ${etiqueta})."
@@ -97,8 +97,8 @@ class color {
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
             """Ocurrió un error al actualizar el elemento GradoColor(${abreviatura}, ${etiqueta}).
-               No se cumplió con la restricción GradoColor.abreviatura única.
-               La abreviatura ${abreviatura} ya existe."""
+No se cumplió con la restricción GradoColor.abreviatura única.
+La abreviatura ${abreviatura} ya existe."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
             "Ocurrió un error al actualizar el elemento GradoColor(${abreviatura}, ${etiqueta})."
@@ -120,14 +120,21 @@ class color {
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
             """Ocurrió un error al eliminar el elemento abreviatura: ${abreviatura}
-               Violación de integridad referencial.
-               Existen referencias a éste elemento en el catálogo Color Familia 1."""
+Violación de integridad referencial.
+Existen referencias a éste elemento en el catálogo Color Familia 1."""
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
             "Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}"
         }
     }
 
+    /**
+     * Genera la tabla para mostrar los resultados.
+     *
+     * @param elementos Elementos a incluir en la tabla
+     *
+     * @return Tabla a mostrar con los elementos
+     */
     private def mostrarTablaResultados(elementos) {
         new UIBuilder().table(separator: dashed, overflow: Overflow.HIDDEN, rightCellPadding: 1) {
             header(decoration: bold, foreground: black, background: white) {
@@ -144,6 +151,11 @@ class color {
         }
     }
 
+    /**
+     * Regresa el servicio a utilizar segun el valor el contexto
+     *
+     * @return Servicio a utilizar.
+     */
     private static GradoColorService getServicio(InvocationContext context) {
         context.attributes['spring.beanfactory'].getBean(GradoColorService)
     }

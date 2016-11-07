@@ -24,7 +24,7 @@ import javax.validation.ConstraintViolationException;
 
 /**
  * Clase de prueba para el Controlador REST que nos permite consultar el catálogo {@link GradoColor}
- * @see TipoPrendaService
+ * @see GradoColorService
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
@@ -113,7 +113,6 @@ public class GradoColorServiceITest {
     @Test(expected = DataIntegrityViolationException.class)
     public void updateDuplicadoTest() {
         test.update(creatEntidad(ABREVIATURA_GRADO_COLOR_E, ETIQUETA_TEST), ABREVIATURA_GRADO_COLOR_D);
-        test.getAll();
     }
 
     @Test
@@ -182,6 +181,14 @@ public class GradoColorServiceITest {
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_GRADO_COLOR_D);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_GRADO_COLOR_D);
+    }
+
+    @Transactional
+    @Sql("/bd/test-data-diamante_grado_color-h2.sql")
+    @Test(expected = DataIntegrityViolationException.class)
+    public void deleteRelacionadoTest() {
+        test.delete(ABREVIATURA_GRADO_COLOR_E);
+        test.getAll();
     }
 
     private static GradoColor creatEntidad(String abr, String etq) {
