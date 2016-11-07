@@ -99,6 +99,7 @@ public class CertificadoDiamantesResource {
         try {
             return new ResponseEntity<>(CatalogoFactory.build(certificadoDiamantesService.get(abreviatura)), HttpStatus.OK);
         } catch (CatalogoNotFoundException e) {
+            LOGGER.warn("El elemento del catalogo no existe. Excepcion: [{}]", e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

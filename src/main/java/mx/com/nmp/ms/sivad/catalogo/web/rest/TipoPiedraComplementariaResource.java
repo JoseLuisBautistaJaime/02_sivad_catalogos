@@ -98,6 +98,7 @@ public class TipoPiedraComplementariaResource {
         try {
             return new ResponseEntity<>(CatalogoFactory.build(tipoPiedraComplementariaService.get(abreviatura)), HttpStatus.OK);
         } catch (CatalogoNotFoundException e) {
+            LOGGER.warn("El elemento del catalogo no existe. Excepcion: [{}]", e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

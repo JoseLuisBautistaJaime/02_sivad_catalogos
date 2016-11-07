@@ -99,6 +99,7 @@ public class ClaridadDiamanteResource {
         try {
             return new ResponseEntity<>(CatalogoFactory.build(claridadDiamanteService.get(abreviatura)), HttpStatus.OK);
         } catch (CatalogoNotFoundException e) {
+            LOGGER.warn("El elemento del catalogo no existe. Excepcion: [{}]", e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
