@@ -79,7 +79,7 @@ public class MotivoBajaPrestamoResource {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> get({})", abreviatura);
         }
-        Catalogo catalogo = motivoBajaPrestamoService.recuperarElemento(abreviatura);
+        Catalogo catalogo = motivoBajaPrestamoService.recuperarElementoCatalogo(abreviatura);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {

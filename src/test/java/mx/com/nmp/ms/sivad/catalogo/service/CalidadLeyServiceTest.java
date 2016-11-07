@@ -3,6 +3,7 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.CalidadLey;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import javax.validation.constraints.AssertTrue;
 
 import static org.junit.Assert.*;
 
@@ -129,23 +131,14 @@ public class CalidadLeyServiceTest {
         CalidadLey calidadLeyAdd = calidadLeyService.save(calidadLeyPrueba);
 
         assertNotNull(calidadLeyAdd);
-        assertTrue(calidadLeyService.findbyAbreviatura(ABREVIATURA_PRUEBA) != null);
+        assertTrue(calidadLeyService.obtenerElementoAbreviatura(ABREVIATURA_PRUEBA) != null);
 
         calidadLeyService.delete(ABREVIATURA_PRUEBA);
-        assertTrue(calidadLeyService.findbyAbreviatura(ABREVIATURA_PRUEBA) == null);
+        try {
+            calidadLeyService.obtenerElementoAbreviatura(ABREVIATURA_PRUEBA);
+        }catch (CatalogoNotFoundException e){
+            assert (true);
+        }
 
-    }
-
-    @Test
-    @Transactional
-    public void testFind() {
-        LOGGER.info(">> testFind");
-
-
-        CalidadLey calidadLeyAdd = calidadLeyService.findbyAbreviatura("BJ");
-
-        assertNull(calidadLeyAdd);
-        //assertEquals(ETIQUETA_PRUEBA, calidadLeyAdd.getEtiqueta());
-        //assertTrue(ULTIMA_ACTUALIZACION_PRUEBA.toLocalDateTime().isBefore(calidadLeyAdd.getConfiguracion().getUltimaActualizacion().toLocalDateTime()));
     }
 }

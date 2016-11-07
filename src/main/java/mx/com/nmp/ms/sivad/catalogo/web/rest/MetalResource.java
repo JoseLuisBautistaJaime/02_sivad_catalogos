@@ -45,7 +45,7 @@ public class MetalResource {
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
-    @RequestMapping(value = "/diamantes/metales",
+    @RequestMapping(value = "/diamantes/alhajas/metales",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -69,7 +69,7 @@ public class MetalResource {
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
-    @RequestMapping(value = "/diamantes/metales/{abreviatura}",
+    @RequestMapping(value = "/diamantes/alhajas/metales/{abreviatura}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -78,7 +78,7 @@ public class MetalResource {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> get({})", abreviatura);
         }
-        Catalogo catalogo = metalService.recuperarElemento(abreviatura);
+        Catalogo catalogo = metalService.recuperarElementoCatalogo(abreviatura);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {

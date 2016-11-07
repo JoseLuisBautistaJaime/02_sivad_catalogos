@@ -45,7 +45,7 @@ public class CalidadLeyResource {
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
-    @RequestMapping(value = "/diamantes/calidades_ley",
+    @RequestMapping(value = "/diamantes/alhajas/calidades_ley",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -69,7 +69,7 @@ public class CalidadLeyResource {
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar en la invocación de headers.
      */
-    @RequestMapping(value = "/diamantes/calidades_ley/{abreviatura}",
+    @RequestMapping(value = "/diamantes/alhajas/calidades_ley/{abreviatura}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -78,7 +78,7 @@ public class CalidadLeyResource {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> get({})", abreviatura);
         }
-        Catalogo catalogo = calidadLeyService.recuperarElemento(abreviatura);
+        Catalogo catalogo = calidadLeyService.recuperarElementoCatalogo(abreviatura);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {

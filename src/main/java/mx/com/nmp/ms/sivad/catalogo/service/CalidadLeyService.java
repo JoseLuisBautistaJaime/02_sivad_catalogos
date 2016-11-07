@@ -6,12 +6,14 @@ import mx.com.nmp.ms.sivad.catalogo.domain.CalidadLey;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.CalidadLeyRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -47,12 +49,20 @@ public class CalidadLeyService {
             LOGGER.info(">> save({})", calidadLey);
         }
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
-                ConfiguracionCatalogoEnum.CALIDAD_LEY.getDominioUnwrap(),
-                ConfiguracionCatalogoEnum.CALIDAD_LEY.getTipo());
+            ConfiguracionCatalogoEnum.CALIDAD_LEY.getDominioUnwrap(),
+            ConfiguracionCatalogoEnum.CALIDAD_LEY.getTipo());
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         calidadLey.setConfiguracion(configuracionCatalogo);
 
-        return calidadLeyRepository.save(calidadLey);
+        try {
+            return calidadLeyRepository.save(calidadLey);
+        } catch (DataIntegrityViolationException e) {
+            String mensaje = "Ya existe un elemento con la abreviatura:" + calidadLey.getAbreviatura();
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(mensaje + " Excepcion: {}", e);
+            }
+            throw e;
+        }
     }
 
     /**
@@ -66,52 +76,44 @@ public class CalidadLeyService {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> update({})", abreviatura);
         }
-        CalidadLey calidadLeyActual = calidadLeyRepository.findByAbreviatura(abreviatura);
-        calidadLeyActual.setEtiqueta(calidadLey.getEtiqueta());
-        calidadLeyActual.setAbreviatura(calidadLey.getAbreviatura());
+        CalidadLey calidadLeyActual = obtenerElementoAbreviatura(abreviatura);
+
+        if (ObjectUtils.isEmpty(calidadLey.getAbreviatura())) {
+            LOGGER.warn("No se definio Abreviatura, se conserva la abreviatura actual: {}", calidadLeyActual.getAbreviatura());
+        } else {
+            calidadLeyActual.setAbreviatura(calidadLey.getAbreviatura());
+        }
+
+        if (ObjectUtils.isEmpty(calidadLey.getEtiqueta())) {
+            LOGGER.warn("No se definio Etiqueta, se conserva la etiqueta actual: {}", calidadLeyActual.getEtiqueta());
+        } else {
+            calidadLeyActual.setEtiqueta(calidadLey.getEtiqueta());
+        }
+
         calidadLeyActual.getConfiguracion().setUltimaActualizacion(new DateTime());
 
-        return calidadLeyRepository.save(calidadLeyActual);
+        try {
+            return calidadLeyRepository.save(calidadLeyActual);
+        } catch (DataIntegrityViolationException e) {
+            String mensaje = "Ya existe un elemento con la abreviatura:" + calidadLey.getAbreviatura();
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(mensaje + " Excepcion: {}", e);
+            }
+            throw e;
+        }
     }
 
-    /**
-     * Obtiene entidad de tipo CalidadLey por identificador.
-     *
-     * @param id identificador de elemento que sera buscado
-     * @return CalidadLey
-     */
-    @Transactional(readOnly = true)
-    public CalidadLey findOne(@NotNull Long id) {
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(">> findOne({})", id);
-        }
-        return calidadLeyRepository.findOne(id);
-    }
-
-    /**
-     * Obtiene entidad de tipo CalidadLey por abreviatura.
-     *
-     * @param abreviatura identificador de elemento que sera buscado
-     * @return CalidadLey
-     */
-    @Transactional(readOnly = true)
-    public CalidadLey findbyAbreviatura(@NotNull String abreviatura) {
-        if (LOGGER.isInfoEnabled()){
-            LOGGER.info(">> findbyAbreviatura({})", abreviatura);
-        }
-        return calidadLeyRepository.findByAbreviatura(abreviatura);
-    }
 
     /**
      * Elimina elemento del catalogo de tipo CalidadLey por abreviatura.
      *
      * @param abreviatura del elemento que sera eliminado
      */
-    public void delete(@NotNull String abreviatura) {
+    public void delete(@HasText String abreviatura) {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> delete({})", abreviatura);
         }
-        CalidadLey calidadLey = calidadLeyRepository.findByAbreviatura(abreviatura);
+        CalidadLey calidadLey = this.obtenerElementoAbreviatura(abreviatura);
         calidadLey.getConfiguracion().setUltimaActualizacion(new DateTime());
         calidadLeyRepository.delete(calidadLey);
     }
@@ -150,17 +152,35 @@ public class CalidadLeyService {
     }
 
     /**
+     * Obtiene un elemento especificado por abreviatura.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @return Catalogo.
+     */
+    public CalidadLey obtenerElementoAbreviatura(@HasText String abreviatura) {
+        CalidadLey result = calidadLeyRepository.findByAbreviatura(abreviatura);
+        if (ObjectUtils.isEmpty(result)) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("<< El elemento con abreviatura {}, no existe.", abreviatura);
+                throw new CatalogoNotFoundException("El elemento con abreviatura {"+abreviatura+"}no existe",CalidadLey.class);
+            }
+        }
+
+        return result;
+    }
+
+    /**
      * Obtiene un elemento del catalogo especificado por abreviatura.
      *
      * @param abreviatura Abreviatura del elemento a recuperar.
      * @return Catalogo.
      */
-    public Catalogo recuperarElemento(@HasText String abreviatura) {
+    public Catalogo recuperarElementoCatalogo(@HasText String abreviatura) {
         CalidadLey result = calidadLeyRepository.findByAbreviatura(abreviatura);
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("<< El elemento con abreviatura {}, no existe.", abreviatura);
             }
         } else {
@@ -169,5 +189,4 @@ public class CalidadLeyService {
 
         return catalogo;
     }
-
 }

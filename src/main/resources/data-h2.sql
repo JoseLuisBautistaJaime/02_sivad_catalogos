@@ -6,7 +6,7 @@ INSERT INTO catalogo_prueba(abreviatura, descripcion, catalogo) VALUES ('CAT1', 
 INSERT INTO catalogo_prueba(abreviatura, descripcion, catalogo) VALUES ('CAT2', 'Catalogo 2', 'DB-h2');
 INSERT INTO catalogo_prueba(abreviatura, descripcion, catalogo) VALUES ('CAT3', 'Catalogo 3', 'DB-h2');
 
-INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (1,'Diamantes','CondicionPrenda','EX','Catálogo de Condiciones de la Prenda');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (1,'Alhajas','CondicionPrenda','EX','Catálogo de Condiciones de la Prenda');
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('EX','Excelente', 1);
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('BN','Buen Estado', 1);
 INSERT INTO CAT_CONDICION_PRENDA(abreviatura, etiqueta, id_configuracion) VALUES ('RE','Regular', 1);
@@ -94,9 +94,21 @@ INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('TR', 'Tr
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('AN', 'Antiguo', 12);
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('OT', 'Otro', 12);
 
-
 RUNSCRIPT FROM 'classpath:/bd/data-diamante_tipo_prenda-h2.sql';
 RUNSCRIPT FROM 'classpath:/bd/data-diamante_grado_color-h2.sql';
 RUNSCRIPT FROM 'classpath:/bd/data-diamante_color-h2.sql';
 RUNSCRIPT FROM 'classpath:/bd/data-diamante_escala_color-h2.sql';
 RUNSCRIPT FROM 'classpath:/bd/data-diamante_grupo_color-h2.sql';
+
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (18,'Diamantes','QuilatajeDiamante','0.25_Q','Catálogo de Quilatajes Diamantes');
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('0_25_Q','0.25', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('0_5_Q','0.5', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('0_75_Q','0.75', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('1_0_Q','1.0', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('1_5_Q','1.5', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('2_0_Q','2.0', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('3_0_Q','3.0', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('4_0_Q','4.0', 18);
+INSERT INTO CAT_QUILATAJE_DIAMANTE(abreviatura, etiqueta, id_configuracion) VALUES ('5_0_Q','2.0', 18);
+
+

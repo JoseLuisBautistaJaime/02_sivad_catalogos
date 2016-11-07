@@ -46,7 +46,7 @@ public class CondicionPrendaResource {
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
 
-    @RequestMapping(value = "/diamantes/condiciones",
+    @RequestMapping(value = "diamantes/alhajas/condiciones",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -70,7 +70,7 @@ public class CondicionPrendaResource {
      * @return ResponseEntity con status 200 (OK) y la lista de elementos, status 404 (NOT FOUND) cuando no contiene elementos.
      * @throws URISyntaxException si hay un error al generar los headers HTTP de paginacion
      */
-    @RequestMapping(value = "/diamantes/condiciones/{abreviatura}",
+    @RequestMapping(value = "/diamantes/alhajas/condiciones/{abreviatura}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -79,7 +79,7 @@ public class CondicionPrendaResource {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> get({})", abreviatura);
         }
-        Catalogo catalogo = condicionPrendaService.recuperarElemento(abreviatura);
+        Catalogo catalogo = condicionPrendaService.recuperarElementoCatalogo(abreviatura);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         if (catalogo == null) {

@@ -47,6 +47,7 @@ public class CalidadLey implements CatalogoConfigurable{
     /**
      * Configuración del catálogo, se relaciona con la tabla de configuración.
      */
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @ManyToOne
     @JoinColumn(name="id_configuracion")
     private ConfiguracionCatalogo configuracion;
@@ -163,7 +164,7 @@ public class CalidadLey implements CatalogoConfigurable{
                 "id=" + elementoId +
                 ", abreviatura='" + abreviatura +
                 ", etiqueta='" + etiqueta +
-                ", configuracionCatalogo='" + configuracion + '\'' +
+                ", configuracion=" + ((configuracion != null) ? configuracion.toString() : "null") +
                 '}';
     }
 }

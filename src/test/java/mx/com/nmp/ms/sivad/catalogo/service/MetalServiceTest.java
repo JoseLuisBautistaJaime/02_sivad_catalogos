@@ -3,6 +3,7 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.Metal;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -14,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.inject.Inject;
+
 import static org.junit.Assert.*;
 
 /**
@@ -126,7 +129,11 @@ public class MetalServiceTest {
         assertTrue(metalService.findbyAbreviatura(ABREVIATURA_PRUEBA) != null);
 
         metalService.delete(ABREVIATURA_PRUEBA);
-        assertTrue(metalService.findbyAbreviatura(ABREVIATURA_PRUEBA) == null);
+        try {
+            metalService.findbyAbreviatura(ABREVIATURA_PRUEBA);
+        } catch (CatalogoNotFoundException e) {
+            assert (true);
+        }
 
     }
 

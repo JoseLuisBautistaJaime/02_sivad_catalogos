@@ -101,7 +101,7 @@ public class MetalResourceITest {
     @Test
     @Transactional
     public void testResourceGetAll() throws Exception {
-        mockMetalService.perform(get("/catalogos/diamantes/metales/"))
+        mockMetalService.perform(get("/catalogos/diamantes/alhajas/metales"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
@@ -120,7 +120,7 @@ public class MetalResourceITest {
     @Test
     @Transactional
     public void testResourceGet() throws Exception {
-        mockMetalService.perform(get("/catalogos/diamantes/metales/BB"))
+        mockMetalService.perform(get("/catalogos/diamantes/alhajas/metales/BB"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
@@ -137,7 +137,7 @@ public class MetalResourceITest {
     @Test
     @Transactional
     public void testResourceGetInexist() throws Exception {
-        mockMetalService.perform(get("/catalogos/diamantes/metales/NA"))
+        mockMetalService.perform(get("/catalogos/diamantes/alhajas/metales/NA"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(content().bytes(new byte[0]));

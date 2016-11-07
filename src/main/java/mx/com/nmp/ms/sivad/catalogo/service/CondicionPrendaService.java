@@ -6,12 +6,14 @@ import mx.com.nmp.ms.sivad.catalogo.domain.CondicionPrenda;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.repository.CondicionPrendaRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -47,12 +49,20 @@ public class CondicionPrendaService {
             LOGGER.info(">> save({})", condicionPrenda);
         }
         ConfiguracionCatalogo configuracionCatalogo = configuracionCatalogoRepository.findByDominioAndTipo(
-                ConfiguracionCatalogoEnum.CONDICION_PRENDA.getDominioUnwrap(),
-                ConfiguracionCatalogoEnum.CONDICION_PRENDA.getTipo());
+            ConfiguracionCatalogoEnum.CONDICION_PRENDA.getDominioUnwrap(),
+            ConfiguracionCatalogoEnum.CONDICION_PRENDA.getTipo());
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         condicionPrenda.setConfiguracion(configuracionCatalogo);
 
-        return condicionPrendaRepository.save(condicionPrenda);
+        try {
+            return condicionPrendaRepository.save(condicionPrenda);
+        } catch (DataIntegrityViolationException e) {
+            String mensaje = "Ya existe un elemento con la abreviatura:" + condicionPrenda.getAbreviatura();
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(mensaje + " Excepcion: {}", e);
+            }
+            throw e;
+        }
     }
 
     /**
@@ -66,26 +76,31 @@ public class CondicionPrendaService {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> update({})", abreviatura);
         }
-        CondicionPrenda condicionPrendaActual = condicionPrendaRepository.findByAbreviatura(abreviatura);
-        condicionPrendaActual.setEtiqueta(condicionPrenda.getEtiqueta());
-        condicionPrendaActual.setAbreviatura(condicionPrenda.getAbreviatura());
+        CondicionPrenda condicionPrendaActual = obtenerElementoAbreviatura(abreviatura);
+
+        if (ObjectUtils.isEmpty(condicionPrenda.getAbreviatura())) {
+            LOGGER.warn("No se definio Abreviatura, se conserva la abreviatura actual: {}", condicionPrendaActual.getAbreviatura());
+        } else {
+            condicionPrendaActual.setAbreviatura(condicionPrenda.getAbreviatura());
+        }
+
+        if (ObjectUtils.isEmpty(condicionPrenda.getEtiqueta())) {
+            LOGGER.warn("No se definio Etiqueta, se conserva la etiqueta actual: {}", condicionPrendaActual.getEtiqueta());
+        } else {
+            condicionPrendaActual.setEtiqueta(condicionPrenda.getEtiqueta());
+        }
+
         condicionPrendaActual.getConfiguracion().setUltimaActualizacion(new DateTime());
 
-        return condicionPrendaRepository.save(condicionPrendaActual);
-    }
-
-    /**
-     * Obtiene entidad de tipo CondicionPrenda por identificador.
-     *
-     * @param id identificador de elemento que sera buscado
-     * @return CondicionPrenda
-     */
-    @Transactional(readOnly = true)
-    public CondicionPrenda findOne(@NotNull Long id) {
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(">> findOne({})", id);
+        try {
+            return condicionPrendaRepository.save(condicionPrendaActual);
+        } catch (DataIntegrityViolationException e) {
+            String mensaje = "Ya existe un elemento con la abreviatura:" + condicionPrenda.getAbreviatura();
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(mensaje + " Excepcion: {}", e);
+            }
+            throw e;
         }
-        return condicionPrendaRepository.findOne(id);
     }
 
     /**
@@ -107,11 +122,11 @@ public class CondicionPrendaService {
      *
      * @param abreviatura del elemento que sera eliminado
      */
-    public void delete(@NotNull String abreviatura) {
+    public void delete(@HasText String abreviatura) {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">> delete({})", abreviatura);
         }
-        CondicionPrenda condicionPrenda = condicionPrendaRepository.findByAbreviatura(abreviatura);
+        CondicionPrenda condicionPrenda = this.obtenerElementoAbreviatura(abreviatura);
         condicionPrenda.getConfiguracion().setUltimaActualizacion(new DateTime());
         condicionPrendaRepository.delete(condicionPrenda);
     }
@@ -142,11 +157,30 @@ public class CondicionPrendaService {
         List<CondicionPrenda> result = condicionPrendaRepository.findAll();
         Catalogo catalogo = null;
         if (ObjectUtils.isEmpty(result)) {
-            LOGGER.warn("<< El catalogo CondicionPrenda no contiene elementos.");
+            LOGGER.warn("<< El catalogo CalidadLey no contiene elementos.");
         } else {
             catalogo = CatalogoFactory.build(result);
         }
         return catalogo;
+    }
+
+
+    /**
+     * Obtiene un elemento del catalogo especificado por abreviatura.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @return Catalogo.
+     */
+    public CondicionPrenda obtenerElementoAbreviatura(@HasText String abreviatura) {
+        CondicionPrenda result = condicionPrendaRepository.findByAbreviatura(abreviatura);
+        if (ObjectUtils.isEmpty(result)) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("<< El elemento con abreviatura {}, no existe.", abreviatura);
+                throw new CatalogoNotFoundException("El elemento con abreviatura {"+abreviatura+"}no existe",CondicionPrenda.class);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -155,7 +189,7 @@ public class CondicionPrendaService {
      * @param abreviatura Abreviatura del elemento a recuperar.
      * @return Catalogo.
      */
-    public Catalogo recuperarElemento(@HasText String abreviatura) {
+    public Catalogo recuperarElementoCatalogo(@HasText String abreviatura) {
         CondicionPrenda result = condicionPrendaRepository.findByAbreviatura(abreviatura);
         Catalogo catalogo = null;
 

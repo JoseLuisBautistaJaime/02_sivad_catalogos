@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CatalogosApplication.class)
-public class CondicionPrendaITest {
+public class CondicionPrendaResourceITest {
 
     private static final String DOMINIO_PRUEBA = "Diamantes";
     private static final String TIPO_PRUEBA = "CondicionPrenda";
@@ -103,7 +103,7 @@ public class CondicionPrendaITest {
     @Test
     @Transactional
     public void testResourceGetAll() throws Exception {
-        mockCondPrendaService.perform(get("/catalogos/diamantes/condiciones/"))
+        mockCondPrendaService.perform(get("/catalogos/diamantes/alhajas/condiciones"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
@@ -122,7 +122,7 @@ public class CondicionPrendaITest {
     @Test
     @Transactional
     public void testResourceGet() throws Exception {
-        mockCondPrendaService.perform(get("/catalogos/diamantes/condiciones/AA"))
+        mockCondPrendaService.perform(get("/catalogos/diamantes/alhajas/condiciones/AA"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
@@ -139,7 +139,7 @@ public class CondicionPrendaITest {
     @Test
     @Transactional
     public void testResourceGetInexist() throws Exception {
-        mockCondPrendaService.perform(get("/catalogos/diamantes/condiciones/NA"))
+        mockCondPrendaService.perform(get("/catalogos/diamantes/alhajas/condiciones/NA"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(content().bytes(new byte[0]));

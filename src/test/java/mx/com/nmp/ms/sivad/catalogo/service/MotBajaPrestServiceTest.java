@@ -3,6 +3,7 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.MotivoBajaPrestamo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -126,10 +127,14 @@ public class MotBajaPrestServiceTest {
 
         MotivoBajaPrestamo motBajPresAdd = motivoBajaPrestamoService.save(motBajPresPrueba);
         assertNotNull(motBajPresAdd);
-        assertTrue(motivoBajaPrestamoService.findbyAbreviatura(ABREVIATURA_PRUEBA) != null);
+        assertTrue(motivoBajaPrestamoService.obtenerElementoAbreviatura(ABREVIATURA_PRUEBA) != null);
 
         motivoBajaPrestamoService.delete(ABREVIATURA_PRUEBA);
-        assertTrue(motivoBajaPrestamoService.findbyAbreviatura(ABREVIATURA_PRUEBA) == null);
+        try{
+            motivoBajaPrestamoService.obtenerElementoAbreviatura(ABREVIATURA_PRUEBA);
+        }catch (CatalogoNotFoundException e){
+            assert (true);
+        }
 
     }
 

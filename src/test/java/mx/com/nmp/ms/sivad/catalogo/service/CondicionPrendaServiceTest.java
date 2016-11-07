@@ -3,6 +3,7 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.CondicionPrenda;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -31,7 +32,7 @@ public class CondicionPrendaServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CondicionPrendaServiceTest.class);
 
-    private static final String DOMINIO_PRUEBA = "Diamantes";
+    private static final String DOMINIO_PRUEBA = "Alhajas";
     private static final String TIPO_PRUEBA = "CondicionPrenda";
     private static final String DESCRIPCION_PRUEBA = "Catálogo de Condiciones de Prenda";
     private static final String VALOR_DEFULT = "ETIQUETA_PRUEBA";
@@ -130,7 +131,12 @@ public class CondicionPrendaServiceTest {
         assertTrue(condicionPrendaService.findbyAbreviatura(ABREVIATURA_PRUEBA) != null);
 
         condicionPrendaService.delete(ABREVIATURA_PRUEBA);
-        assertTrue(condicionPrendaService.findbyAbreviatura(ABREVIATURA_PRUEBA) == null);
+
+        try {
+            condicionPrendaService.obtenerElementoAbreviatura(ABREVIATURA_PRUEBA);
+        }catch (CatalogoNotFoundException e){
+            assert (true);
+        }
 
     }
 

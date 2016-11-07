@@ -103,7 +103,7 @@ public class CalidadLeyReourceITest {
     @Test
     @Transactional
     public void testResourceGetAll() throws Exception {
-        mockCalidadLeyService.perform(get("/catalogos/diamantes/calidades_ley/"))
+        mockCalidadLeyService.perform(get("/catalogos/diamantes/alhajas/calidades_ley/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
@@ -122,7 +122,7 @@ public class CalidadLeyReourceITest {
     @Test
     @Transactional
     public void testResourceGet() throws Exception {
-        mockCalidadLeyService.perform(get("/catalogos/diamantes/calidades_ley/BB"))
+        mockCalidadLeyService.perform(get("/catalogos/diamantes/alhajas/calidades_ley/BB"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
@@ -139,7 +139,7 @@ public class CalidadLeyReourceITest {
     @Test
     @Transactional
     public void testResourceGetInexist() throws Exception {
-        mockCalidadLeyService.perform(get("/catalogos/diamantes/calidades_ley/NA"))
+        mockCalidadLeyService.perform(get("/catalogos/diamantes/alhajas/calidades_ley/NA"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(content().bytes(new byte[0]));
