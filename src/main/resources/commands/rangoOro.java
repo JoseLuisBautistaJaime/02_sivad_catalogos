@@ -53,7 +53,6 @@ public class rangoOro extends BaseCommand {
                 .overflow(Overflow.WRAP)
                 .rightCellPadding(1);
         table.row(
-                new LabelElement("ID_ELEMENTO").style(Style.style(Decoration.bold)),
                 new LabelElement("ABREVIATURA").style(Style.style(Decoration.bold)),
                 new LabelElement("ETIQUETA").style(Style.style(Decoration.bold)),
                 new LabelElement("ID_CONFIGURACION").style(Style.style(Decoration.bold))
@@ -66,33 +65,29 @@ public class rangoOro extends BaseCommand {
      * Modifica un elemento del catalogo.
      *
      * @param context
-     * @param id identificador del elemento que sera eliminado.
+     * @param abrAnterior abreviatura del elemento que sera modificado.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
      * @param etiqueta nueva etiqueta que sera asignada al elemento.
-     * @param configuracion nueva configuración que sera asignada al elemento.
      */
     @Command
-    @Usage("Modifica los datos del elemento del catalogo Rango Oro especidifcado por una ID")
+    @Usage("Modifica los datos del elemento del catalogo Rango Oro especidifcado por una Abreviatura")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("id") @Required @Option(names = {"m", "modificar"}) String modificar,
+                          @Usage("Abreviatura del elemento que se quiere actualizar")
+                          @Required @Option(names = {"i", "abrAnterior"}) String abrAnterior,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
-                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta,
-                          @Usage("ID ConfiguraciÃ³n.") @Required @Option(names = {"c", "configuracion"}) String configuracion) {
+                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
 
         try {
 
-            RangoOro rangoOro = this.getController().findOne(Long.parseLong(modificar));
+            RangoOro rangoOro = new RangoOro();
 
             rangoOro.setAbreviatura(abreviatura);
             rangoOro.setEtiqueta(etiqueta);
-            rangoOro.setConfiguracion(this.getControllerConfig().findOne((Long.parseLong(configuracion))));
-
-            this.getController().saveAndFlush(rangoOro);
+            rangoOro = this.getController().saveAndFlush(rangoOro,abrAnterior);
 
             table = getTable();
 
             table.row(
-                    new LabelElement(rangoOro.getIdElemento()).style(Style.style(Color.cyan)),
                     new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow)),
                     new LabelElement(rangoOro.getConfiguracion().getId().toString())
@@ -121,7 +116,6 @@ public class rangoOro extends BaseCommand {
 
             for (RangoOro rangoOro : lstRangoOro){
                 table.row(
-                        new LabelElement(rangoOro.getIdElemento()).style(Style.style(Color.cyan)),
                         new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
                         new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow)),
                         new LabelElement(rangoOro.getConfiguracion().getId().toString())
@@ -136,22 +130,23 @@ public class rangoOro extends BaseCommand {
     }
 
     /**
-     * Obtiene los elementos del catálogo.
+     * Obtiene el elemento del catálogo.
      *
      * @param context
+     * @param abreviatura abreviatura de elemento a mostrar.
      */
     @Command
     @Usage("Muestra un elemento del catalogo RangoOro.")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("identificador ddel elemento.") @Required @Argument String id) {
+                         @Usage("Abreviatura del elemento a recuperar.")
+                         @Required @Argument String abreviatura) {
 
         try {
-            RangoOro rangoOro = this.getController().findOne(Long.parseLong(id));
+            RangoOro rangoOro = this.getController().get(abreviatura);
 
             table = getTable();
 
             table.row(
-                    new LabelElement(rangoOro.getIdElemento()).style(Style.style(Color.cyan)),
                     new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow)),
                     new LabelElement(rangoOro.getConfiguracion().getId().toString())
@@ -167,19 +162,19 @@ public class rangoOro extends BaseCommand {
     /**
      * Elimina elemento del catálogo por identificador.
      *
-     * @param id identificador de elemento a eliminar.
+     * @param abreviatura abreviatura de elemento a eliminar.
      * @return String.
      */
     @Command
     @Usage("Eliminar un elemento del catalogo RangoOro especificado por ID.")
     public String eliminar(
-            @Usage("identificador de la entrada del cat\u00E1logo.")
+            @Usage("Abreviatura de la entrada del cat\u00E1logo.")
             @Required
-            @Argument String id) {
+            @Argument String abreviatura) {
 
-        this.getController().delete(Long.parseLong(id));
+        this.getController().delete(abreviatura);
 
-        return "El elemento con ID " + id + " fue eliminado exitosamente!";
+        return "El elemento con Abreviatura " + abreviatura + " fue eliminado exitosamente!";
     }
 
 
@@ -188,7 +183,6 @@ public class rangoOro extends BaseCommand {
      * @param context
      * @param abreviatura
      * @param etiqueta
-     * @param configuracion
      */
     @Command
     @Usage("Agrega un elemento al catalogo de tipo RangoOro.")
@@ -200,11 +194,7 @@ public class rangoOro extends BaseCommand {
                         @Usage("Etiqueta")
                         @Required
                         @Option(names = {"e", "etiqueta"})
-                        String etiqueta,
-                        @Usage("ID Configuración.")
-                        @Required
-                        @Option(names = {"c", "configuracion"})
-                        String configuracion) {
+                        String etiqueta) {
 
 
         try {
@@ -212,14 +202,12 @@ public class rangoOro extends BaseCommand {
 
             rangoOro.setAbreviatura(abreviatura);
             rangoOro.setEtiqueta(etiqueta);
-            rangoOro.setConfiguracion(this.getControllerConfig().findOne((Long.parseLong(configuracion))));
 
-            this.getController().save(rangoOro);
+            rangoOro = this.getController().save(rangoOro);
 
             table = getTable();
 
             table.row(
-                    new LabelElement(rangoOro.getIdElemento()).style(Style.style(Color.cyan)),
                     new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow)),
                     new LabelElement(rangoOro.getConfiguracion().getId().toString())

@@ -39,7 +39,7 @@ public class Corte implements CatalogoConfigurable {
      */
     @NotNull
     @Size(min = 1)
-    @Column(name = "abreviatura", length = 20, nullable = false)
+    @Column(name = "abreviatura", length = 20, nullable = false, unique = true)
     @JournalData
     private String abreviatura;
 
@@ -113,7 +113,7 @@ public class Corte implements CatalogoConfigurable {
                 "idElemento=" + idElemento +
                 ", abreviatura='" + abreviatura + '\'' +
                 ", etiqueta='" + etiqueta + '\'' +
-                ", configuracion=" + configuracion.toString() +
+                ", configuracion=" +  ((configuracion != null) ? configuracion.toString() : "null") +
                 '}';
     }
 }

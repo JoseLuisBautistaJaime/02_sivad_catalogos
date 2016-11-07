@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Repositorio de prueba para entidades de tipo "RangoOro".
+ * Repositorio para entidades de tipo "RangoOro".
  *
  * @author mmarquez
  */

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repositorio de prueba para entidades de tipo Corte de diamante.
+ * Repositorio para entidades de tipo Corte de diamante.
  *
  * @author mmarquez
  */

@@ -30,7 +30,10 @@ public enum ConfiguracionCatalogoEnum {
     QUILATAJE_DIAMANTE("QuilatajeDiamante", DominioEnum.DIAMANTES),
     QUILATAJE_ORO("QuilatajeOro", DominioEnum.ALHAJAS),
     TIPO_PIEDRA_COMPLEMENTARIA("TipoPiedraComplementaria", DominioEnum.DIAMANTES),
-    TIPO_PRENDA("TipoPrenda", DominioEnum.ALHAJAS);
+    TIPO_PRENDA("TipoPrenda", DominioEnum.ALHAJAS),
+    RANGO_ORO("RangoOro", DominioEnum.ALHAJAS),
+    RANGO_METAL("RangoMetal", DominioEnum.ALHAJAS),
+    CORTE("Corte", DominioEnum.DIAMANTES);
 
     private String tipo;
     private DominioEnum dominio;

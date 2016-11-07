@@ -6,6 +6,7 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.Corte;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.CorteService;
 import org.slf4j.Logger;
@@ -19,6 +20,11 @@ import com.codahale.metrics.annotation.Timed;
 
 import javax.inject.Inject;
 import java.util.List;
+import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Controlador REST para entidades de tipo Cortes.
@@ -49,7 +55,13 @@ public class CorteResource {
     public ResponseEntity<Catalogo> getAll() {
         LOGGER.info(">> getAll");
         List<Corte> result = corteService.getAll();
-        Catalogo catalogo = CatalogoFactory.build(result);
+        Catalogo catalogo = null;
+
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo Corte no contiene elementos.");
+        } else {
+            catalogo = CatalogoFactory.build(result);
+        }
         return new ResponseEntity<>(catalogo, HttpStatus.OK);
     }
 
@@ -66,13 +78,13 @@ public class CorteResource {
     @Timed
     public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
         LOGGER.info(">> get: [{}]", abreviatura);
-        Corte corte = corteService.get(abreviatura);
-
-        if (ObjectUtils.isEmpty(corte)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
+        try {
+            Corte corte = corteService.get(abreviatura);
             Catalogo catalogo = CatalogoFactory.build(corte);
             return new ResponseEntity<>(catalogo, HttpStatus.OK);
+        } catch (CatalogoNotFoundException e) {
+            LOGGER.warn("El elemento del catalogo no existe. Excepcion: [{}]", e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -88,10 +100,10 @@ public class CorteResource {
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = "dependencias")
     @Timed
-    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") Boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") boolean dependencias) {
         if (dependencias) {
             LOGGER.warn("El cat\u00E1logo no contiene dependencias.");
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(NOT_ACCEPTABLE);
         }
 
         return getAll();

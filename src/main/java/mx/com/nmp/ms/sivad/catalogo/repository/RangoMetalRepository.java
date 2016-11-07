@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Repositorio de prueba para entidades de tipo "RangoMetal".
+ * Repositorio para entidades de tipo "RangoMetal".
  *
  * @author mmarquez
  */

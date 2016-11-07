@@ -6,6 +6,7 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.RangoOro;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.RangoOroService;
 import org.slf4j.Logger;
@@ -19,6 +20,12 @@ import com.codahale.metrics.annotation.Timed;
 
 import javax.inject.Inject;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Controlador REST para entidades de tipo RangoOro.
@@ -51,7 +58,13 @@ public class RangoOroResource {
     public ResponseEntity<Catalogo> getAll() {
         LOGGER.info(">> getAll");
         List<RangoOro> result = rangoOroService.getAll();
-        Catalogo catalogo = CatalogoFactory.build(result);
+        Catalogo catalogo = null;
+
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo RangoOro no contiene elementos.");
+        } else {
+            catalogo = CatalogoFactory.build(result);
+        }
         return new ResponseEntity<>(catalogo, HttpStatus.OK);
     }
 
@@ -68,14 +81,15 @@ public class RangoOroResource {
     @Timed
     public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
         LOGGER.info(">> get: [{}]", abreviatura);
-        RangoOro rangoOro = rangoOroService.get(abreviatura);
-
-        if (ObjectUtils.isEmpty(rangoOro)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
+        try {
+            RangoOro rangoOro = rangoOroService.get(abreviatura);
             Catalogo catalogo = CatalogoFactory.build(rangoOro);
             return new ResponseEntity<>(catalogo, HttpStatus.OK);
+        } catch (CatalogoNotFoundException e) {
+            LOGGER.warn("El elemento del catalogo no existe. Excepcion: [{}]", e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
     }
 
     /**
@@ -90,10 +104,10 @@ public class RangoOroResource {
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = "dependencias")
     @Timed
-    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") Boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") boolean dependencias) {
         if (dependencias) {
             LOGGER.warn("El cat\u00E1logo no contiene dependencias.");
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(NOT_ACCEPTABLE);
         }
 
         return getAll();

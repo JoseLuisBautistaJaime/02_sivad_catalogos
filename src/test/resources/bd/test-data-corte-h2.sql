@@ -1,0 +1,16 @@
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (12, 'Diamantes', 'Corte', 'Catálogo de Cortes Diamante');
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('BR', 'Brillante', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('PR', 'Princesa', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('OV', 'Oval', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('PE', 'Pera', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('RA', 'Radiant', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('BA', 'Baguette', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('FL', 'Flanders', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('MA', 'Marquesa', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('CO', 'Corazón', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('ES', 'Esmeralda', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('CJ', 'Cojin', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('AS', 'Asscher', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('TR', 'Trillion', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('AN', 'Antiguo', 12);
+INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('OT', 'Otro', 12);

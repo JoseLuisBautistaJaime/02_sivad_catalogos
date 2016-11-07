@@ -77,7 +77,7 @@ INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('MS
 INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('RF', 'RJ-Fundir', 11);
 INSERT INTO CAT_RANGO_METAL(abreviatura, etiqueta, id_configuracion) VALUES ('RM', 'RJ-Marca', 11);
 
-INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (12, 'Alhajas', 'Corte', 'Catálogo de Cortes Diamante');
+INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, descripcion) VALUES (12, 'Diamantes', 'Corte', 'Catálogo de Cortes Diamante');
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('BR', 'Brillante', 12);
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('PR', 'Princesa', 12);
 INSERT INTO CAT_CORTE(abreviatura, etiqueta, id_configuracion) VALUES ('OV', 'Oval', 12);

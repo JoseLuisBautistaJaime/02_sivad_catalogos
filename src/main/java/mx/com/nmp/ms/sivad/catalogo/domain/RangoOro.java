@@ -41,7 +41,7 @@ public class RangoOro implements CatalogoConfigurable {
      */
     @NotNull
     @Size(min = 1)
-    @Column(name = "abreviatura", length = 20, nullable = false)
+    @Column(name = "abreviatura", length = 20, nullable = false, unique = true)
     @JournalData
     private String abreviatura;
 
@@ -70,7 +70,7 @@ public class RangoOro implements CatalogoConfigurable {
      * Constructor de la clase.
      */
     public RangoOro() {
-        // Constructor vacio
+        super();
     }
 
     public Long getIdElemento() {
@@ -115,7 +115,7 @@ public class RangoOro implements CatalogoConfigurable {
                 "idElemento=" + idElemento +
                 ", abreviatura='" + abreviatura + '\'' +
                 ", etiqueta='" + etiqueta + '\'' +
-                ", configuracion=" + configuracion.toString() +
+                ", configuracion=" + ((configuracion != null) ? configuracion.toString() : "null") +
                 '}';
     }
 }

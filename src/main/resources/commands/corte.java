@@ -53,7 +53,6 @@ public class corte extends BaseCommand {
                 .overflow(Overflow.WRAP)
                 .rightCellPadding(1);
         table.row(
-                new LabelElement("ID_ELEMENTO").style(Style.style(Decoration.bold)),
                 new LabelElement("ABREVIATURA").style(Style.style(Decoration.bold)),
                 new LabelElement("ETIQUETA").style(Style.style(Decoration.bold)),
                 new LabelElement("ID_CONFIGURACION").style(Style.style(Decoration.bold))
@@ -66,33 +65,29 @@ public class corte extends BaseCommand {
      * Modifica un elemento del catalogo.
      *
      * @param context
-     * @param id identificador del elemento que sera eliminado.
+     * @param abrAnterior abreviatura del elemento que sera modificado.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
      * @param etiqueta nueva etiqueta que sera asignada al elemento.
-     * @param configuracion nueva configuración que sera asignada al elemento.
      */
     @Command
-    @Usage("Modifica los datos del elemento del catalogo Corte Diamante especidifcado por una ID")
+    @Usage("Modifica los datos del elemento del catalogo Corte Diamante especidifcado por una Abreviatura")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("id") @Required @Option(names = {"m", "modificar"}) String modificar,
+                          @Usage("Abreviatura del elemento que se quiere actualizar")
+                          @Required @Option(names = {"i", "abrAnterior"}) String abrAnterior,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
-                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta,
-                          @Usage("ID ConfiguraciÃ³n.") @Required @Option(names = {"c", "configuracion"}) String configuracion) {
+                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
 
         try {
 
-            Corte corte = this.getController().findOne(Long.parseLong(modificar));
+            Corte corte = new Corte();
 
             corte.setAbreviatura(abreviatura);
             corte.setEtiqueta(etiqueta);
-            corte.setConfiguracion(this.getControllerConfig().findOne((Long.parseLong(configuracion))));
-
-            this.getController().saveAndFlush(corte);
+            corte = this.getController().saveAndFlush(corte, abrAnterior);
 
             table = getTable();
 
             table.row(
-                    new LabelElement(corte.getIdElemento()).style(Style.style(Color.cyan)),
                     new LabelElement(corte.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(corte.getEtiqueta()).style(Style.style(Color.yellow)),
                     new LabelElement(corte.getConfiguracion().getId().toString())
@@ -121,7 +116,6 @@ public class corte extends BaseCommand {
 
             for (Corte corte : lstCorte){
                 table.row(
-                        new LabelElement(corte.getIdElemento()).style(Style.style(Color.cyan)),
                         new LabelElement(corte.getAbreviatura()).style(Style.style(Color.green)),
                         new LabelElement(corte.getEtiqueta()).style(Style.style(Color.yellow)),
                         new LabelElement(corte.getConfiguracion().getId().toString())
@@ -139,19 +133,20 @@ public class corte extends BaseCommand {
      * Obtiene los elementos del catálogo.
      *
      * @param context
+     * @param abreviatura abreviatura de elemento a mostrar.
      */
     @Command
     @Usage("Muestra un elemento del catalogo Corte Diamante.")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("identificador ddel elemento.") @Required @Argument String id) {
+                         @Usage("Abreviatura del elemento a recuperar.")
+                         @Required @Argument String abreviatura) {
 
         try {
-            Corte corte = this.getController().findOne(Long.parseLong(id));
+            Corte corte = this.getController().get(abreviatura);
 
             table = getTable();
 
             table.row(
-                    new LabelElement(corte.getIdElemento()).style(Style.style(Color.cyan)),
                     new LabelElement(corte.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(corte.getEtiqueta()).style(Style.style(Color.yellow)),
                     new LabelElement(corte.getConfiguracion().getId().toString())
@@ -167,44 +162,35 @@ public class corte extends BaseCommand {
     /**
      * Elimina elemento del catálogo por identificador.
      *
-     * @param id identificador de elemento a eliminar.
+     * @param abreviatura abreviatura de elemento a eliminar.
      * @return String.
      */
     @Command
     @Usage("Eliminar un elemento del catalogo Corte Diamante especificado por ID.")
     public String eliminar(
-            @Usage("identificador de la entrada del cat\u00E1logo.")
+            @Usage("Abreviatura de la entrada del cat\u00E1logo.")
             @Required
-            @Argument String id) {
+            @Argument String abreviatura) {
 
-        this.getController().delete(Long.parseLong(id));
+        this.getController().delete(abreviatura);
 
-        return "El elemento con ID " + id + " fue eliminado exitosamente!";
+        return "El elemento con Abreviatura " + abreviatura + " fue eliminado exitosamente!";
     }
 
 
     /**
-     * Agrega elemento de catálogo de tipo Corte.
+     * Agrega elemento de catálogo de tipo RangoOro.
      * @param context
      * @param abreviatura
      * @param etiqueta
-     * @param configuracion
      */
     @Command
     @Usage("Agrega un elemento al catalogo de tipo Corte Diamante.")
     public void agregar(InvocationContext<Object> context,
                         @Usage("Abreviatura")
                         @Required
-                        @Option(names = {"a", "abreviatura"})
-                        String abreviatura,
-                        @Usage("Etiqueta")
-                        @Required
-                        @Option(names = {"e", "etiqueta"})
-                        String etiqueta,
-                        @Usage("ID Configuración.")
-                        @Required
-                        @Option(names = {"c", "configuracion"})
-                        String configuracion) {
+                        @Option(names = {"a", "abreviatura"}) String abreviatura,
+                        @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
 
 
         try {
@@ -212,14 +198,12 @@ public class corte extends BaseCommand {
 
             corte.setAbreviatura(abreviatura);
             corte.setEtiqueta(etiqueta);
-            corte.setConfiguracion(this.getControllerConfig().findOne((Long.parseLong(configuracion))));
 
-            this.getController().save(corte);
+            corte = this.getController().save(corte);
 
             table = getTable();
 
             table.row(
-                    new LabelElement(corte.getIdElemento()).style(Style.style(Color.cyan)),
                     new LabelElement(corte.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(corte.getEtiqueta()).style(Style.style(Color.yellow)),
                     new LabelElement(corte.getConfiguracion().getId().toString())
