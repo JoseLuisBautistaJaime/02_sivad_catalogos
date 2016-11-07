@@ -58,7 +58,7 @@ public class QuilatajeDiamanteResourceITest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void getAllTest() throws Exception {
         mockQuilatajeDiamanteService.perform(get("/catalogos/diamantes/quilatajes_diamantes"))
             .andExpect(status().isOk())
@@ -91,7 +91,7 @@ public class QuilatajeDiamanteResourceITest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void getAllDependenciasFalseTestTest() throws Exception {
         mockQuilatajeDiamanteService.perform(get("/catalogos/diamantes/quilatajes_diamantes?dependencias=false"))
             .andExpect(status().isOk())
@@ -123,7 +123,7 @@ public class QuilatajeDiamanteResourceITest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void getAllDependenciasTrueTest() throws Exception {
         mockQuilatajeDiamanteService.perform(get("/catalogos/diamantes/quilatajes_diamantes?dependencias=true"))
             .andExpect(status().isNotAcceptable())
@@ -149,7 +149,7 @@ public class QuilatajeDiamanteResourceITest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void getAllDependenciasSinValorTest() throws Exception {
         mockQuilatajeDiamanteService.perform(get("/catalogos/diamantes/quilatajes_diamantes?dependencias="))
             .andExpect(status().isBadRequest())
@@ -175,7 +175,7 @@ public class QuilatajeDiamanteResourceITest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void getOneTest() throws Exception {
         mockQuilatajeDiamanteService.perform(get("/catalogos/diamantes/quilatajes_diamantes/0_25_Q"))
             .andExpect(status().isOk())
@@ -205,7 +205,7 @@ public class QuilatajeDiamanteResourceITest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void getOneNoElementoTest() throws Exception {
         mockQuilatajeDiamanteService.perform(get("/catalogos/diamantes/quilatajes_diamantes/NA"))
             .andExpect(status().isNotFound())

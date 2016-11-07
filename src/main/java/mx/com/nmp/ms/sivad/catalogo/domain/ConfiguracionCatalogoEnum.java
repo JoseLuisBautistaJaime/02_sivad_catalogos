@@ -27,7 +27,7 @@ public enum ConfiguracionCatalogoEnum {
     GRUPO_COLOR("GrupoColor", DominioEnum.DIAMANTES),
     METAL("Metal", DominioEnum.ALHAJAS),
     MOTIVO_BAJA_PRESTAMO("MotivoBajaPrestamo", DominioEnum.DIAMANTES),
-    QUILATAJE_DIAMANTE("QuilatajeDiamante", DominioEnum.ALHAJAS),
+    QUILATAJE_DIAMANTE("QuilatajeDiamante", DominioEnum.DIAMANTES),
     QUILATAJE_ORO("QuilatajeOro", DominioEnum.ALHAJAS),
     TIPO_PIEDRA_COMPLEMENTARIA("TipoPiedraComplementaria", DominioEnum.DIAMANTES),
     TIPO_PRENDA("TipoPrenda", DominioEnum.ALHAJAS);

@@ -1,5 +1,5 @@
 --
--- Datos de prueba para catálogo Quilataje Oro.
+-- Datos de prueba para catálogo Quilataje Diamante.
 --
 
 INSERT INTO CNF_CONFIGURACION_CATALOGO(id, dominio, tipo, valor_default, descripcion) VALUES (18,'Diamantes','QuilatajeDiamante','0_25_Q','Catálogo de Quilatajes Diamantes');

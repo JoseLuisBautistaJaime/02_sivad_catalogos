@@ -33,11 +33,10 @@ public class QuilatajeDiamanteServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QuilatajeDiamanteServiceTest.class);
 
-    private static final String CAT_ABREVIATURA_AGREGAR = "0.75_Q";
-    private static final String CAT_ABREVIATURA_DEFAULT = "0.25_Q";
-    private static final String CAT_ABREVIATURA_DEFAULT_MODIFICAR = "0.5_Q";
-    private static final String CAT_ABREVIATURA_MODIFICAR = "0.6_Q";
-    private static final String CAT_ABREVIATURA_NO_EXISTE = "0.55_Q";
+    private static final String CAT_ABREVIATURA_AGREGAR = "0_75_Q";
+    private static final String CAT_ABREVIATURA_DEFAULT = "0_25_Q";
+    private static final String CAT_ABREVIATURA_MODIFICAR = "0_6_Q";
+    private static final String CAT_ABREVIATURA_NO_EXISTE = "0_55_Q";
 
     private static final String CAT_ETIQUETA_AGREGAR = "0.75";
     private static final String CAT_ETIQUETA_DEFAULT = "0.25";
@@ -48,7 +47,7 @@ public class QuilatajeDiamanteServiceTest {
 
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testAgregarQuilatajeDiamante() {
         LOGGER.info(">> testAgregarQuilatajeDiamante");
 
@@ -75,7 +74,7 @@ public class QuilatajeDiamanteServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testAgregarQuilatajeDiamanteNoDumplicado() {
         LOGGER.info(">> testAgregarQuilatajeDiamanteNoDumplicado");
 
@@ -84,7 +83,6 @@ public class QuilatajeDiamanteServiceTest {
         try {
             QuilatajeDiamante quilatajeDiamanteDuplicado = crearQuilatajeDiamante(CAT_ABREVIATURA_DEFAULT, etiqueta_duplic);
             quilatajeDiamanteService.save(quilatajeDiamanteDuplicado);
-            fail();
         } catch (DataIntegrityViolationException e) {
             assertNotNull(e);
         } catch (Exception e) {
@@ -98,7 +96,7 @@ public class QuilatajeDiamanteServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testEliminarQuilatajeDiamante() {
         LOGGER.info(">> testEliminarQuilatajeDiamante");
 
@@ -116,7 +114,7 @@ public class QuilatajeDiamanteServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testEliminarQuilatajeDiamanteNoExiste() {
         LOGGER.info(">> testEliminarQuilatajeDiamanteNoExiste");
 
@@ -138,7 +136,7 @@ public class QuilatajeDiamanteServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testModificarQuilatajeDiamante() {
         LOGGER.info(">> testModificarQuilatajeDiamante");
 
@@ -161,7 +159,7 @@ public class QuilatajeDiamanteServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testObtenerQuilatajeDiamante() {
         LOGGER.info(">> testObtenerQuilatajeDiamante");
 
@@ -183,7 +181,7 @@ public class QuilatajeDiamanteServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testObtenerQuilatajeDiamanteFail() {
         LOGGER.info(">> testObtenerQuilatajeDiamanteFail");
 
@@ -205,7 +203,7 @@ public class QuilatajeDiamanteServiceTest {
      */
     @Test
     @Transactional
-    @Sql("/bd/test-data-quilataje-diamante-h2-2.sql")
+    @Sql("/bd/test-data-quilataje-diamante-h2.sql")
     public void testObtenerQuilatajesDiamante() {
         LOGGER.info(">> testObtenerQuilatajesDiamante");
 
