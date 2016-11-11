@@ -67,10 +67,14 @@ public class CatalogosApplication {
 
         Environment env = app.run(args).getEnvironment();
         LOGGER.info("\n----------------------------------------------------------\n\t" +
-                "Aplicacion '{}' en ejecucion. URLs:\n\t" +
-                "Local: \t\thttp://127.0.0.1:{}\n\t" +
+                "Arquetipo MS v{}\n\t" +
+                "Aplicacion '{}' v{} en ejecucion. URLs:\n\t" +
+                "Local: \t\thttp://{}:{}\n\t" +
                 "Externa: \thttp://{}:{}\n----------------------------------------------------------",
+            env.getProperty("info.arquetipo.version"),
             env.getProperty("spring.application.name"),
+            env.getProperty("info.microservicio.version"),
+            env.getProperty("arquetipo.localhost.address"),
             env.getProperty("server.port"),
             InetAddress.getLocalHost().getHostAddress(),
             env.getProperty("server.port"));
