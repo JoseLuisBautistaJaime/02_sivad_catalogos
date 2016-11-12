@@ -4,6 +4,7 @@
  */
 package mx.com.nmp.ms.sivad.catalogo;
 
+import mx.com.nmp.ms.arquetipo.logger.util.EnvironmentLogUtil;
 import mx.com.nmp.ms.arquetipo.profile.DefaultProfileUtil;
 import mx.com.nmp.ms.arquetipo.profile.NmpProfile;
 import mx.com.nmp.ms.sivad.catalogo.config.AppProperties;
@@ -21,7 +22,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -66,22 +66,7 @@ public class CatalogosApplication {
         DefaultProfileUtil.addDefaultProfile(app);
 
         Environment env = app.run(args).getEnvironment();
-        LOGGER.info("\n----------------------------------------------------------\n\t" +
-                "Arquetipo MS v{}\n\t" +
-                "Aplicacion '{}' v{} en ejecucion. URLs:\n\t" +
-                "Local: \t\thttp://{}:{}\n\t" +
-                "Externa: \thttp://{}:{}\n----------------------------------------------------------",
-            env.getProperty("info.arquetipo.version"),
-            env.getProperty("spring.application.name"),
-            env.getProperty("info.microservicio.version"),
-            env.getProperty("arquetipo.localhost.address"),
-            env.getProperty("server.port"),
-            InetAddress.getLocalHost().getHostAddress(),
-            env.getProperty("server.port"));
-
-        String configServerStatus = env.getProperty("configserver.status");
-        LOGGER.info("\n----------------------------------------------------------\n\t" +
-                "Servidor de Configuracion: \t{}\n----------------------------------------------------------",
-            configServerStatus == null ? "No encontrado o no establecido." : configServerStatus);
+        LOGGER.info(EnvironmentLogUtil.envHeader(env));
+        LOGGER.info(EnvironmentLogUtil.configServerHeader(env));
     }
 }
