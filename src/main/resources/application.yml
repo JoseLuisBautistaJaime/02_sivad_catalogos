@@ -15,8 +15,6 @@ info:
 microservicio:
   cache: # Hibernate 2nd level cache, used by CacheConfiguration
     timeToLiveSeconds: 3600
-    hazelcast:
-      backupCount: 1
 
 
 spring:
