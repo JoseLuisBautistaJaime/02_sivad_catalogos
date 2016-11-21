@@ -34,9 +34,9 @@
         <!-- IMPORTANTE: Se debe definir como propiedad para que pueda ser inyectada
             en configuración de Spring y ser utilizada para su publicación -->
         <nmp.arquetipo.version>0.8.12-SNAPSHOT</nmp.arquetipo.version>
+		<argLine>-Xmx256m</argLine>
 
         <!-- ordenar alfabéticamente -->
-        <hazelcast.version>3.6.5</hazelcast.version>
         <!-- Spring Boot 1.4.x es la última versión que soporta Hibernate 4.3.X;
             para usar Hibernate 5 hay que borrar la siguiente línea -->
         <hibernate.version>4.3.11.Final</hibernate.version>
@@ -132,6 +132,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+		<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.ehcache</groupId>
+                    <artifactId>ehcache-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
@@ -144,20 +155,10 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-            <version>${hazelcast.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-hibernate4</artifactId>
-            <version>${hazelcast.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-spring</artifactId>
-            <version>${hazelcast.version}</version>
+
+		<dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate4</artifactId>
         </dependency>
 
         <!-- Spring Cloud -->
@@ -178,6 +179,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+		<dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-ehcache</artifactId>
+            <version>${dropwizard-metrics.version}</version>
         </dependency>
 
         <!-- starter de Spring Boot 1.4 que pone en deprecated el starter "-ws" -->

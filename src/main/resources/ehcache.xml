@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         name="CM1"
+         updateCheck="false"
+         maxBytesLocalHeap="16M">
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+        eternal="false"
+        overflowToDisk="false"
+        />
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.QuilatajeDiamante"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.CertificadoDiamantes"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.ColorOro"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.QuilatajeOro"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.MotivoBajaPrestamo"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.TipoPrenda"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.ClaridadDiamante"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.TipoPiedraComplementaria"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.CalidadLey"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.CondicionPrenda"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="mx.com.nmp.ms.sivad.catalogo.domain.Metal"
+           timeToLiveSeconds="3600">
+    </cache>
+</ehcache>

@@ -5,7 +5,6 @@
 package mx.com.nmp.ms.sivad.catalogo.config;
 
 import com.codahale.metrics.MetricRegistry;
-import com.hazelcast.core.HazelcastInstance;
 import mx.com.nmp.ms.arquetipo.profile.NmpProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +39,6 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
 
     @Autowired(required = false)
     private MetricRegistry metricRegistry;
-
-    // se inyecta instancia Hazelcast para forzar su inicialización antes de que el Servlet filter la utilice.
-    @Inject
-    private HazelcastInstance hazelcastInstance;
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
