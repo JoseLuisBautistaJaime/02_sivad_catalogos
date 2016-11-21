@@ -4,14 +4,9 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.repository;
 
-import mx.com.nmp.ms.sivad.catalogo.domain.CatalogoPrueba;
-import mx.com.nmp.ms.sivad.catalogo.domain.RangoMetal;
 import mx.com.nmp.ms.sivad.catalogo.domain.RangoOro;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Repositorio para entidades de tipo "RangoOro".
