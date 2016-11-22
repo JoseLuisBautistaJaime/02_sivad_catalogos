@@ -32,19 +32,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .headers()
             .frameOptions()
             .disable()
-            .and()
+        .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+        .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, "/api/**").authenticated()
             .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
             .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
             .anyRequest().permitAll()
-            .and()
+        .and()
             .exceptionHandling()
             .authenticationEntryPoint(authenticationEntryPoint)
-            .and()
+        .and()
             .httpBasic();
     }
 
