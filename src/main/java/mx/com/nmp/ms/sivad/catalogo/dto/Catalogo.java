@@ -8,7 +8,7 @@
 package mx.com.nmp.ms.sivad.catalogo.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import mx.com.nmp.ms.arquetipo.date.CustomDateTimeSerializer;
 import org.joda.time.DateTime;
@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
-@JsonRootName("catalogo")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class Catalogo implements Serializable {
     private static final long serialVersionUID = -6312079590372674003L;
 
