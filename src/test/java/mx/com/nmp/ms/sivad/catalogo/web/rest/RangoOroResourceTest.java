@@ -40,11 +40,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CatalogosApplication.class)
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class RangoOroResourceTest {
-    private static final String DOMINIO_PATH = "$.dominio";
-    private static final String TIPO_PATH = "$.tipo";
+    private static final String DOMINIO_PATH = "$.Catalogo.dominio";
+    private static final String TIPO_PATH = "$.Catalogo.tipo";
 
-    private static final String ABREVIATURA_PATH = "$.listaValores[*].abreviatura";
-    private static final String ETIQUETA_PATH = "$.listaValores[*].etiqueta";
+    private static final String ABREVIATURA_PATH = "$.Catalogo.listaValores[*].abreviatura";
+    private static final String ETIQUETA_PATH = "$.Catalogo.listaValores[*].etiqueta";
 
     private static final String ABREVIATURA_F1 = "F1";
     private static final String ETIQUETA_F1 = "Pedaceria y Piezas Rotas";

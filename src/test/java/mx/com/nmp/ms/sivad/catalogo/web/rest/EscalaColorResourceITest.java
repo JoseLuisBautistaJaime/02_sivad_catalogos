@@ -34,12 +34,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CatalogosApplication.class)
 public class EscalaColorResourceITest {
-    private static final String DOMINIO_PATH = "$.dominio";
-    private static final String TIPO_PATH = "$.tipo";
+    private static final String DOMINIO_PATH = "$.Catalogo.dominio";
+    private static final String TIPO_PATH = "$.Catalogo.tipo";
 
-    private static final String ABREVIATURA_PADRES_PATH = "$.listaValores[*].padres[*].abreviatura";
-    private static final String ABREVIATURA_PATH = "$.listaValores[*].abreviatura";
-    private static final String ETIQUETA_PATH = "$.listaValores[*].etiqueta";
+    private static final String ABREVIATURA_PADRES_PATH = "$.Catalogo.listaValores[*].padres[*].abreviatura";
+    private static final String ABREVIATURA_PATH = "$.Catalogo.listaValores[*].abreviatura";
+    private static final String ETIQUETA_PATH = "$.Catalogo.listaValores[*].etiqueta";
 
     private static final String ABREVIATURA_INCOLORO = "INCOLORO";
     private static final String ETIQUETA_INCOLORO = "Incoloro";

@@ -73,12 +73,12 @@ public class QuilatajeOroResourceIntTest {
         test.perform(get("/catalogos/diamantes/alhajas/quilatajes"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("12_Q"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("12"))
-                .andExpect(jsonPath("$.listaValores[1].abreviatura").value("14_Q"))
-                .andExpect(jsonPath("$.listaValores[1].etiqueta").value("14"));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("12_Q"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("12"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].abreviatura").value("14_Q"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].etiqueta").value("14"));
     }
 
     /**
@@ -106,12 +106,12 @@ public class QuilatajeOroResourceIntTest {
         test.perform(get("/catalogos/diamantes/alhajas/quilatajes?dependencias=false"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("12_Q"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("12"))
-                .andExpect(jsonPath("$.listaValores[1].abreviatura").value("14_Q"))
-                .andExpect(jsonPath("$.listaValores[1].etiqueta").value("14"));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("12_Q"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("12"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].abreviatura").value("14_Q"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].etiqueta").value("14"));
     }
 
     /**
@@ -190,10 +190,10 @@ public class QuilatajeOroResourceIntTest {
         test.perform(get("/catalogos/diamantes/alhajas/quilatajes/12_Q"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("12_Q"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("12"));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.QUILATAJE_ORO.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("12_Q"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("12"));
     }
 
     /**

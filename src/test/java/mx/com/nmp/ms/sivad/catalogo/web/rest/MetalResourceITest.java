@@ -104,12 +104,12 @@ public class MetalResourceITest {
         mockMetalService.perform(get("/catalogos/diamantes/alhajas/metales"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
-                .andExpect(jsonPath("$.tipo").value(configuracionCatalogo.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value(ABREVIATURA_PRUEBA_A))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value(ETIQUETA_PRUEBA_A))
-                .andExpect(jsonPath("$.listaValores[1].abreviatura").value(ABREVIATURA_PRUEBA_B))
-                .andExpect(jsonPath("$.listaValores[1].etiqueta").value(ETIQUETA_PRUEBA_B));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(configuracionCatalogo.getDominio()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(configuracionCatalogo.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value(ABREVIATURA_PRUEBA_A))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value(ETIQUETA_PRUEBA_A))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].abreviatura").value(ABREVIATURA_PRUEBA_B))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].etiqueta").value(ETIQUETA_PRUEBA_B));
     }
 
     /**
@@ -123,10 +123,10 @@ public class MetalResourceITest {
         mockMetalService.perform(get("/catalogos/diamantes/alhajas/metales/BB"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(configuracionCatalogo.getDominio()))
-                .andExpect(jsonPath("$.tipo").value(configuracionCatalogo.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value(ABREVIATURA_PRUEBA_B))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value(ETIQUETA_PRUEBA_B));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(configuracionCatalogo.getDominio()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(configuracionCatalogo.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value(ABREVIATURA_PRUEBA_B))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value(ETIQUETA_PRUEBA_B));
     }
 
     /**

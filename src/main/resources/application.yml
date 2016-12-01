@@ -6,7 +6,6 @@ spring:
       hibernate.generate_statistics: true
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
       hibernate.cache.use_minimal_puts: true
-      hibernate.cache.hazelcast.use_lite_member: true
 
 # ===================================================================
 # Propiedades especificas de la aplicacion (microservicio)
@@ -20,7 +19,6 @@ info:
     descripcion: #description#
   spring-boot:
     version: #parent.version#
-
 
 microservicio:
   cache: # Hibernate 2nd level cache, used by CacheConfiguration

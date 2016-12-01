@@ -73,12 +73,12 @@ public class ColorOroResourceIntTest {
         test.perform(get("/catalogos/diamantes/alhajas/colores_oro"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(ConfiguracionCatalogoEnum.COLOR_ORO.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(ConfiguracionCatalogoEnum.COLOR_ORO.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("AM"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("Amarillo"))
-                .andExpect(jsonPath("$.listaValores[1].abreviatura").value("BL"))
-                .andExpect(jsonPath("$.listaValores[1].etiqueta").value("Blanco"));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.COLOR_ORO.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.COLOR_ORO.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("AM"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("Amarillo"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].abreviatura").value("BL"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].etiqueta").value("Blanco"));
     }
 
     /**
@@ -106,12 +106,12 @@ public class ColorOroResourceIntTest {
         test.perform(get("/catalogos/diamantes/alhajas/colores_oro?dependencias=false"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(ConfiguracionCatalogoEnum.COLOR_ORO.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(ConfiguracionCatalogoEnum.COLOR_ORO.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("AM"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("Amarillo"))
-                .andExpect(jsonPath("$.listaValores[1].abreviatura").value("BL"))
-                .andExpect(jsonPath("$.listaValores[1].etiqueta").value("Blanco"));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.COLOR_ORO.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.COLOR_ORO.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("AM"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("Amarillo"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].abreviatura").value("BL"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].etiqueta").value("Blanco"));
     }
 
     /**
@@ -190,10 +190,10 @@ public class ColorOroResourceIntTest {
         test.perform(get("/catalogos/diamantes/alhajas/colores_oro/AM"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.dominio").value(ConfiguracionCatalogoEnum.COLOR_ORO.getDominioUnwrap()))
-                .andExpect(jsonPath("$.tipo").value(ConfiguracionCatalogoEnum.COLOR_ORO.getTipo()))
-                .andExpect(jsonPath("$.listaValores[0].abreviatura").value("AM"))
-                .andExpect(jsonPath("$.listaValores[0].etiqueta").value("Amarillo"));
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.COLOR_ORO.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.COLOR_ORO.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("AM"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("Amarillo"));
     }
 
     /**
