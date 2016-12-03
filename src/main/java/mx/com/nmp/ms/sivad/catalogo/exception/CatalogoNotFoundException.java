@@ -8,7 +8,7 @@
 package mx.com.nmp.ms.sivad.catalogo.exception;
 
 /**
- * Excepción que sera lanzada cudo no se encuetre la configuración de un catálogo.
+ * Excepción que será lanzada cuando no se encuentre la configuración de un catálogo.
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
