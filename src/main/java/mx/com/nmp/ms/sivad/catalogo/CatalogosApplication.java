@@ -58,8 +58,10 @@ public class CatalogosApplication {
     }
 
     /**
-     * Metodo principal de la aplicacion.
-     * @param args Lista de parametros.
+     * Metodo principal, utilizado para ejecutar la aplicación
+     *
+     * @param args argumentos de línea de comandos
+     * @throws UnknownHostException si no se puede convertir el nombre de localhost a una dirección
      */
     public static void main(String[] args) throws UnknownHostException {
         SpringApplication app = new SpringApplication(CatalogosApplication.class);
