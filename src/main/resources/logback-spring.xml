@@ -33,6 +33,7 @@
     <logger name="org.crsh" level="WARN" />
     <logger name="org.hibernate" level="WARN" />
     <logger name="org.springframework" level="WARN" />
+    <logger name="org.springframework.cloud.config" level="DEBUG" />
     <logger name="org.xnio" level="WARN" />
     <logger name="sun.net" level="WARN" />
 

@@ -1,7 +1,11 @@
 spring:
-  application:
-    name: sivad-catalogos
-  profiles:
-    active: #spring.profiles.active#
-  config:
-    location: classpath:/core-application.yml,classpath:/application.yml
+    application:
+        name: sivad-catalogos
+    profiles:
+        active: #spring.profiles.active#
+    config:
+        location: classpath:/core-application.yml,classpath:/application.yml
+    cloud:
+        config:
+            uri: https://nmp-config-server.cfapps.io
+            password: password
