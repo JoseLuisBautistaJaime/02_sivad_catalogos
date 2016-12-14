@@ -45,10 +45,10 @@ public class ConfiguracionCatalogoResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<ConfiguracionCatalogo>> getAllConfiguracionCatalogo(Pageable paginacion)
+    public ResponseEntity<List<ConfiguracionCatalogo>> getAll(Pageable paginacion)
             throws URISyntaxException {
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(">> getAllConfiguracionCatalogo({})", paginacion);
+            LOGGER.info(">> getAll({})", paginacion);
         }
 
         Page<ConfiguracionCatalogo> page = configuracionCatalogoService.findAll(paginacion);

@@ -22,7 +22,6 @@ import java.net.URISyntaxException;
  *
  * @author jbautista
  */
-
 @RestController
 @RequestMapping("/catalogos")
 public class MotivoBajaPrestamoResource {

@@ -79,7 +79,7 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
             params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
         if (dependencias) {
             return super.getAll();
         } else {

@@ -97,7 +97,7 @@ public class GradoColorResource {
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
             params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias") boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
         if (dependencias) {
             LOGGER.warn("El catálogo no contiene dependencias.");
             return new ResponseEntity<>(NOT_ACCEPTABLE);
@@ -118,7 +118,7 @@ public class GradoColorResource {
     @RequestMapping(value = "/{abreviatura}",
             method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> getOne(@PathVariable String abreviatura) {
+    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
         GradoColor result = gradoColorService.getOne(abreviatura);
 
         if (ObjectUtils.isEmpty(result)) {

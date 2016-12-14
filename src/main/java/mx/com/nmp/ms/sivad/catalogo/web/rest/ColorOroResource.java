@@ -77,7 +77,7 @@ public class ColorOroResource {
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = "dependencias")
     @Timed
-    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
         if (dependencias) {
             LOGGER.warn("El catalogo ColorOro no contiene dependencias.");
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);

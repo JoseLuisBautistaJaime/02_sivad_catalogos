@@ -100,7 +100,7 @@ public class RangoMetalResource {
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = "dependencias")
     @Timed
-    public ResponseEntity<Catalogo> getAll(@RequestParam("dependencias") boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
         if (dependencias) {
             LOGGER.warn("El cat\u00E1logo no contiene dependencias.");
             return new ResponseEntity<>(NOT_ACCEPTABLE);
