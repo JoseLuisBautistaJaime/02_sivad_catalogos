@@ -53,8 +53,8 @@ public class corte extends BaseCommand {
                 .overflow(Overflow.WRAP)
                 .rightCellPadding(1);
         table.header(
-                new LabelElement("Abreviatura").style(Style.style(Decoration.bold)),
-                new LabelElement("Etiqueta").style(Style.style(Decoration.bold))
+                new LabelElement("Abreviatura").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white)),
+                new LabelElement("Etiqueta").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white))
         );
 
         return table;
