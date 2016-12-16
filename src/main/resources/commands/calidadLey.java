@@ -19,7 +19,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
-@Usage("Administra operaciones del cat\u00e1logo Calidades Ley.")
+@Usage("Administración del cat\u00e1logo Calidades Ley.")
 public class calidadLey extends BaseCommand {
 
     private TableElement table;
@@ -44,7 +44,7 @@ public class calidadLey extends BaseCommand {
             .separator(BorderStyle.DASHED)
             .overflow(Overflow.HIDDEN)
             .rightCellPadding(1);
-        table.row(
+        table.header(
             new LabelElement("Abreviatura").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white)),
             new LabelElement("Etiqueta").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white))
         );
@@ -60,16 +60,17 @@ public class calidadLey extends BaseCommand {
      * @param etiqueta    nueva etiqueta que sera asignada al elemento.
      */
     @Command
-    @Usage("Modifica los datos del elemento del cat\u00e1logo mediante la Abreviatura")
+    @Usage("Permite actualizar un elemento del cat\u00e1logo")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("Elemento a Modificar") @Required @Option(names = {"m", "abreviaturaActual"}) String abreviaturaActual,
+                          @Usage("Abreviatura actual del elemento a actualizar")
+                          @Required @Option(names = {"i", "abreviaturaActual"}) String abreviaturaActual,
                           @Usage("Abreviatura") @Option(names = {"a", "abreviatura"}) String abreviatura,
                           @Usage("Etiqueta") @Option(names = {"e", "etiqueta"}) String etiqueta) throws Exception {
 
         CalidadLey calidadLeyModificar = new CalidadLey();
 
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
-            context.provide(new LabelElement("\nSe requiere al menos un elemento [Abreviatura, Etiqueta] para realizar la operaci\u00f3n \n"));
+            context.provide(new LabelElement("\nSe requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta]) para realizar la actualizaci\u00f3n."));
         } else {
             try {
                 calidadLeyModificar.setAbreviatura(abreviatura);
@@ -83,12 +84,12 @@ public class calidadLey extends BaseCommand {
                     new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow))
                 );
 
-                context.provide(new LabelElement("\nEl elemento con abreviatura ["+abreviaturaActual+"] ha sido modificado:\n"));
+                context.provide(new LabelElement("\nEl elemento con abreviatura ["+abreviaturaActual+"] ha sido modificado:"));
                 context.provide(table);
             } catch (CatalogoNotFoundException e) {
-                context.provide(new LabelElement("\nEl elemento del cat\u00e1logo con abreviatura [" + abreviaturaActual + "] no existe.\n"));
+                context.provide(new LabelElement("\nEl elemento del cat\u00e1logo con abreviatura [" + abreviaturaActual + "] no existe."));
             } catch (DataIntegrityViolationException e) {
-                context.provide(new LabelElement("\nEl elemento con abreviatura [" + abreviaturaActual + "] ya existe.\n"));
+                context.provide(new LabelElement("\nYa existe un elemento del cat\u00e1logo con abreviatura [" + abreviaturaActual + "]."));
             }
 
         }
@@ -102,22 +103,27 @@ public class calidadLey extends BaseCommand {
      * @param context contexto del objeto.
      */
     @Command
-    @Usage("Muestra los elementos del cat\u00e1logo.")
+    @Usage("Permite recuperar todos los elementos del cat\u00e1logo")
     public void elementos(InvocationContext<Object> context) {
 
         try {
             List<CalidadLey> lstCalidadLey = this.getController().findAll();
 
-            table = getTable();
-            for (CalidadLey calidadLey : lstCalidadLey) {
-                table.row(
-                    new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow))
-                );
+            if (lstCalidadLey != null && lstCalidadLey.size() > 0) {
+                table = getTable();
+                for (CalidadLey calidadLey : lstCalidadLey) {
+                    table.row(
+                        new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow))
+                    );
+                }
+
+                context.provide(table);
+            } else {
+                context.provide(new LabelElement("\nEl cat\u00e1logo no contiene elementos."));
             }
 
-            context.provide(new LabelElement("\nElementos del cat\u00e1logo:\n"));
-            context.provide(table);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -129,9 +135,9 @@ public class calidadLey extends BaseCommand {
      * @param context contexto del objeto.
      */
     @Command
-    @Usage("Muestra un elemento del cat\u00e1logo.")
+    @Usage("Permite recuperar el elemento del cat\u00e1logo que coincida con la abreviatura indicada")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("Abreviatura del elemento.") @Required @Argument String abreviatura) throws Exception {
+                         @Usage("Abreviatura del elemento a recuperar") @Required @Argument String abreviatura) throws Exception {
 
         try {
             CalidadLey calidadLey = this.getController().obtenerElementoAbreviatura(abreviatura);
@@ -141,11 +147,10 @@ public class calidadLey extends BaseCommand {
                 new LabelElement(calidadLey.getAbreviatura()).style(Style.style(Color.green)),
                 new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow))
             );
-            context.provide(new LabelElement("\nElemento del cat\u00e1logo:\n"));
-            context.provide(table);
 
+            context.provide(table);
         } catch (CatalogoNotFoundException e) {
-            context.provide(new LabelElement("\nEl elemento con Abrevitura [" + abreviatura + "] no existe.\n"));
+            context.provide(new LabelElement("\nEl elemento del cat\u00e1ogo con abreviatura [" + abreviatura + "] no existe.\n"));
         } catch (Exception e) {
             context.provide("\nOcurrio una error al realizar la operaci\u00f3n.\n");
         }
@@ -158,12 +163,12 @@ public class calidadLey extends BaseCommand {
      * @return String.
      */
     @Command
-    @Usage("Elimina un elemento del cat\u00e1go por abreviatura.")
+    @Usage("Permite eliminar un elemento del cat\u00e1logo")
     public String eliminar(
-        @Usage("Abreviatura del cat\u00e1logo.") @Required @Argument String abreviatura) {
+        @Usage("Abreviatura del elemento a eliminar") @Required @Argument String abreviatura) {
         try {
             this.getController().delete(abreviatura);
-            return "\nEl elemento con abreviatura [" + abreviatura + "] fue eliminado exitosamente.\n";
+            return "\nEl elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del cat\u00e1logo.\n";
         } catch (CatalogoNotFoundException e) {
             return "\nEl elemento del cat\u00e1logo con abreviatura [" + abreviatura + "] no existe.\n";
         }
@@ -177,7 +182,7 @@ public class calidadLey extends BaseCommand {
      * @param etiqueta    etiqueta del elemento.
      */
     @Command
-    @Usage("Agrega un elemento al cat\u00e1logo de tipo CondicionPrenda.")
+    @Usage("Permite agregar un nuevo elemento al cat\u00e1logo")
     public void agregar(InvocationContext<Object> context,
                         @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
                         @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) throws Exception {
@@ -194,10 +199,10 @@ public class calidadLey extends BaseCommand {
                 new LabelElement(calidadLey.getEtiqueta()).style(Style.style(Color.yellow))
             );
 
-            context.provide(new LabelElement("\nEl elemento con abreviatura ["+abreviatura+"] fue agregado correctamente.\n"));
+            context.provide(new LabelElement("\nEl elemento con abreviatura ["+abreviatura+"] fue agregado correctamente al cat\u00e1logo."));
             context.provide(table);
         } catch (DataIntegrityViolationException e) {
-            context.provide(new LabelElement("\nEl elemento con Abrevitura [" + abreviatura + "] ya existe.\n"));
+            context.provide(new LabelElement("\nYa existe un elemento del cat\u00e1logo con abreviatura [" + abreviatura + "]."));
         } catch (Exception e) {
             context.provide("\nOcurrio una error al realizar la operaci\u00f3n");
         }
