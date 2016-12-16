@@ -17,7 +17,7 @@ import org.springframework.beans.factory.BeanFactory;
 
 import java.util.List;
 
-@Usage("Administra operaciones del catalogo RangoMetal.")
+@Usage("Administración del catálogo Rango Metal")
 public class rangoMetal extends BaseCommand {
 
     private TableElement table;
@@ -52,10 +52,9 @@ public class rangoMetal extends BaseCommand {
                 .separator(BorderStyle.DASHED)
                 .overflow(Overflow.WRAP)
                 .rightCellPadding(1);
-        table.row(
-                new LabelElement("ABREVIATURA").style(Style.style(Decoration.bold)),
-                new LabelElement("ETIQUETA").style(Style.style(Decoration.bold)),
-                new LabelElement("ID_CONFIGURACION").style(Style.style(Decoration.bold))
+        table.header(
+            new LabelElement("Abreviatura").style(Style.style(Decoration.bold)),
+            new LabelElement("Etiqueta").style(Style.style(Decoration.bold))
         );
 
         return table;
@@ -70,9 +69,9 @@ public class rangoMetal extends BaseCommand {
      * @param etiqueta nueva etiqueta que sera asignada al elemento.
      */
     @Command
-    @Usage("Modifica los datos del elemento del catalogo Rango Metal especidifcado por una ID")
+    @Usage("Permite actualizar un elemento del catálogo")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("Abreviatura del elemento que se quiere actualizar")
+                          @Usage("Abreviatura actual del elemento a actualizar")
                           @Required @Option(names = {"i", "abrAnterior"}) String abrAnterior,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
                           @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
@@ -89,11 +88,10 @@ public class rangoMetal extends BaseCommand {
 
             table.row(
                     new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(rangoMetal.getConfiguracion().getId().toString())
+                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
             );
 
-            context.provide(new LabelElement("\nEl elemento modificado es:\n"));
+            context.provide(new LabelElement("\nEl elemento con abreviatura [" + abrAnterior + "] ha sido modificado."));
             context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -106,7 +104,7 @@ public class rangoMetal extends BaseCommand {
      * @param context
      */
     @Command
-    @Usage("Muestra los elementos del catalogo RangoMetal.")
+    @Usage("Permite recuperar todos los elementos del catálogo")
     public void elementos(InvocationContext<Object> context) {
 
         try {
@@ -117,12 +115,10 @@ public class rangoMetal extends BaseCommand {
             for (RangoMetal rangoMetal : lstRangoMetal){
                 table.row(
                         new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                        new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow)),
-                        new LabelElement(rangoMetal.getConfiguracion().getId().toString())
+                        new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
                 );
             }
 
-            context.provide(new LabelElement("\nElementos del catalogo Rango Metal:\n"));
             context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -136,9 +132,9 @@ public class rangoMetal extends BaseCommand {
      * @param abreviatura abreviatura de elemento a mostrar.
      */
     @Command
-    @Usage("Muestra un elemento del catalogo RangoMetal.")
+    @Usage("Permite recuperar el elemento del catálogo que coincida con la abreviatura indicada")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("Abreviatura del elemento a recuperar.")
+                         @Usage("Abreviatura del elemento a recuperar")
                          @Required @Argument String abreviatura) {
 
         try {
@@ -148,11 +144,9 @@ public class rangoMetal extends BaseCommand {
 
             table.row(
                     new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(rangoMetal.getConfiguracion().getId().toString())
+                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
             );
 
-            context.provide(new LabelElement("\nElemento del catalogo Rango Metal:\n"));
             context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -165,15 +159,15 @@ public class rangoMetal extends BaseCommand {
      * @param abreviatura abreviatura de elemento a eliminar.
      */
     @Command
-    @Usage("Eliminar un elemento del catalogo RangoMetal especificado por ID.")
+    @Usage("Permite eliminar un elemento del catálogo")
     public String eliminar(
-            @Usage("Abreviatura de la entrada del cat\u00E1logo.")
+            @Usage("Abreviatura del elemento a eliminar")
             @Required
             @Argument String abreviatura) {
 
         this.getController().delete(abreviatura);
 
-        return "El elemento con Abreviatura " + abreviatura + " fue eliminado exitosamente!";
+        return "El elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del catálogo.";
     }
 
 
@@ -184,7 +178,7 @@ public class rangoMetal extends BaseCommand {
      * @param etiqueta
      */
     @Command
-    @Usage("Agrega un elemento al catalogo de tipo RangoMetal.")
+    @Usage("Permite agregar un nuevo elemento al catálogo")
     public void agregar(InvocationContext<Object> context,
                         @Usage("Abreviatura")
                         @Required
@@ -208,11 +202,10 @@ public class rangoMetal extends BaseCommand {
 
             table.row(
                     new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow)),
-                    new LabelElement(rangoMetal.getConfiguracion().getId().toString())
+                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
             );
 
-            context.provide(new LabelElement("\nEl elemento agregado es:\n"));
+            context.provide(new LabelElement("\nEl elemento con abreviatura [" + abreviatura + "] fue agregado correctamente al catálogo."));
             context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -52,7 +52,7 @@ public class corte extends BaseCommand {
                 .separator(BorderStyle.DASHED)
                 .overflow(Overflow.WRAP)
                 .rightCellPadding(1);
-        table.row(
+        table.header(
                 new LabelElement("Abreviatura").style(Style.style(Decoration.bold)),
                 new LabelElement("Etiqueta").style(Style.style(Decoration.bold))
         );
