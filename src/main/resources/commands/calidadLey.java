@@ -89,7 +89,7 @@ public class calidadLey extends BaseCommand {
             } catch (CatalogoNotFoundException e) {
                 context.provide(new LabelElement("\nEl elemento del cat\u00e1logo con abreviatura [" + abreviaturaActual + "] no existe."));
             } catch (DataIntegrityViolationException e) {
-                context.provide(new LabelElement("\nYa existe un elemento del cat\u00e1logo con abreviatura [" + abreviaturaActual + "]."));
+                context.provide(new LabelElement("\nYa existe un elemento del cat\u00e1logo con abreviatura [" + abreviatura + "]."));
             }
 
         }
@@ -150,9 +150,9 @@ public class calidadLey extends BaseCommand {
 
             context.provide(table);
         } catch (CatalogoNotFoundException e) {
-            context.provide(new LabelElement("\nEl elemento del cat\u00e1ogo con abreviatura [" + abreviatura + "] no existe.\n"));
+            context.provide(new LabelElement("\nEl elemento del cat\u00e1ogo con abreviatura [" + abreviatura + "] no existe."));
         } catch (Exception e) {
-            context.provide("\nOcurrio una error al realizar la operaci\u00f3n.\n");
+            context.provide("\nOcurrio una error al realizar la operación.");
         }
     }
 
@@ -168,9 +168,9 @@ public class calidadLey extends BaseCommand {
         @Usage("Abreviatura del elemento a eliminar") @Required @Argument String abreviatura) {
         try {
             this.getController().delete(abreviatura);
-            return "\nEl elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del cat\u00e1logo.\n";
+            return "\nEl elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del cat\u00e1logo.";
         } catch (CatalogoNotFoundException e) {
-            return "\nEl elemento del cat\u00e1logo con abreviatura [" + abreviatura + "] no existe.\n";
+            return "\nEl elemento del cat\u00e1logo con abreviatura [" + abreviatura + "] no existe.";
         }
     }
 
@@ -204,7 +204,7 @@ public class calidadLey extends BaseCommand {
         } catch (DataIntegrityViolationException e) {
             context.provide(new LabelElement("\nYa existe un elemento del cat\u00e1logo con abreviatura [" + abreviatura + "]."));
         } catch (Exception e) {
-            context.provide("\nOcurrio una error al realizar la operaci\u00f3n");
+            context.provide("\nOcurrio una error al realizar la operación.");
         }
     }
 }
