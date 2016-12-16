@@ -19,7 +19,7 @@ import org.springframework.util.ObjectUtils
  *
  * @author jbautista
  */
-@Usage("Administración del cat\u00e1logo Quilataje Oro")
+@Usage("Administración del cat\u00e1logo Quilataje Diamante")
 class quilatajeDiamante {
 
     /**

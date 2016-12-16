@@ -130,7 +130,7 @@ class quilatajeOro {
             try {
                 def quilatajeOro = new QuilatajeOro([abreviatura: abreviatura, etiqueta: etiqueta])
                 def elemento = getServicio(context).update(abreviaturaActual, quilatajeOro)
-                out.println("La abreviatura fue actualizada correctamente.")
+                out.println("El elemento con abreviatura [" + abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
                 out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
