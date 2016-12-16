@@ -131,7 +131,7 @@ class claridad {
             try {
                 def claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta])
                 def elemento = getServicio(context).save(claridadDiamante)
-                out.println("La abreviatura fue actualizada correctamente.")
+                out.println("El elemento con abreviatura ["+ abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
                 out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
