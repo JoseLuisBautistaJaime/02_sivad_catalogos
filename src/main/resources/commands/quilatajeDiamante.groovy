@@ -113,7 +113,7 @@ class quilatajeDiamante {
     @Command
     def modificar(InvocationContext context,
                   @Usage("Abreviatura actual del elemento a actualizar")
-                  @Option(names = ["m", "abreviaturaActual"]) @Required String abreviaturaActual,
+                  @Option(names = ["i", "abreviaturaActual"]) @Required String abreviaturaActual,
                   @Usage("Abreviatura")
                   @Option(names = ["a", "abreviatura"]) String abreviatura,
                   @Usage("Etiqueta")
@@ -126,7 +126,7 @@ class quilatajeDiamante {
             try {
                 def quilatajeDiamante = new QuilatajeDiamante([abreviatura: abreviatura, etiqueta: etiqueta])
                 def elemento = getServicio(context).update(abreviaturaActual, quilatajeDiamante)
-                out.println("La abreviatura fue actualizada correctamente.")
+                out.println("El elemento con abreviatura ["+ abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
                 out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
