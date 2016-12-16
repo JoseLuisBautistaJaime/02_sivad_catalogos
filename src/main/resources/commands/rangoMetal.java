@@ -170,7 +170,6 @@ public class rangoMetal extends BaseCommand {
         return "El elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del catálogo.";
     }
 
-
     /**
      * Agrega elemento de catálogo de tipo RangoMetal.
      * @param context
