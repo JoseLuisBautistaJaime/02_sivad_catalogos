@@ -129,7 +129,7 @@ class certificado {
             try {
                 def certificadoDiamante = new CertificadoDiamantes([abreviatura: abreviatura, etiqueta: etiqueta])
                 def elemento = getServicio(context).save(certificadoDiamante)
-                out.println("La abreviatura fue actualizada correctamente.")
+                out.println("El elemento con abreviatura [" + abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
                 out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
@@ -171,4 +171,5 @@ class certificado {
     private static CertificadoDiamantesService getServicio(InvocationContext context) {
         context.attributes['spring.beanfactory'].getBean(CertificadoDiamantesService)
     }
+
 }
