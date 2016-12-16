@@ -10,7 +10,7 @@ import org.crsh.cli.Usage
 import org.crsh.command.InvocationContext
 
 @SuppressWarnings("GroovyUnusedDeclaration")
-@Usage("Administra los elementos del catálogo Color familia 3")
+@Usage("Administración del catálogo Color familia 3")
 class colorfamilia3 extends basefamiliascolor<GrupoColor> {
     @Usage("""Permite asignar padres a un elemento del catálogo.
                     Detalle de relación. Rol hijo: Color familia 3, Rol padre: Color familia 2""")
