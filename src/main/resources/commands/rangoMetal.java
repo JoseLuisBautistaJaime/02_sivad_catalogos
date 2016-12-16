@@ -110,16 +110,20 @@ public class rangoMetal extends BaseCommand {
         try {
             List<RangoMetal> lstRangoMetal = this.getController().getAll();
 
-            table = getTable();
+            if (lstRangoMetal != null && lstRangoMetal.size() > 0) {
+                table = getTable();
 
-            for (RangoMetal rangoMetal : lstRangoMetal){
-                table.row(
-                        new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                        new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
-                );
+                for (RangoMetal rangoMetal : lstRangoMetal){
+                    table.row(
+                            new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
+                            new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
+                    );
+                }
+
+                context.provide(table);
+            } else {
+                context.provide(new LabelElement("\nEl cat\u00e1logo no contiene elementos."));
             }
-
-            context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

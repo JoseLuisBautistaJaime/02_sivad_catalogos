@@ -110,16 +110,20 @@ public class rangoOro extends BaseCommand {
         try {
             List<RangoOro> lstRangoOro = this.getController().getAll();
 
-            table = getTable();
+            if (lstRangoOro != null && lstRangoOro.size() > 0) {
+                table = getTable();
 
-            for (RangoOro rangoOro : lstRangoOro){
-                table.row(
-                        new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
-                        new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow))
-                );
+                for (RangoOro rangoOro : lstRangoOro){
+                    table.row(
+                            new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
+                            new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow))
+                    );
+                }
+
+                context.provide(table);
+            } else {
+                context.provide(new LabelElement("\nEl cat\u00e1logo no contiene elementos."));
             }
-
-            context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

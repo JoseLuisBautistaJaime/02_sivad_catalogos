@@ -110,16 +110,20 @@ public class corte extends BaseCommand {
         try {
             List<Corte> lstCorte = this.getController().getAll();
 
-            table = getTable();
+            if (lstCorte != null && lstCorte.size() > 0) {
+                table = getTable();
 
-            for (Corte corte : lstCorte){
-                table.row(
-                        new LabelElement(corte.getAbreviatura()).style(Style.style(Color.green)),
-                        new LabelElement(corte.getEtiqueta()).style(Style.style(Color.yellow))
-                );
+                for (Corte corte : lstCorte){
+                    table.row(
+                            new LabelElement(corte.getAbreviatura()).style(Style.style(Color.green)),
+                            new LabelElement(corte.getEtiqueta()).style(Style.style(Color.yellow))
+                    );
+                }
+
+                context.provide(table);
+            } else {
+                context.provide(new LabelElement("\nEl cat\u00e1logo no contiene elementos."));
             }
-
-            context.provide(table);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
