@@ -16,6 +16,7 @@ import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -68,7 +69,14 @@ public class ClaridadDiamanteService {
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         claridadDiamante.setConfiguracion(configuracionCatalogo);
 
-        return claridadDiamanteRespository.save(claridadDiamante);
+        try {
+            return claridadDiamanteRespository.save(claridadDiamante);
+        } catch (DataIntegrityViolationException e) {
+            String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo ClaridadDiamante ya " +
+                "contiene un elemento con la abreviatura: [" + claridadDiamante.getAbreviatura() + "].";
+            LOGGER.warn(mensaje + " Excepcion: [{}]", e);
+            throw e;
+        }
     }
 
     /**

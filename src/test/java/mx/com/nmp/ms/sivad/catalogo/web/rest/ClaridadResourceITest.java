@@ -37,7 +37,7 @@ public class ClaridadResourceITest {
 
     private static final String DOMINIO_PRUEBA = "Diamantes";
     private static final String TIPO_PRUEBA = "ClaridadDiamante";
-    private static final String DESCRIPCION_PRUEBA = "Catálogo de Calidades Ley";
+    private static final String DESCRIPCION_PRUEBA = "Catálogo de Claridad Diamante";
     private static final String VALOR_DEFULT = "ETIQUETA_PRUEBA";
     private static final DateTime ULTIMA_ACTUALIZACION_PRUEBA = new DateTime(0L, DateTimeZone.UTC);
     private static final String ABREVIATURA_PRUEBA_A = "AA";
@@ -69,6 +69,8 @@ public class ClaridadResourceITest {
     @Before
     public void initTest() {
 
+        configuracionCatalogoRepository.deleteAll();
+        
         ConfiguracionCatalogo configuracionCatalogoPrueba = new ConfiguracionCatalogo();
         configuracionCatalogoPrueba.setTipo(TIPO_PRUEBA);
         configuracionCatalogoPrueba.setDescripcion(DESCRIPCION_PRUEBA);

@@ -67,7 +67,6 @@ public class CalidadLeyReourceITest {
         this.mockCalidadLeyService = MockMvcBuilders.standaloneSetup(calidadLeyResource).build();
     }
 
-
     @Before
     public void initTest() {
 
@@ -77,6 +76,9 @@ public class CalidadLeyReourceITest {
         configuracionCatalogoPrueba.setDominio(DOMINIO_PRUEBA);
         configuracionCatalogoPrueba.setValorDefault(VALOR_DEFULT);
         configuracionCatalogoPrueba.setUltimaActualizacion(ULTIMA_ACTUALIZACION_PRUEBA);
+
+        configuracionCatalogoRepository.deleteAll();
+
         configuracionCatalogo = configuracionCatalogoRepository.saveAndFlush(configuracionCatalogoPrueba);
 
         configuracionCatalogoRepository.save(configuracionCatalogo);
