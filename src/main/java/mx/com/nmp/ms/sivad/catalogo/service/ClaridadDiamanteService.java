@@ -168,7 +168,16 @@ public class ClaridadDiamanteService {
             }
 
         claridadDiamanteOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
-        return claridadDiamanteRespository.save(claridadDiamanteOriginal);
+
+        try {
+            return claridadDiamanteRespository.save(claridadDiamanteOriginal);
+        } catch (DataIntegrityViolationException e) {
+        String mensaje = "Ya existe un elemento con la abreviatura:" + claridadDiamante.getAbreviatura();
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn(mensaje + " Excepcion: {}", e);
+        }
+        throw e;
+    }
 
     }
 }
