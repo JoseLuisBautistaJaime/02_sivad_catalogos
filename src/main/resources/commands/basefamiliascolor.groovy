@@ -63,7 +63,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            "Ya existe un elemento del catáogo con abreviatura [${abreviatura}]."
+            "Ya existe un elemento del catálogo con abreviatura [${abreviatura}]."
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             "Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta})."
