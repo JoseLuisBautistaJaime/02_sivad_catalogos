@@ -40,10 +40,10 @@ public class rangoMetal extends BaseCommand {
      */
     private TableElement getTable() {
         TableElement table = new TableElement()
-                .overflow(Overflow.HIDDEN);
+            .overflow(Overflow.HIDDEN);
         table.header(
-            new LabelElement("Abreviatura ").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white)),
-            new LabelElement("Etiqueta ").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white))
+            new LabelElement("Abreviatura ").style(Style.style(Color.black).background(Color.white)),
+            new LabelElement("Etiqueta ").style(Style.style(Color.black).background(Color.white))
         );
 
         return table;
