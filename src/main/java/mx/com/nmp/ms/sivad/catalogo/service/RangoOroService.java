@@ -53,7 +53,7 @@ public class RangoOroService {
         try {
             return rangoOroRepository.save(rangoOro);
         } catch (DataIntegrityViolationException e) {
-            String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo RagoOro ya " +
+            String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo RangoOro ya " +
                 "contiene un elemento con la abreviatura: [" + rangoOro.getAbreviatura() + "].";
             LOGGER.warn(mensaje + " Excepcion: [{}]", e);
             throw e;

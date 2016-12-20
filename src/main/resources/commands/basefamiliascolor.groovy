@@ -32,7 +32,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            "El catálogo no contiene elementos."
+            out.println("El catálogo no contiene elementos.")
         }
     }
 
@@ -46,7 +46,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            "El elemento del cat\u00e1ogo con abreviatura [${abreviatura}] no existe."
+            out.println("El elemento del cat\u00e1logo con abreviatura [${abreviatura}] no existe.")
         }
     }
 
@@ -63,10 +63,10 @@ abstract class basefamiliascolor<T extends BaseColor> {
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            "Ya existe un elemento del catálogo con abreviatura [${abreviatura}]."
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            "Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta})."
+            out.println("Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta}).")
         }
     }
 
@@ -91,13 +91,13 @@ abstract class basefamiliascolor<T extends BaseColor> {
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "El elemento del catálogo con abreviatura [${abrAnterior}] no existe."
+            out.println("El elemento del catálogo con abreviatura [${abrAnterior}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "Ya existe un elemento del catálogo con abreviatura [${abreviatura}]."
+            out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "Ocurrió un error al actualizar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta})."
+            out.println("Ocurrió un error al actualizar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta}).")
         }
     }
 
@@ -108,18 +108,18 @@ abstract class basefamiliascolor<T extends BaseColor> {
                  @Required @Argument String abreviatura) {
         try {
             getServicio(context).delete(abreviatura)
-            "El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del catálogo."
+            out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del catálogo.")
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            "El elemento del catálogo con abreviatura [${abreviatura}] no existe."
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            """Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}
+            out.println("""Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}
 Violación de integridad referencial.
-Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()}."""
+Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()}.""")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            "Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}"
+            out.println("Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}")
         }
     }
 
@@ -135,7 +135,7 @@ Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()
             mostrarArbolPadres(arbol, elemento)
             arbol
         } else {
-            "El elemento del catálogo con abreviatura [${abreviatura}] no existe."
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
         }
     }
 
@@ -165,7 +165,7 @@ Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()
                 out.println("No se encontraron los padres con abreviatura: ${padres}", red)
             }
 
-            out.println("""Asignacion ejecutada correctamente.
+            out.println("""Asignación ejecutada correctamente.
 Se agregaron los padres: ${pAgregados} al elemento con abreviatura: ${elemento}.""");
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al agregar el padre al elemento", e)
@@ -201,7 +201,7 @@ ${msj}""", red);
     protected void eliminarPadre(InvocationContext context, String elemento, String padre) {
         try {
             getServicio(context).removePadre(elemento, padre)
-            out.println("""Desasignacion ejecutada correctamente.
+            out.println("""Desasignación ejecutada correctamente.
 Se desasigno el padre: ${padre} del elemento con abreviatura: ${elemento}.""");
         } catch (CatalogoNotFoundException e) {
             String msj

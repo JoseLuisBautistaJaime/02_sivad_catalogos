@@ -39,7 +39,7 @@ class color {
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            "El catálogo no contiene elementos."
+            out.println("El catálogo no contiene elementos.")
         }
     }
 
@@ -53,7 +53,7 @@ class color {
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            "El elemento del catálogo con abreviatura ${abreviatura} no existe."
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
         }
     }
 
@@ -70,10 +70,10 @@ class color {
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            "Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}]."
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            "Ocurrió un error al guardar el elemento GradoColor(${abreviatura}, ${etiqueta})."
+            out.println("Ocurrió un error al guardar el elemento GradoColor(${abreviatura}, ${etiqueta}).")
         }
     }
 
@@ -98,13 +98,13 @@ class color {
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "El elemento del catálogo con abreviatura [${abrAnterior}] no existe."
+            out.println("El elemento del catálogo con abreviatura [${abrAnterior}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}]."
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "Ocurrió un error al actualizar el elemento GradoColor(${abreviatura}, ${etiqueta})."
+            out.println("Ocurrió un error al actualizar el elemento GradoColor(${abreviatura}, ${etiqueta}).")
         }
     }
 
@@ -115,18 +115,18 @@ class color {
                  @Required @Argument String abreviatura) {
         try {
             getServicio(context).delete(abreviatura)
-            "El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del cat\u00e1logo."
+            out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del cat\u00e1logo.")
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            "El elemento del cat\u00e1logo con abreviatura [${abreviatura}] no existe."
+            out.println("El elemento del cat\u00e1logo con abreviatura [${abreviatura}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            """Ocurrió un error al eliminar el elemento abreviatura: ${abreviatura}
+            out.println("""Ocurrió un error al eliminar el elemento abreviatura: ${abreviatura}
 Violación de integridad referencial.
-Existen referencias a éste elemento en el catálogo Color Familia 1."""
+Existen referencias a éste elemento en el catálogo Color Familia 1.""")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            "Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}"
+            out.println("Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}")
         }
     }
 
