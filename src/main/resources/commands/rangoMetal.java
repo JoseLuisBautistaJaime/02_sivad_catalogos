@@ -1,23 +1,24 @@
 package commands;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.RangoMetal;
+import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.service.RangoMetalService;
-import mx.com.nmp.ms.sivad.catalogo.service.ConfiguracionCatalogoService;
 import org.crsh.cli.*;
 import org.crsh.command.BaseCommand;
 import org.crsh.command.InvocationContext;
 import org.crsh.text.Color;
 import org.crsh.text.Decoration;
 import org.crsh.text.Style;
-import org.crsh.text.ui.BorderStyle;
 import org.crsh.text.ui.LabelElement;
 import org.crsh.text.ui.Overflow;
 import org.crsh.text.ui.TableElement;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
-@Usage("Administración del catálogo Rango Metal")
+@Usage("Administraci\u00f3n del cat\u00e1logo Rango Metal")
 public class rangoMetal extends BaseCommand {
 
     private TableElement table;
@@ -33,28 +34,16 @@ public class rangoMetal extends BaseCommand {
     }
 
     /**
-     * Obtiene el bean del contexto de spring para interarctuar con el API, clase ConfiguracionCatalogoService
-     *
-     * @return
-     */
-    private ConfiguracionCatalogoService getControllerConfig() {
-        BeanFactory factory = (BeanFactory) this.context.getAttributes().get("spring.beanfactory");
-        return (ConfiguracionCatalogoService) factory.getBean(ConfiguracionCatalogoService.class);
-    }
-
-    /**
      * Crea el header de la tabla con los elementos.
      *
      * @return TableElement
      */
     private TableElement getTable() {
         TableElement table = new TableElement()
-                .separator(BorderStyle.DASHED)
-                .overflow(Overflow.WRAP)
-                .rightCellPadding(1);
+                .overflow(Overflow.HIDDEN);
         table.header(
-            new LabelElement("Abreviatura").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white)),
-            new LabelElement("Etiqueta").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white))
+            new LabelElement("Abreviatura ").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white)),
+            new LabelElement("Etiqueta ").style(Style.style(Decoration.bold).foreground(Color.black).background(Color.white))
         );
 
         return table;
@@ -64,65 +53,65 @@ public class rangoMetal extends BaseCommand {
      * Modifica un elemento del catalogo.
      *
      * @param context
-     * @param abrAnterior abreviatura del elemento que sera modificado.
+     * @param abreviaturaActual abreviatura del elemento que sera modificado.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
      * @param etiqueta nueva etiqueta que sera asignada al elemento.
      */
     @Command
-    @Usage("Permite actualizar un elemento del catálogo")
+    @Usage("Permite actualizar un elemento del cat\u00e1logo")
     public void modificar(InvocationContext<Object> context,
-                          @Usage("Abreviatura actual del elemento a actualizar")
-                          @Required @Option(names = {"i", "abrAnterior"}) String abrAnterior,
+                          @Usage("Abreviatura actual del elemento a actualizar") @Required @Option(names = {"i", "abreviaturaActual"}) String abreviaturaActual,
                           @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
-                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) {
+                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) throws Exception {
 
-        try {
+        if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
+            context.provide(new LabelElement("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta]) para realizar la actualizaci\u00f3n."));
+        } else {
+            try {
+                RangoMetal rangoMetal = new RangoMetal();
+                rangoMetal.setAbreviatura(abreviatura);
+                rangoMetal.setEtiqueta(etiqueta);
+                rangoMetal = this.getController().saveAndFlush(rangoMetal, abreviaturaActual);
 
-            RangoMetal rangoMetal = new RangoMetal();
-
-            rangoMetal.setAbreviatura(abreviatura);
-            rangoMetal.setEtiqueta(etiqueta);
-            rangoMetal = this.getController().saveAndFlush(rangoMetal, abrAnterior);
-
-            table = getTable();
-
-            table.row(
+                table = getTable();
+                table.row(
                     new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
-            );
+                );
 
-            context.provide(new LabelElement("\nEl elemento con abreviatura [" + abrAnterior + "] ha sido modificado."));
-            context.provide(table);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                context.provide(new LabelElement("El elemento con abreviatura [" + abreviaturaActual + "] ha sido modificado."));
+                context.provide(table);
+            } catch (CatalogoNotFoundException e) {
+                context.provide(new LabelElement("El elemento del cat\u00e1logo con abreviatura [" + abreviaturaActual + "] no existe."));
+            } catch (DataIntegrityViolationException e) {
+                context.provide(new LabelElement("Ya existe un elemento del cat\u00e1logo con abreviatura [" + abreviatura + "]."));
+            }
         }
     }
 
     /**
-     * Obtiene los elementos del catálogo.
+     * Obtiene los elementos del catalogo.
      *
      * @param context
      */
     @Command
-    @Usage("Permite recuperar todos los elementos del catálogo")
+    @Usage("Permite recuperar todos los elementos del cat\u00e1logo")
     public void elementos(InvocationContext<Object> context) {
 
         try {
             List<RangoMetal> lstRangoMetal = this.getController().getAll();
-
             if (lstRangoMetal != null && lstRangoMetal.size() > 0) {
                 table = getTable();
-
                 for (RangoMetal rangoMetal : lstRangoMetal){
                     table.row(
-                            new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                            new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
+                        new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
                     );
                 }
 
                 context.provide(table);
             } else {
-                context.provide(new LabelElement("\nEl cat\u00e1logo no contiene elementos."));
+                context.provide(new LabelElement("El cat\u00e1logo no contiene elementos."));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -130,88 +119,78 @@ public class rangoMetal extends BaseCommand {
     }
 
     /**
-     * Obtiene el elemento del catálogo.
+     * Obtiene el elemento del catalogo.
      *
      * @param context
      * @param abreviatura abreviatura de elemento a mostrar.
      */
     @Command
-    @Usage("Permite recuperar el elemento del catálogo que coincida con la abreviatura indicada")
+    @Usage("Permite recuperar el elemento del cat\u00e1logo que coincida con la abreviatura indicada")
     public void elemento(InvocationContext<Object> context,
-                         @Usage("Abreviatura del elemento a recuperar")
-                         @Required @Argument String abreviatura) {
-
+                         @Usage("Abreviatura del elemento a recuperar") @Required @Argument String abreviatura) throws Exception {
         try {
             RangoMetal rangoMetal = this.getController().get(abreviatura);
 
             table = getTable();
-
             table.row(
-                    new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
+                new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
+                new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
             );
-
             context.provide(table);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (CatalogoNotFoundException e) {
+            context.provide(new LabelElement("El elemento del cat\u00e1ogo con abreviatura [" + abreviatura + "] no existe."));
+        } catch (Exception e) {
+            context.provide("Ocurrio una error al realizar la operaci\u00f3n.");
         }
     }
 
     /**
-     * Elimina elemento del catálogo por identificador.
+     * Elimina elemento del catalogo por identificador.
      *
      * @param abreviatura abreviatura de elemento a eliminar.
+     * @return String.
      */
     @Command
-    @Usage("Permite eliminar un elemento del catálogo")
+    @Usage("Permite eliminar un elemento del cat\u00e1logo")
     public String eliminar(
-            @Usage("Abreviatura del elemento a eliminar")
-            @Required
-            @Argument String abreviatura) {
-
-        this.getController().delete(abreviatura);
-
-        return "El elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del catálogo.";
+        @Usage("Abreviatura del elemento a eliminar") @Required @Argument String abreviatura) {
+        try {
+            this.getController().delete(abreviatura);
+            return "El elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del cat\u00e1logo.\n";
+        } catch (CatalogoNotFoundException e) {
+            return "El elemento del cat\u00e1logo con abreviatura [" + abreviatura + "] no existe.\n";
+        }
     }
 
     /**
-     * Agrega elemento de catálogo de tipo RangoMetal.
+     * Agrega elemento de catalogo de tipo RangoMetal.
      * @param context
      * @param abreviatura
      * @param etiqueta
      */
     @Command
-    @Usage("Permite agregar un nuevo elemento al catálogo")
+    @Usage("Permite agregar un nuevo elemento al cat\u00e1logo")
     public void agregar(InvocationContext<Object> context,
-                        @Usage("Abreviatura")
-                        @Required
-                        @Option(names = {"a", "abreviatura"})
-                        String abreviatura,
-                        @Usage("Etiqueta")
-                        @Required
-                        @Option(names = {"e", "etiqueta"})
-                        String etiqueta) {
-
-
+                        @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
+                        @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) throws Exception {
         try {
             RangoMetal rangoMetal = new RangoMetal();
-
             rangoMetal.setAbreviatura(abreviatura);
             rangoMetal.setEtiqueta(etiqueta);
-
-            this.getController().save(rangoMetal);
+            rangoMetal = this.getController().save(rangoMetal);
 
             table = getTable();
-
             table.row(
-                    new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
-                    new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
+                new LabelElement(rangoMetal.getAbreviatura()).style(Style.style(Color.green)),
+                new LabelElement(rangoMetal.getEtiqueta()).style(Style.style(Color.yellow))
             );
 
-            context.provide(new LabelElement("\nEl elemento con abreviatura [" + abreviatura + "] fue agregado correctamente al catálogo."));
+            context.provide(new LabelElement("El elemento con abreviatura [" + abreviatura + "] fue agregado correctamente al cat\u00e1logo."));
             context.provide(table);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (DataIntegrityViolationException e) {
+            context.provide(new LabelElement("Ya existe un elemento del cat\u00e1logo con abreviatura [" + abreviatura + "]."));
+        } catch (Exception e) {
+            context.provide("Ocurrio una error al realizar la operaci\u00f3n.");
         }
     }
 }

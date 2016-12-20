@@ -74,7 +74,6 @@ public class rangoOro extends BaseCommand {
                 rangoOro = this.getController().saveAndFlush(rangoOro, abreviaturaActual);
 
                 table = getTable();
-
                 table.row(
                     new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
                     new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow))
@@ -101,13 +100,12 @@ public class rangoOro extends BaseCommand {
 
         try {
             List<RangoOro> lstRangoOro = this.getController().getAll();
-
             if (lstRangoOro != null && lstRangoOro.size() > 0) {
                 table = getTable();
                 for (RangoOro rangoOro : lstRangoOro){
                     table.row(
-                            new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
-                            new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow))
+                        new LabelElement(rangoOro.getAbreviatura()).style(Style.style(Color.green)),
+                        new LabelElement(rangoOro.getEtiqueta()).style(Style.style(Color.yellow))
                     );
                 }
 
@@ -178,7 +176,6 @@ public class rangoOro extends BaseCommand {
             RangoOro rangoOro = new RangoOro();
             rangoOro.setAbreviatura(abreviatura);
             rangoOro.setEtiqueta(etiqueta);
-
             rangoOro = this.getController().save(rangoOro);
 
             table = getTable();

@@ -53,6 +53,7 @@ public class condicionPrenda extends BaseCommand {
      * Modifica un elemento del catalogo.
      *
      * @param context     coontexto del objeto.
+     * @param abreviaturaActual abreviatura del elemento que sera modificado.
      * @param abreviatura nueva abreviatura que sera asignada al elemento.
      * @param etiqueta    nueva etiqueta que sera asignada al elemento.
      */
@@ -99,7 +100,6 @@ public class condicionPrenda extends BaseCommand {
 
         try {
             List<CondicionPrenda> lstCondicionPrenda = this.getController().findAll();
-
             if (lstCondicionPrenda != null && lstCondicionPrenda.size() > 0) {
                 table = getTable();
                 for (CondicionPrenda condicionPrenda : lstCondicionPrenda) {
@@ -122,6 +122,7 @@ public class condicionPrenda extends BaseCommand {
      * Obtiene los elementos del catalogo.
      *
      * @param context contexto del objeto.
+     * @param abreviatura abreviatura de elemento a mostrar.
      */
     @Command
     @Usage("Permite recuperar el elemento del cat\u00e1logo que coincida con la abreviatura indicada")
@@ -161,10 +162,8 @@ public class condicionPrenda extends BaseCommand {
         }
     }
 
-
     /**
      * Agrega elemento de catalogo de tipo CondicionPrenda.
-     *
      * @param context     contexto del objeto.
      * @param abreviatura abreviatura del elemento.
      * @param etiqueta    etiqueta del elemento.
@@ -178,7 +177,6 @@ public class condicionPrenda extends BaseCommand {
             CondicionPrenda condicionPrenda = new CondicionPrenda();
             condicionPrenda.setAbreviatura(abreviatura);
             condicionPrenda.setEtiqueta(etiqueta);
-
             this.getController().save(condicionPrenda);
 
             table = getTable();
