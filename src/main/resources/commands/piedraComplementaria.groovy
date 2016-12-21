@@ -8,13 +8,13 @@
 package commands
 
 import mx.com.nmp.ms.sivad.catalogo.domain.TipoPiedraComplementaria
-import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoDuplicateKeyException
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException
 import mx.com.nmp.ms.sivad.catalogo.service.TipoPiedraComplementariaService
 import org.crsh.cli.*
 import org.crsh.command.InvocationContext
 import org.crsh.text.ui.Overflow
 import org.crsh.text.ui.UIBuilder
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.util.ObjectUtils
 
 /**
@@ -45,7 +45,7 @@ class piedraComplementaria {
             def elemento = getServicio(context).save(tipoPiedraComp)
             out.println("El elemento con abreviatura [${abreviatura}] fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
-        } catch (CatalogoDuplicateKeyException e) {
+        } catch (DataIntegrityViolationException e) {
             out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
         }
     }
@@ -130,12 +130,12 @@ class piedraComplementaria {
         } else {
             try {
                 def piedraComplem = new TipoPiedraComplementaria([abreviatura: abreviatura, etiqueta: etiqueta])
-                def elemento = getServicio(context).save(piedraComplem)
+                def elemento = getServicio(context).update(abreviaturaActual, piedraComplem)
                 out.println("El elemento con abreviatura [" + abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
                 out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
-            } catch (CatalogoDuplicateKeyException e) {
+            } catch (DataIntegrityViolationException e) {
                 out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
             }
         }

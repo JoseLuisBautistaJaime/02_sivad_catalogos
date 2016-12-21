@@ -66,7 +66,7 @@ public class TipoPiedraComplementariaService {
 
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         tipoPiedraComplementaria.setConfiguracion(configuracionCatalogo);
-        return tipoPiedraComplementariaRepository.save(tipoPiedraComplementaria);
+        return tipoPiedraComplementariaRepository.saveAndFlush(tipoPiedraComplementaria);
     }
 
     /**
@@ -159,7 +159,7 @@ public class TipoPiedraComplementariaService {
             }
 
         tipoPiedraComplementariaOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
-        return tipoPiedraComplementariaRepository.save(tipoPiedraComplementariaOriginal);
+        return tipoPiedraComplementariaRepository.saveAndFlush(tipoPiedraComplementariaOriginal);
 
     }
 

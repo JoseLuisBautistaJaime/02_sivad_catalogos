@@ -9,7 +9,6 @@ import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.CertificadoDiamantes;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
-import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.CertificadoDiamantesRepository;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
@@ -67,7 +66,7 @@ public class CertificadoDiamantesService {
         configuracionCatalogo.setUltimaActualizacion(new DateTime());
         certificadoDiamantes.setConfiguracion(configuracionCatalogo);
 
-        return certificadoDiamantesRepository.save(certificadoDiamantes);
+        return certificadoDiamantesRepository.saveAndFlush(certificadoDiamantes);
     }
 
     /**
@@ -160,7 +159,7 @@ public class CertificadoDiamantesService {
             }
 
         certificadoDiamantesOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
-        return certificadoDiamantesRepository.save(certificadoDiamantesOriginal);
+        return certificadoDiamantesRepository.saveAndFlush(certificadoDiamantesOriginal);
 
     }
 

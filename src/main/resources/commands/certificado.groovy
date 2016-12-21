@@ -8,13 +8,13 @@
 package commands
 
 import mx.com.nmp.ms.sivad.catalogo.domain.CertificadoDiamantes
-import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoDuplicateKeyException
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException
 import mx.com.nmp.ms.sivad.catalogo.service.CertificadoDiamantesService
 import org.crsh.cli.*
 import org.crsh.command.InvocationContext
 import org.crsh.text.ui.Overflow
 import org.crsh.text.ui.UIBuilder
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.util.ObjectUtils
 
 /**
@@ -43,7 +43,7 @@ class certificado {
             def elemento = getServicio(context).save(certificadoDiamante)
             out.println("El elemento con abreviatura [${abreviatura}] fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
-        } catch (CatalogoDuplicateKeyException e) {
+        } catch (DataIntegrityViolationException e) {
             out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
         }
     }
@@ -128,12 +128,12 @@ class certificado {
         } else {
             try {
                 def certificadoDiamante = new CertificadoDiamantes([abreviatura: abreviatura, etiqueta: etiqueta])
-                def elemento = getServicio(context).save(certificadoDiamante)
+                def elemento = getServicio(context).update(abreviaturaActual, certificadoDiamante)
                 out.println("El elemento con abreviatura [" + abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
                 out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}] no existe.")
-            } catch (CatalogoDuplicateKeyException e) {
+            } catch (DataIntegrityViolationException e) {
                 out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
             }
         }

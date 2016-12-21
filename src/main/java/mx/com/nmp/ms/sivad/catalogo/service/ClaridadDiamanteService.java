@@ -70,7 +70,7 @@ public class ClaridadDiamanteService {
         claridadDiamante.setConfiguracion(configuracionCatalogo);
 
         try {
-            return claridadDiamanteRespository.save(claridadDiamante);
+            return claridadDiamanteRespository.saveAndFlush(claridadDiamante);
         } catch (DataIntegrityViolationException e) {
             String mensaje = "No fue posible realizar el guardado de la entidad. El catalogo ClaridadDiamante ya " +
                 "contiene un elemento con la abreviatura: [" + claridadDiamante.getAbreviatura() + "].";
@@ -170,7 +170,7 @@ public class ClaridadDiamanteService {
         claridadDiamanteOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
 
         try {
-            return claridadDiamanteRespository.save(claridadDiamanteOriginal);
+            return claridadDiamanteRespository.saveAndFlush(claridadDiamanteOriginal);
         } catch (DataIntegrityViolationException e) {
         String mensaje = "Ya existe un elemento con la abreviatura:" + claridadDiamante.getAbreviatura();
         if (LOGGER.isWarnEnabled()) {
