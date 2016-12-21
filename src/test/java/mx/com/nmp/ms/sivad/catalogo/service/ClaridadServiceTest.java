@@ -39,7 +39,7 @@ public class ClaridadServiceTest {
     private static final String ETIQUETA_PRUEBA = "ETIQUETA_PRUEBA";
     private static final String ABREVIATURA_PRUEBA = "ABREVIATURA_PRUEBA";
     private static final String ETIQUETA_PRUEBA_EDIT = "ETIQUETA_PRUEBA_EDIT";
-    private static final String ABREVIATURA_PRUEBA_EDIT = "ABREVIATURA_PRUEBA_EDIT";
+    private static final String ABREVIATURA_PRUEBA_EDIT = "ABREVIATURA_PRUEBA_E";
 
     @Inject
     private ClaridadDiamanteService claridadDiamanteService;
