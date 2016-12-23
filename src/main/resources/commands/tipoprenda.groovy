@@ -28,11 +28,11 @@ import org.springframework.util.ObjectUtils
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 @SuppressWarnings("GroovyUnusedDeclaration")
-@Usage("Administración del catálogo Quilataje Diamante Tipo Prenda")
+@Usage("Administraci\u00f3n del cat\u00e1logo Tipo Prenda")
 class tipoprenda {
     Logger LOGGER = LoggerFactory.getLogger(tipoprenda.class)
 
-    @Usage("Permite recuperar todos los elementos del catálogo")
+    @Usage("Permite recuperar todos los elementos del cat\u00e1logo")
     @Command
     def elementos(InvocationContext context) {
         def catalogo = getServicio(context).getAll()
@@ -40,11 +40,11 @@ class tipoprenda {
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            "El catálogo no contiene elementos."
+            out.println("El cat\u00e1logo no contiene elementos.")
         }
     }
 
-    @Usage("Permite recuperar el elemento del catálogo que coincida con la abreviatura indicada")
+    @Usage("Permite recuperar el elemento del cat\u00e1logo que coincida con la abreviatura indicada")
     @Command
     def elemento(InvocationContext context,
                  @Usage("Abreviatura del elemento a recuperar")
@@ -54,11 +54,11 @@ class tipoprenda {
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            "El elemento del catá1ogo con abreviatura [${abreviatura}] no existe."
+            out.println("El elemento del cat\u00e1logo con abreviatura [${abreviatura}] no existe.")
         }
     }
 
-    @Usage("Permite agregar un nuevo elemento al catálogo")
+    @Usage("Permite agregar un nuevo elemento al cat\u00e1logo")
     @Command
     def agregar(InvocationContext context,
                 @Usage("Abreviatura") @Required @Option(names = ["a", "abreviatura"]) String abreviatura,
@@ -70,15 +70,15 @@ class tipoprenda {
             out.println("El elemento con abreviatura [${abreviatura}] fue agregado correctamente al cat\u00e1logo.")
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
-            LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            "Ya existe un elemento del catálogo con abreviatura [${abreviatura}]."
+            LOGGER.error("Ocurri\u00f3 un error al guardar el elemento", e)
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
-            LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            "Ocurrió un error al guardar el elemento TipoPrenda(${abreviatura}, ${etiqueta})."
+            LOGGER.error("Ocurri\u00f3 un error al guardar el elemento", e)
+            out.println("Ocurri\u00f3 un error al guardar el elemento TipoPrenda(${abreviatura}, ${etiqueta}).")
         }
     }
 
-    @Usage("Permite actualizar un elemento del catálogo")
+    @Usage("Permite actualizar un elemento del cat\u00e1logo")
     @Command
     def modificar(InvocationContext context,
                   @Usage("Abreviatura actual del elemento a actualizar")
@@ -87,7 +87,7 @@ class tipoprenda {
                   @Usage("Etiqueta") @Option(names = ["e", "etiqueta"]) String etiqueta) {
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
             out.println("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta]) " +
-                "para realizar la actualización.")
+                "para realizar la actualizaci\u00f3n.")
             return
         }
 
@@ -98,31 +98,31 @@ class tipoprenda {
             out.println("El elemento con abreviatura [" + abrAnterior + "] ha sido modificado.")
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
-            LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "El elemento del catálogo con abreviatura [${abrAnterior}] no existe."
+            LOGGER.error("Ocurri\u00f3 un error al actualizar el elemento", e)
+            out.println("El elemento del cat\u00e1logo con abreviatura [${abrAnterior}] no existe.")
         } catch (DataIntegrityViolationException e) {
-            LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}]."
+            LOGGER.error("Ocurri\u00f3 un error al actualizar el elemento", e)
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
-            LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            "Ocurrió un error al actualizar el elemento TipoPrenda(${abreviatura}, ${etiqueta})."
+            LOGGER.error("Ocurri\u00f3 un error al actualizar el elemento", e)
+            out.println("Ocurri\u00f3 un error al actualizar el elemento TipoPrenda(${abreviatura}, ${etiqueta}).")
         }
     }
 
-    @Usage("Permite eliminar un elemento del catálogo")
+    @Usage("Permite eliminar un elemento del cat\u00e1logo")
     @Command
     def eliminar(InvocationContext context,
                  @Usage("Abreviatura del elemento a eliminar")
                  @Required @Argument String abreviatura) {
         try {
             getServicio(context).delete(abreviatura)
-            "El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del catálogo."
+            out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del cat\u00e1logo.")
         } catch (CatalogoNotFoundException e) {
-            LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            "El elemento del catálogo con abreviatura [${abreviatura}] no existe."
+            LOGGER.error("Ocurri\u00f3 un error al eliminar el elemento", e)
+            out.println("El elemento del cat\u00e1logo con abreviatura [${abreviatura}] no existe.")
         } catch (Exception e) {
-            LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            "Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}"
+            LOGGER.error("Ocurri\u00f3 un error al eliminar el elemento", e)
+            out.println("Ocurri\u00f3 un error al eliminar el elemento con abreviatura: ${abreviatura}")
         }
     }
 
