@@ -5,7 +5,7 @@
 
     <groupId>mx.com.nmp.ms</groupId>
     <artifactId>sivad-catalogos</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.9.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>sivad-catalogos</name>
@@ -578,9 +578,9 @@
                     <artifactId>spring-boot-starter-undertow</artifactId>
                 </dependency>
                 <dependency>
-                    <groupId>informix</groupId>
-                    <artifactId>ifxjdbc</artifactId>
-                    <version>3.50</version>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.39</version>
                 </dependency>
             </dependencies>
             <build>
@@ -609,11 +609,6 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-undertow</artifactId>
                 </dependency>
-                <dependency>
-                    <groupId>informix</groupId>
-                    <artifactId>ifxjdbc</artifactId>
-                    <version>3.50</version>
-                </dependency>
             </dependencies>
             <build>
                 <plugins>
@@ -629,7 +624,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>testing${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>cloud${metrics.profile}</spring.profiles.active>
             </properties>
         </profile>
 
