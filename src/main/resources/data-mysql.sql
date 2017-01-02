@@ -93,8 +93,8 @@ INSERT INTO cat_rango_metal (elemento_id, abreviatura, etiqueta, id_configuracio
 --
 -- INICIA - DATOS CATÁLOGO: 'MOTIVOS DE BAJA DE PRÉSTAMO'
 --
-INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'MTA', 'Motivo A', 8);
-INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'MTB', 'Motivo B', 8);
+INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'MBP_CL', 'Solicitado por el Cliente', 8);
+INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'MBP_PV', 'A consideración del Perito Valuador', 8);
 
 --
 -- INICIA - DATOS CATÁLOGO: 'CERTIFICADOS DE DIAMANTES'
