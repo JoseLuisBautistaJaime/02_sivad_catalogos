@@ -12,6 +12,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import java.util.Set;
+
 import static javax.persistence.GenerationType.IDENTITY;
 /**
  *
@@ -21,37 +23,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "cat_corte")
 @JsonIgnoreProperties({"idElemento", "configuracion"})
 @EntityListeners(JournalEntityListener.class)
-public class Corte implements CatalogoConfigurable {
+public class Corte extends BaseCorte implements CatalogoConfigurable {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Identificador del registro.
-     */
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "elemento_id", nullable = false)
-    @JournalData
-    private Long idElemento;
-
-    /**
-     * Nombre reconocible de este elemento orientado a uso interno de los sistemas.
-     */
-    @NotNull
-    @Size(min = 1)
-    @Column(name = "abreviatura", length = 20, nullable = false, unique = true)
-    @JournalData
-    private String abreviatura;
-
-
-    /**
-     * Nombre que cualquier sistema de cara al usuario podría utilizar para presentar el elemento.
-     */
-    @NotNull
-    @Size(min = 1)
-    @Column(name = "etiqueta", length = 150, nullable = false)
-    @JournalData
-    private String etiqueta;
 
     /**
      * Metadata del catálogo. Contiene la definición del catálogo en sí.
@@ -60,7 +34,8 @@ public class Corte implements CatalogoConfigurable {
     @JoinColumn(name = "id_configuracion")
     private ConfiguracionCatalogo configuracion;
 
-
+    @OneToMany(mappedBy = "padre", fetch = FetchType.EAGER)
+    private Set<SubCorte> hijos;
 
     // METODOS
 
@@ -71,36 +46,20 @@ public class Corte implements CatalogoConfigurable {
         // Constructor vacio
     }
 
-    public Long getIdElemento() {
-        return idElemento;
-    }
-
-    public void setIdElemento(Long idElemento) {
-        this.idElemento = idElemento;
-    }
-
-    public String getAbreviatura() {
-        return abreviatura;
-    }
-
-    public void setAbreviatura(String abreviatura) {
-        this.abreviatura = abreviatura;
-    }
-
-    public String getEtiqueta() {
-        return etiqueta;
-    }
-
-    public void setEtiqueta(String etiqueta) {
-        this.etiqueta = etiqueta;
-    }
-
     public ConfiguracionCatalogo getConfiguracion() {
         return configuracion;
     }
 
     public void setConfiguracion(ConfiguracionCatalogo configuracion) {
         this.configuracion = configuracion;
+    }
+
+    public Set<SubCorte> getHijos() {
+        return hijos;
+    }
+
+    public void setHijos(Set<SubCorte> hijos) {
+        this.hijos = hijos;
     }
 
     /**
@@ -110,10 +69,11 @@ public class Corte implements CatalogoConfigurable {
     @Override
     public String toString() {
         return "Corte {" +
-                "idElemento=" + idElemento +
-                ", abreviatura='" + abreviatura + '\'' +
-                ", etiqueta='" + etiqueta + '\'' +
+                "idElemento=" + getIdElemento() +
+                ", abreviatura='" + getAbreviatura() + '\'' +
+                ", etiqueta='" + getEtiqueta() + '\'' +
                 ", configuracion=" +  ((configuracion != null) ? configuracion.toString() : "null") +
+                ", hijos=" + (hijos != null ? hijos.size() : 0) +
                 '}';
     }
 }

@@ -1,10 +1,11 @@
-/**
+/*
  * Proyecto:        NMP - Microservicio de Catálogos
  * Quarksoft S.A.P.I. de C.V. – Todos los derechos reservados. Para uso exclusivo de Nacional Monte de Piedad.
  */
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.Corte;
+import mx.com.nmp.ms.sivad.catalogo.domain.CorteWithoutDependenciesProjection;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
@@ -20,11 +21,6 @@ import com.codahale.metrics.annotation.Timed;
 
 import javax.inject.Inject;
 import java.util.List;
-import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Controlador REST para entidades de tipo Cortes.
@@ -33,6 +29,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  */
 @RestController
 @RequestMapping("/catalogos/diamantes/cortes")
+@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class CorteResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CorteResource.class);
@@ -54,13 +51,13 @@ public class CorteResource {
     @Timed
     public ResponseEntity<Catalogo> getAll() {
         LOGGER.info(">> getAll");
-        List<Corte> result = corteService.getAll();
+        List<CorteWithoutDependenciesProjection> result = corteService.getAllWithoutDependencies();
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {
             LOGGER.warn("El catálogo Corte no contiene elementos.");
         } else {
-            catalogo = CatalogoFactory.build(result);
+            catalogo = CatalogoFactory.build(result.get(0).getConfiguracion(), result);
         }
         return new ResponseEntity<>(catalogo, HttpStatus.OK);
     }
@@ -102,11 +99,27 @@ public class CorteResource {
     @Timed
     public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
         if (dependencias) {
-            LOGGER.warn("El cat\u00E1logo no contiene dependencias.");
-            return new ResponseEntity<>(NOT_ACCEPTABLE);
+            return new ResponseEntity<>(getAllWithDependencies(), HttpStatus.OK);
+        } else {
+            return getAll();
         }
+    }
 
-        return getAll();
+    /**
+     * Recupera todos los elemtos el catálogo incluyendo dependencias.
+     *
+     * @return Catalogo con los elementos.
+     */
+    private Catalogo getAllWithDependencies() {
+        LOGGER.info(">> getAll");
+        List<Corte> result = corteService.getAll();
+
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo Corte no contiene elementos.");
+            return null;
+        } else {
+            return CatalogoFactory.build(result);
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 package commands;
 
+import mx.com.nmp.ms.sivad.catalogo.domain.BaseCorte;
 import mx.com.nmp.ms.sivad.catalogo.domain.Corte;
+import mx.com.nmp.ms.sivad.catalogo.domain.SubCorte;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.service.CorteService;
 import org.crsh.cli.*;
@@ -12,10 +14,12 @@ import org.crsh.text.Style;
 import org.crsh.text.ui.LabelElement;
 import org.crsh.text.ui.Overflow;
 import org.crsh.text.ui.TableElement;
+import org.crsh.text.ui.TreeElement;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 @Usage("Administraci\u00f3n del cat\u00e1logo Corte Diamante")
@@ -158,6 +162,10 @@ public class corte extends BaseCommand {
             return "El elemento con abreviatura [" + abreviatura + "] fue eliminado correctamente del cat\u00e1logo.\n";
         } catch (CatalogoNotFoundException e) {
             return "El elemento del cat\u00e1logo con abreviatura [" + abreviatura + "] no existe.\n";
+        } catch (DataIntegrityViolationException e) {
+            return String.format("Ocurri\u00f3 un error al eliminar el elemento abreviatura: [%s]\n" +
+                "Violaci\u00f3n de integridad referencial.\n" +
+                "Existen referencias a éste elemento en el cat\u00e1logo Sub Cortes.", abreviatura);
         }
     }
 
@@ -191,5 +199,51 @@ public class corte extends BaseCommand {
         } catch (Exception e) {
             context.provide("Ocurrio una error al realizar la operaci\u00f3n.");
         }
+    }
+
+    @Command
+    @Usage("Muestra graficamente la relación del elemento con sus hijos. Relación Padre Hijo")
+    public void relacion(InvocationContext context,
+                          @Usage("Abreviatura del elemento a consultar.")
+                          @Argument String abreviatura) throws Exception {
+        List<Corte> elementos;
+
+        if (ObjectUtils.isEmpty(abreviatura)) {
+            elementos = getController().getAll();
+        } else {
+            try {
+                elementos = Collections.singletonList(getController().get(abreviatura));
+            } catch (CatalogoNotFoundException e) {
+                context.provide(
+                    new LabelElement("El elemento del cat\u00e1ogo con abreviatura [" + abreviatura + "] no existe."));
+                return;
+            }
+        }
+
+        if (elementos == null || elementos.size() <= 0) {
+            context.provide(new LabelElement("El cat\u00e1logo no contiene elementos."));
+        } else {
+            for (Corte c : elementos) {
+                TreeElement arbol = construirArbol(new TreeElement(), c);
+                context.provide(arbol);
+            }
+        }
+    }
+
+    private TreeElement construirArbol(TreeElement arbol, BaseCorte elemento) {
+        arbol.addChild(new LabelElement(String.format("[%s, %s]", elemento.getAbreviatura(), elemento.getEtiqueta())));
+
+        if (Corte.class.isAssignableFrom(elemento.getClass())) {
+            Corte c = (Corte) elemento;
+            if (c.getHijos() != null && c.getHijos().size() > 0) {
+                TreeElement te = new TreeElement();
+                arbol.addChild(te);
+                for (SubCorte s : c.getHijos()) {
+                    construirArbol(te, s);
+                }
+            }
+        }
+
+        return arbol;
     }
 }

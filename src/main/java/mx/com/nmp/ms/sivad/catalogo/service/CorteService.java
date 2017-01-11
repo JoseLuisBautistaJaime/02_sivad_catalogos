@@ -10,6 +10,7 @@ import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.Corte;
+import mx.com.nmp.ms.sivad.catalogo.domain.CorteWithoutDependenciesProjection;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.CorteRepository;
 import org.slf4j.Logger;
@@ -94,6 +95,15 @@ public class CorteService {
     public List<Corte> getAll() {
         LOGGER.info(">> getAll()");
         return corteRepository.findAll();
+    }
+
+    /**
+     * Permite recuperar todos los elementos del catálogo, sin las dependencias.
+     *
+     * @return Objeto {@link CorteWithoutDependenciesProjection} con todos los elementos.
+     */
+    public List<CorteWithoutDependenciesProjection> getAllWithoutDependencies() {
+        return  corteRepository.findAllWithoutDependenciesBy();
     }
 
     /**

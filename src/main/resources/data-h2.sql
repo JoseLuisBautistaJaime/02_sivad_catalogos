@@ -153,21 +153,25 @@ INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_config
 ------------------------------------------------------------------------------------------------------------------------
 -- INICIA - DATOS CATÁLOGO: 'CORTE DIAMANTE'
 ------------------------------------------------------------------------------------------------------------------------
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'BR', 'Brillante', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'PR', 'Princesa', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'OV', 'Oval', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (4, 'PE', 'Pera', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (5, 'RA', 'Radiant', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'BA', 'Baguette', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (7, 'FL', 'Flanders', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, 'MA', 'Marquesa', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (9, 'CO', 'Corazón', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (10, 'ES', 'Esmeralda', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (11, 'CJ', 'Cojin', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (12, 'AS', 'Asscher', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (13, 'TR', 'Trillion', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (14, 'AN', 'Antiguo', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (15, 'OT', 'Otro', 12);
+INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'RO', 'Round', 12);
+INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'PE', 'Pear', 12);
+
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (1, 1, 'BR', 'Brillante');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (2, 1, 'AN', 'Antiguo');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (3, 1, 'CJ', 'Cojin');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (4, 1, 'CO', 'Corazón');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (5, 1, 'MA', 'Marquesa');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (6, 1, 'OV', 'Oval');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (7, 1, 'BA', 'Baguette');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (8, 1, 'AS', 'Asscher');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (9, 1, 'FL', 'Flanders');
+
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (10, 2, 'PE', 'Pera');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (11, 2, 'ES', 'Esmeralda');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (12, 2, 'RA', 'Radiant');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (13, 2, 'PR', 'Princesa');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (14, 2, 'TR', 'Trillion');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (15, 2, 'OT', 'Otro');
 
 
 

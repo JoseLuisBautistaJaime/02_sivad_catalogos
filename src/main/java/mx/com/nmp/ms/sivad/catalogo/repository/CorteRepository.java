@@ -5,8 +5,11 @@
 package mx.com.nmp.ms.sivad.catalogo.repository;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.Corte;
+import mx.com.nmp.ms.sivad.catalogo.domain.CorteWithoutDependenciesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Repositorio para entidades de tipo Corte de diamante.
@@ -24,4 +27,11 @@ public interface CorteRepository extends JpaRepository<Corte, Long> {
      */
     Corte findByAbreviatura(String abreviatura);
 
+    /**
+     * Recupera todos los elementos del catálogo sin dependecias.
+     * @see CorteWithoutDependenciesProjection
+     *
+     * @return Proyección que contiene los elementos del catálogo.
+     */
+    List<CorteWithoutDependenciesProjection> findAllWithoutDependenciesBy();
 }

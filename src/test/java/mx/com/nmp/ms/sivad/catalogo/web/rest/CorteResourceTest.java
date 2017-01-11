@@ -120,7 +120,7 @@ public class CorteResourceTest {
     @Test
     public void getAllSinDatosDependenciasTrueTest() throws Exception {
         test.perform(get("/catalogos/diamantes/cortes?dependencias=true"))
-                .andExpect(status().isNotAcceptable())
+                .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0]));
     }
 
@@ -134,8 +134,8 @@ public class CorteResourceTest {
     @Sql("/bd/test-data-corte-h2.sql")
     public void getAllDependenciasTrueTest() throws Exception {
         test.perform(get("/catalogos/diamantes/cortes?dependencias=true"))
-                .andExpect(status().isNotAcceptable())
-                .andExpect(content().bytes(new byte[0]));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE));
     }
 
     /**
