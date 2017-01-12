@@ -157,7 +157,7 @@ class SubCorteCommand {
             }
 
             map.eachWithIndex { Map.Entry<Corte, List<SubCorte>> entry ->
-                row {
+                header {
                     label(entry.key.abreviatura, foreground: cyan)
 
                     table(separator: dashed, rightCellPadding: 1) {

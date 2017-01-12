@@ -23,7 +23,7 @@ import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_
 @Cache(usage = NONSTRICT_READ_WRITE)
 @JsonIgnoreProperties({"idElemento"})
 @EntityListeners(JournalEntityListener.class)
-public class BaseCorte {
+public abstract class BaseCorte {
     /**
      * Identificador del registro.
      */
