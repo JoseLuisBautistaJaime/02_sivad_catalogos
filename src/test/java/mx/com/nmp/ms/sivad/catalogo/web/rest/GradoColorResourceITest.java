@@ -48,11 +48,11 @@ public class GradoColorResourceITest {
     private static final String ABREVIATURA_PATH = "$.Catalogo.listaValores[*].abreviatura";
     private static final String ETIQUETA_PATH = "$.Catalogo.listaValores[*].etiqueta";
 
-    private static final String ABREVIATURA_GRADO_COLOR_D = "GRADO_COLOR_D";
-    private static final String ETIQUETA_GRADO_COLOR_D = "D";
+    private static final String ABREVIATURA_D = "D";
+    private static final String ETIQUETA_D = "D";
 
-    private static final String ABREVIATURA_GRADO_COLOR_E = "GRADO_COLOR_E";
-    private static final String ETIQUETA_GRADO_COLOR_E = "E";
+    private static final String ABREVIATURA_E = "E";
+    private static final String ETIQUETA_E = "E";
 
     @Inject
     private GradoColorService gradoColorService;
@@ -96,10 +96,10 @@ public class GradoColorResourceITest {
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
                 .andExpect(jsonPath(TIPO_PATH).value(tpe.getTipo()))
-                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_GRADO_COLOR_D)))
-                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_GRADO_COLOR_D)))
-                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_GRADO_COLOR_E)))
-                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_GRADO_COLOR_E)));
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_D)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_D)))
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_E)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_E)));
     }
 
     /**
@@ -168,10 +168,10 @@ public class GradoColorResourceITest {
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
                 .andExpect(jsonPath(TIPO_PATH).value(tpe.getTipo()))
-                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_GRADO_COLOR_D)))
-                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_GRADO_COLOR_D)))
-                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_GRADO_COLOR_E)))
-                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_GRADO_COLOR_E)));
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_D)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_D)))
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_E)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_E)));
     }
 
     /**
@@ -181,7 +181,7 @@ public class GradoColorResourceITest {
      */
     @Test
     public void getOneSinDatosTest() throws Exception {
-        test.perform(get("/catalogos/diamantes/colores/GRADO_COLOR_D"))
+        test.perform(get("/catalogos/diamantes/colores/D"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().bytes(new byte[0]));
     }
@@ -223,12 +223,12 @@ public class GradoColorResourceITest {
     public void getOneTest() throws Exception {
         ConfiguracionCatalogoEnum tpe = ConfiguracionCatalogoEnum.GRADO_COLOR;
 
-        test.perform(get("/catalogos/diamantes/colores/GRADO_COLOR_E"))
+        test.perform(get("/catalogos/diamantes/colores/E"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
                 .andExpect(jsonPath(TIPO_PATH).value(tpe.getTipo()))
-                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_GRADO_COLOR_E)))
-                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_GRADO_COLOR_E)));
+                .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_E)))
+                .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_E)));
     }
 }

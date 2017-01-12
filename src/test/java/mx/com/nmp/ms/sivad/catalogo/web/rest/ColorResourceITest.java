@@ -140,10 +140,10 @@ public class ColorResourceITest {
             .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_COLOR_D_E)))
             .andExpect(jsonPath(ABREVIATURA_PATH).value(hasItem(ABREVIATURA_BLANCO_NATURAL)))
             .andExpect(jsonPath(ETIQUETA_PATH).value(hasItem(ETIQUETA_BLANCO_NATURAL)))
-            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("GRADO_COLOR_D")))
-            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("GRADO_COLOR_E")))
-            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("GRADO_COLOR_F")))
-            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("GRADO_COLOR_G")));
+            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("D")))
+            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("E")))
+            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("F")))
+            .andExpect(jsonPath(ABREVIATURA_PADRES_PATH).value(hasItem("G")));
     }
 
     /**

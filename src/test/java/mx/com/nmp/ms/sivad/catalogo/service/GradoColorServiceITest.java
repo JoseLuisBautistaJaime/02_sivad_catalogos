@@ -31,12 +31,12 @@ import javax.validation.ConstraintViolationException;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CatalogosApplication.class)
 public class GradoColorServiceITest {
-    private static final String ABREVIATURA_GRADO_COLOR_D = "GRADO_COLOR_D";
-    private static final String ETIQUETA_GRADO_COLOR_D = "D";
+    private static final String ABREVIATURA_D = "D";
+    private static final String ETIQUETA_D = "D";
 
     private static final String ABREVIATURA_XXX = "xXx";
 
-    private static final String ABREVIATURA_GRADO_COLOR_E = "GRADO_COLOR_E";
+    private static final String ABREVIATURA_E = "E";
 
     private static final String ABREVIATURA_TEST = "TEST";
     private static final String ETIQUETA_TEST = "Test";
@@ -67,7 +67,7 @@ public class GradoColorServiceITest {
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     @Test(expected = DataIntegrityViolationException.class)
     public void saveDuplicadoTest() {
-        test.save(creatEntidad(ABREVIATURA_GRADO_COLOR_D, ETIQUETA_GRADO_COLOR_D));
+        test.save(creatEntidad(ABREVIATURA_D, ETIQUETA_D));
     }
 
     @Test
@@ -112,16 +112,16 @@ public class GradoColorServiceITest {
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     @Test(expected = DataIntegrityViolationException.class)
     public void updateDuplicadoTest() {
-        test.update(creatEntidad(ABREVIATURA_GRADO_COLOR_E, ETIQUETA_TEST), ABREVIATURA_GRADO_COLOR_D);
+        test.update(creatEntidad(ABREVIATURA_E, ETIQUETA_TEST), ABREVIATURA_D);
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     public void updateAbrNullTest() {
-        GradoColor result = test.update(creatEntidad(null, ETIQUETA_TEST), ABREVIATURA_GRADO_COLOR_D);
+        GradoColor result = test.update(creatEntidad(null, ETIQUETA_TEST), ABREVIATURA_D);
         Assert.assertNotNull(result);
-        Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_GRADO_COLOR_D);
+        Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_D);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_TEST);
     }
 
@@ -129,28 +129,28 @@ public class GradoColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     public void updateEtqNullTest() {
-        GradoColor result = test.update(creatEntidad(ABREVIATURA_TEST, null), ABREVIATURA_GRADO_COLOR_D);
+        GradoColor result = test.update(creatEntidad(ABREVIATURA_TEST, null), ABREVIATURA_D);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_TEST);
-        Assert.assertEquals(result.getEtiqueta(), ETIQUETA_GRADO_COLOR_D);
-        Assert.assertNotEquals(result.getAbreviatura(), ABREVIATURA_GRADO_COLOR_D);
+        Assert.assertEquals(result.getEtiqueta(), ETIQUETA_D);
+        Assert.assertNotEquals(result.getAbreviatura(), ABREVIATURA_D);
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     public void updateAmbNullTest() {
-        GradoColor result = test.update(creatEntidad(null, null), ABREVIATURA_GRADO_COLOR_D);
+        GradoColor result = test.update(creatEntidad(null, null), ABREVIATURA_D);
         Assert.assertNotNull(result);
-        Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_GRADO_COLOR_D);
-        Assert.assertEquals(result.getEtiqueta(), ETIQUETA_GRADO_COLOR_D);
+        Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_D);
+        Assert.assertEquals(result.getEtiqueta(), ETIQUETA_D);
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     public void updateTest() {
-        GradoColor result = test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_GRADO_COLOR_D);
+        GradoColor result = test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_D);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_TEST);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_TEST);
@@ -158,7 +158,7 @@ public class GradoColorServiceITest {
 
     @Test(expected = CatalogoNotFoundException.class)
     public void deleteSinDatosTest() {
-        test.delete(ABREVIATURA_GRADO_COLOR_D);
+        test.delete(ABREVIATURA_D);
     }
 
     @Test(expected = CatalogoNotFoundException.class)
@@ -177,17 +177,17 @@ public class GradoColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     public void deleteTest() {
-        GradoColor result = test.delete(ABREVIATURA_GRADO_COLOR_D);
+        GradoColor result = test.delete(ABREVIATURA_D);
         Assert.assertNotNull(result);
-        Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_GRADO_COLOR_D);
-        Assert.assertEquals(result.getEtiqueta(), ETIQUETA_GRADO_COLOR_D);
+        Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_D);
+        Assert.assertEquals(result.getEtiqueta(), ETIQUETA_D);
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     @Test(expected = DataIntegrityViolationException.class)
     public void deleteRelacionadoTest() {
-        test.delete(ABREVIATURA_GRADO_COLOR_E);
+        test.delete(ABREVIATURA_E);
         test.getAll();
     }
 

@@ -213,7 +213,7 @@ public class ColorServiceITest {
     @Sql("/bd/test-data-diamante_color-h2.sql")
     public void addPadresNoPadreSiPadreTest() {
         Color result = test.addPadres(ABREVIATURA_BLANCO_NATURAL,
-            Arrays.asList(ABREVIATURA_XXX, "GRADO_COLOR_D", ABREVIATURA_XXX));
+            Arrays.asList(ABREVIATURA_XXX, "D", ABREVIATURA_XXX));
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getPadres());
         Assert.assertEquals(result.getPadres().size(), 3);
@@ -225,7 +225,7 @@ public class ColorServiceITest {
     public void addPadresSiPadreTest() {
         test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
         Color result = test.addPadres(ABREVIATURA_TEST,
-            Arrays.asList("GRADO_COLOR_D", "GRADO_COLOR_E"));
+            Arrays.asList("D", "E"));
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getPadres());
         Assert.assertEquals(result.getPadres().size(), 2);
@@ -249,7 +249,7 @@ public class ColorServiceITest {
     @Sql("/bd/test-data-diamante_color-h2.sql")
     @Test(expected = IndexOutOfBoundsException.class)
     public void removePadresNoContienePadreTest() {
-        test.removePadre(ABREVIATURA_COLOR_D_E, "GRADO_COLOR_F");
+        test.removePadre(ABREVIATURA_COLOR_D_E, "F");
     }
 
     @Transactional
@@ -257,15 +257,15 @@ public class ColorServiceITest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void removePadresPadresNullTest() {
         test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
-        test.removePadre(ABREVIATURA_TEST, "GRADO_COLOR_F");
+        test.removePadre(ABREVIATURA_TEST, "F");
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_color-h2.sql")
     public void removePadresTest() {
-        test.removePadre(ABREVIATURA_BLANCO_NATURAL, "GRADO_COLOR_F");
-        Color result = test.removePadre(ABREVIATURA_BLANCO_NATURAL, "GRADO_COLOR_G");
+        test.removePadre(ABREVIATURA_BLANCO_NATURAL, "F");
+        Color result = test.removePadre(ABREVIATURA_BLANCO_NATURAL, "G");
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getPadres());
         Assert.assertEquals(result.getPadres().size(), 0);

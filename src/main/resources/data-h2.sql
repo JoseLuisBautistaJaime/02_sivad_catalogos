@@ -153,8 +153,8 @@ INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_config
 ------------------------------------------------------------------------------------------------------------------------
 -- INICIA - DATOS CATÁLOGO: 'CORTE DIAMANTE'
 ------------------------------------------------------------------------------------------------------------------------
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'RO', 'Round', 12);
-INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'PE', 'Pear', 12);
+INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'Round', 'Round', 12);
+INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'Pear', 'Pear', 12);
 
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (1, 1, 'BR', 'Brillante');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (2, 1, 'AN', 'Antiguo');
