@@ -68,8 +68,8 @@
         <sonar.tests>${project.basedir}/src/test/</sonar.tests>
 
         <!-- variables para profiles -->
-        <metrics.profile/>
-        <profile.swagger></profile.swagger>
+        <profile.metrics />
+        <profile.swagger />
     </properties>
 
     <dependencyManagement>
@@ -408,7 +408,7 @@
         <profile>
             <id>metrics</id>
             <properties>
-                <metrics.profile>,metrics</metrics.profile>
+                <profile.metrics>,metrics</profile.metrics>
             </properties>
         </profile>
 
@@ -451,7 +451,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>dev,swagger${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>dev${profile.metrics}${profile.swagger}</spring.profiles.active>
             </properties>
         </profile>
 
@@ -508,7 +508,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>WARN</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>prod${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>prod${profile.metrics}${profile.swagger}</spring.profiles.active>
             </properties>
         </profile>
 
@@ -565,7 +565,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>WARN</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>dr${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>dr${profile.metrics}${profile.swagger}</spring.profiles.active>
             </properties>
         </profile>
 
@@ -597,7 +597,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>ensamble${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>ensamble${profile.metrics}${profile.swagger}</spring.profiles.active>
             </properties>
         </profile>
 
@@ -624,7 +624,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>cloud${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>cloud${profile.metrics}${profile.swagger}</spring.profiles.active>
             </properties>
         </profile>
 
