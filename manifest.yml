@@ -1,7 +1,6 @@
 ---
 applications:
 - name: sivad-catalogos
-  host: test-sivad-catalogos
   memory: 1G
   timeout: 120
   path: target/sivad-catalogos-0.9.0-SNAPSHOT.jar
