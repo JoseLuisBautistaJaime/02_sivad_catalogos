@@ -135,7 +135,7 @@ public class QuilatajeDiamanteService {
         }
 
         QuilatajeDiamante quilatajeDiamanteOriginal = obtenerElemento(abreviatura);
-        if (ObjectUtils.isEmpty(quilatajeDiamanteOriginal.getAbreviatura())) {
+        if (ObjectUtils.isEmpty(quilatajeDiamante.getAbreviatura())) {
             LOGGER.warn("No se definio nueva abreviatura. Se conserva la abreviatura actual [{}].",
                 quilatajeDiamanteOriginal.getAbreviatura());
         } else {
