@@ -1,7 +1,7 @@
 ---
 applications:
 - name: sivad-catalogos
-  host: dev1775-sivad-catalogos
+  host: test1775-sivad-catalogos
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   memory: 1G
   timeout: 120
