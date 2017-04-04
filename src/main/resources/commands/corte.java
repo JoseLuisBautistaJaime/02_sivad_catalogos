@@ -65,8 +65,8 @@ public class corte extends BaseCommand {
     @Usage("Permite actualizar un elemento del cat\u00e1logo")
     public void modificar(InvocationContext<Object> context,
                           @Usage("Abreviatura actual del elemento a actualizar") @Required @Option(names = {"i", "abreviaturaActual"}) String abreviaturaActual,
-                          @Usage("Abreviatura") @Required @Option(names = {"a", "abreviatura"}) String abreviatura,
-                          @Usage("Etiqueta") @Required @Option(names = {"e", "etiqueta"}) String etiqueta) throws Exception {
+                          @Usage("Abreviatura") @Option(names = {"a", "abreviatura"}) String abreviatura,
+                          @Usage("Etiqueta") @Option(names = {"e", "etiqueta"}) String etiqueta) throws Exception {
 
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
             context.provide(new LabelElement("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta]) para realizar la actualizaci\u00f3n."));
