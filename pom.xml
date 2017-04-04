@@ -460,132 +460,13 @@
             </properties>
         </profile>
 
-        <!-- Perfil de producción -->
+        <!-- Perfil de desarrollo local con BD MySQL -->
         <profile>
-            <id>prod</id>
+            <id>local</id>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-undertow</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>informix</groupId>
-                    <artifactId>ifxjdbc</artifactId>
-                    <version>3.50</version>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <version>2.5</version>
-                        <configuration>
-                            <filesets>
-                                <fileset>
-                                    <directory>target/www/</directory>
-                                </fileset>
-                            </filesets>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <configuration>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <executable>true</executable>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>build-info</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <!-- configuración de logger -->
-                <logback.loglevel>WARN</logback.loglevel>
-                <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>prod${profile.metrics}${profile.swagger}</spring.profiles.active>
-            </properties>
-        </profile>
-
-        <!-- Perfil de disaster recovery -->
-        <profile>
-            <id>dr</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-undertow</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>informix</groupId>
-                    <artifactId>ifxjdbc</artifactId>
-                    <version>3.50</version>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <version>2.5</version>
-                        <configuration>
-                            <filesets>
-                                <fileset>
-                                    <directory>target/www/</directory>
-                                </fileset>
-                            </filesets>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <configuration>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <executable>true</executable>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>build-info</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <!-- configuración de logger -->
-                <logback.loglevel>WARN</logback.loglevel>
-                <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>dr${profile.metrics}${profile.swagger}</spring.profiles.active>
-            </properties>
-        </profile>
-
-        <!-- Perfil de ensamble -->
-        <profile>
-            <id>ensamble</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-undertow</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>5.1.39</version>
                 </dependency>
             </dependencies>
             <build>
@@ -602,13 +483,13 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>ensamble${profile.metrics}${profile.swagger}</spring.profiles.active>
+                <spring.profiles.active>local${profile.metrics}${profile.swagger}</spring.profiles.active>
             </properties>
         </profile>
 
-        <!-- Perfil de testing -->
+        <!-- Perfil en la nube -->
         <profile>
-            <id>testing</id>
+            <id>cloud</id>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
