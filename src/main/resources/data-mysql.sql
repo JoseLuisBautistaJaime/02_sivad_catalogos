@@ -185,8 +185,7 @@ INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_con
 INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, 'K', 'K', 14);
 INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (9, 'L', 'L', 14);
 INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (10, 'M', 'M', 14);
-INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (11, 'N', 'N', 14);
-INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (12, 'O_Z', 'O-Z', 14);
+INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (11, 'N', 'N, O-Z', 14);
 
 --
 -- INICIA - DATOS CATÁLOGO: 'COLOR'
@@ -209,7 +208,6 @@ INSERT INTO cat_diamante_grado_color_color (elemento_padre, elemento_hijo) VALUE
 INSERT INTO cat_diamante_grado_color_color (elemento_padre, elemento_hijo) VALUES (9, 5);
 INSERT INTO cat_diamante_grado_color_color (elemento_padre, elemento_hijo) VALUES (10, 5);
 INSERT INTO cat_diamante_grado_color_color (elemento_padre, elemento_hijo) VALUES (11, 6);
-INSERT INTO cat_diamante_grado_color_color (elemento_padre, elemento_hijo) VALUES (12, 6);
 
 --
 -- INICIA - DATOS CATÁLOGO: 'ESCALA COLOR'
@@ -228,7 +226,6 @@ INSERT INTO cat_diamante_color_escala_color (elemento_padre, elemento_hijo) VALU
 INSERT INTO cat_diamante_color_escala_color (elemento_padre, elemento_hijo) VALUES (4, 3);
 INSERT INTO cat_diamante_color_escala_color (elemento_padre, elemento_hijo) VALUES (5, 3);
 INSERT INTO cat_diamante_color_escala_color (elemento_padre, elemento_hijo) VALUES (5, 4);
-INSERT INTO cat_diamante_color_escala_color (elemento_padre, elemento_hijo) VALUES (6, 4);
 INSERT INTO cat_diamante_color_escala_color (elemento_padre, elemento_hijo) VALUES (6, 5);
 
 --
@@ -249,7 +246,6 @@ INSERT INTO cat_diamante_escala_color_grupo_color (elemento_padre, elemento_hijo
 INSERT INTO cat_diamante_escala_color_grupo_color (elemento_padre, elemento_hijo) VALUES (3, 4);
 INSERT INTO cat_diamante_escala_color_grupo_color (elemento_padre, elemento_hijo) VALUES (3, 5);
 INSERT INTO cat_diamante_escala_color_grupo_color (elemento_padre, elemento_hijo) VALUES (4, 5);
-INSERT INTO cat_diamante_escala_color_grupo_color (elemento_padre, elemento_hijo) VALUES (4, 6);
 INSERT INTO cat_diamante_escala_color_grupo_color (elemento_padre, elemento_hijo) VALUES (5, 6);
 
 --
