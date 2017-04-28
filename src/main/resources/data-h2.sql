@@ -1,5 +1,5 @@
 --
--- Utilizado para poblar la BD (mysql) utilizada con los perfiles cloud.
+-- Utilizado para poblar la BD (mysql) utilizada con el perfil dev.
 --
 
 
@@ -29,7 +29,7 @@ INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descri
 -- INICIA - DATOS CATÁLOGO: 'CONDICIÓN PRENDA'
 --
 INSERT INTO cat_condicion_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'EX', 'Excelente', 1);
-INSERT INTO cat_condicion_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'BN', 'Buen Estado', 1);
+INSERT INTO cat_condicion_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'BN', 'Bueno', 1);
 INSERT INTO cat_condicion_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'RE', 'Regular', 1);
 
 --
@@ -96,6 +96,7 @@ INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_con
 INSERT INTO cat_certificado_diamantes (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'GI', 'GIA', 9);
 INSERT INTO cat_certificado_diamantes (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'HR', 'HRD Antwerp', 9);
 INSERT INTO cat_certificado_diamantes (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'IG', 'IGE', 9);
+INSERT INTO cat_certificado_diamantes (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (4, 'AJ', 'Alta Joyería', 9);
 
 --
 -- INICIA - DATOS CATÁLOGO: 'TIPOS DE PIEDRA COMPLEMENTARIA'
@@ -120,11 +121,6 @@ INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_config
 INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (4, 'VS1', 'VS1', 11);
 INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (5, 'VS2', 'VS2', 11);
 INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'SI1', 'SI1', 11);
-INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (7, 'SI2', 'SI2', 11);
-INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, 'SI3', 'SI3', 11);
-INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (9, 'I1', 'I1', 11);
-INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (10, 'I2', 'I2', 11);
-INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (11, 'I3', 'I3', 11);
 
 -- ----------------------------------------------------------------------------------------------------------------------
 -- INICIA - DATOS CATÁLOGO: 'CORTE DIAMANTE'
@@ -147,7 +143,7 @@ INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (11
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (12, 2, 'RA', 'Radiant');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (13, 2, 'PR', 'Princesa');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (14, 2, 'TR', 'Trillion');
-INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (15, 2, 'ME', 'Melee');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (15, 1, 'ME', 'Melee');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (16, 2, 'OT', 'Otro');
 
 
