@@ -34,7 +34,7 @@ public class MotivoBajaPrestamoResource {
     /**
      * Constructor
      */
-    private MotivoBajaPrestamoResource() {
+    public MotivoBajaPrestamoResource() {
         super();
     }
 
