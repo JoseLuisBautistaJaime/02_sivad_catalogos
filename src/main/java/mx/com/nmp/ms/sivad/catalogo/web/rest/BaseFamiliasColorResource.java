@@ -45,7 +45,27 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      * @return ResponseEntity
      */
     public ResponseEntity<Catalogo> getAll() {
-        List<T> result = getService().getAll();
+    	Long idRango = 1L;
+        List<T> result = getService().getAllByRango(idRango);
+        Catalogo catalogo = null;
+
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo {} no contiene elementos.", getGenericClass().getSimpleName());
+        } else {
+            catalogo = CatalogoFactory.build(result);
+        }
+
+        return new ResponseEntity<>(catalogo, OK);
+    }
+
+    /**
+     * Recupera todos los elementos del catálogo. Se incluyen dependencias.
+     * @param idRango
+     *
+     * @return ResponseEntity
+     */
+    protected ResponseEntity<Catalogo> getAllByRango(Long idRango) {
+        List<T> result = getService().getAllByRango(idRango);
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {
@@ -60,12 +80,35 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
 
     /**
      * Recupera todos los elementos del catálogo. Sin dependencias.
+     * @param idRango
      *
      * @return ResponseEntity
      */
     @SuppressWarnings("WeakerAccess")
     public ResponseEntity<Catalogo> getAllWithoutDependencies() {
-        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependencies();
+    	Long idRango = 1L;
+        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependenciesByRango(idRango);
+        Catalogo catalogo = null;
+
+        if (ObjectUtils.isEmpty(result)) {
+            LOGGER.warn("El catálogo {} no contiene elementos.", getGenericClass().getSimpleName());
+        } else {
+            catalogo = CatalogoFactory.build(result.get(0).getConfiguracion(), result);
+        }
+
+        return new ResponseEntity<>(catalogo, OK);
+    }
+
+
+    /**
+     * Recupera todos los elementos del catálogo. Sin dependencias.
+     * @param idRango
+     *
+     * @return ResponseEntity
+     */
+    @SuppressWarnings("WeakerAccess")
+    public ResponseEntity<Catalogo> getAllWithoutDependencies(Long idRango) {
+        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependenciesByRango(idRango);
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {

@@ -10,9 +10,12 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.domain.EscalaColor;
 import mx.com.nmp.ms.sivad.catalogo.domain.GrupoColor;
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.service.BaseFamiliasColorService;
 import mx.com.nmp.ms.sivad.catalogo.service.GrupoColorService;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,7 +65,7 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Catalogo> getAll() {
-        return super.getAllWithoutDependencies();
+        return getAllWithoutDependencies();
     }
 
     /**
@@ -79,9 +82,19 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
             params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "rango", required = false) String rango) {
+    	
+    	// Rango
+    	Long idRango = 1L;
+    	if (StringUtils.isNotBlank(rango)) {
+    		RangoPeso rangoPeso = grupoColorService.getRangoPeso(rango);
+    		if (rangoPeso != null) {
+    			idRango = rangoPeso.getIdElemento();
+    		}
+    	}
+
         if (dependencias) {
-            return super.getAll();
+            return super.getAllByRango(idRango);
         } else {
             return getAll();
         }

@@ -13,8 +13,10 @@ import mx.com.nmp.ms.sivad.catalogo.domain.BaseColor;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.repository.BaseFamiliasColorRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,13 +66,14 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @param elemento Elemento modificado.
      * @param abreviatura Abreviatura que identifica el elementos que será modificado.
+     * @param idRango
      *
      * @return El objeto {@link T} que fue actualizado.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a actualizar.
      */
-    public T update(@NotNull T elemento, @HasText String abreviatura) {
-        T cc = obtenerElemento(abreviatura);
+    public T update(@NotNull T elemento, @HasText String abreviatura, @NotNull Long idRango) {
+        T cc = obtenerElemento(abreviatura, idRango);
         actualizarCatalogo(cc, elemento);
 
         return getRepository().saveAndFlush(cc);
@@ -80,13 +83,14 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * Permite eliminar un elemento del catálogo.
      *
      * @param abreviatura Abreviatura del elemento a eliminar.
+     * @param idRango
      *
      * @return El objeto {@link T} que fue eliminado.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a eliminar.
      */
-    public T delete(@HasText String abreviatura) {
-        T cc = obtenerElemento(abreviatura);
+    public T delete(@HasText String abreviatura, @NotNull Long idRango) {
+        T cc = obtenerElemento(abreviatura, idRango);
         actualizarConfiguracion();
         getRepository().delete(cc);
 
@@ -104,13 +108,36 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
     }
 
     /**
+     * Permite recuperar el rango peso
+     * @param idRango
+     *
+     * @return Objeto {@link T} con todos los elementos.
+     */
+    @Transactional(readOnly = true)
+    public RangoPeso getRangoPeso(String abreviatura) {
+        return getRepository().findRangoPesoByAbreviatura(abreviatura);
+    }
+
+    /**
+     * Permite recuperar todos los elementos del catálogo. Se incluyen dependencias.
+     * @param idRango
+     *
+     * @return Objeto {@link T} con todos los elementos.
+     */
+    @Transactional(readOnly = true)
+    public List<T> getAllByRango(Long idRango) {
+        return getRepository().findAllByRangoIdElemento(idRango);
+    }
+
+    /**
      * Permite recuperar todos los elementos del catálogo, sin las dependencias.
+     * @param idRango
      *
      * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
      */
     @Transactional(readOnly = true)
-    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies() {
-        return getRepository().findAllWithoutDependenciesBy();
+    public List<FCWithoutDependenciesProjection> getAllWithoutDependenciesByRango(Long idRango) {
+        return getRepository().findAllWithoutDependenciesByRangoIdElemento(idRango);
     }
 
     /**
@@ -121,8 +148,20 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * @return Objeto {@link T} con el elemento especificado.
      */
     @Transactional(readOnly = true)
-    public T getOne(@HasText String abreviatura) {
-        return getRepository().findByAbreviatura(abreviatura);
+    public T getOne(@HasText String abreviatura, @NotNull Long idRango) {
+        return getRepository().findByAbreviaturaAndRango(abreviatura, idRango);
+    }
+
+    /**
+     * Permite recuperar un elemento del catálogo.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     *
+     * @return Objeto {@link T} con el elemento especificado.
+     */
+    @Transactional(readOnly = true)
+    public RangoPeso getOne(@HasText String abreviatura) {
+        return getRepository().findRangoPesoByAbreviatura(abreviatura);
     }
 
     /**
@@ -169,11 +208,12 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * Lee un elemento del catálogo filtrando por {@code abreviatura}
      *
      * @param abreviatura Abreviatura del elemento a recuperar.
+     * @param idRango Rango
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a recuperar.
      */
-    protected T obtenerElemento(String abreviatura) {
-        T cc = getRepository().findByAbreviatura(abreviatura);
+    protected T obtenerElemento(String abreviatura, Long idRango) {
+        T cc = getRepository().findByAbreviaturaAndRango(abreviatura, idRango);
 
         if (ObjectUtils.isEmpty(cc)) {
             String mensaje = String.format("El elemento con %s.abreviatura = %s, no existe.",

@@ -72,6 +72,13 @@ public abstract class BaseColor implements CatalogoConfigurable {
     private ConfiguracionCatalogo configuracion;
 
     /**
+     * Metadata del catálogo. Contiene la definición del catálogo en sí.
+     */
+    @ManyToOne
+    @JoinColumn(name = "id_rango")
+    private RangoPeso rango;
+
+    /**
      * Constructor
      */
     @SuppressWarnings("WeakerAccess")
@@ -152,4 +159,13 @@ public abstract class BaseColor implements CatalogoConfigurable {
     public void setConfiguracion(ConfiguracionCatalogo configuracion) {
         this.configuracion = configuracion;
     }
+
+	public RangoPeso getRango() {
+		return rango;
+	}
+
+	public void setRango(RangoPeso rango) {
+		this.rango = rango;
+	}
+
 }
