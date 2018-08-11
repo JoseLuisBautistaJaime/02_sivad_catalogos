@@ -72,7 +72,7 @@ public abstract class BaseColor implements CatalogoConfigurable {
     private ConfiguracionCatalogo configuracion;
 
     /**
-     * Metadata del catálogo. Contiene la definición del catálogo en sí.
+     * Rango del catálogo. Contiene la definición del catálogo en sí.
      */
     @ManyToOne
     @JoinColumn(name = "id_rango")

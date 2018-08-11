@@ -70,6 +70,13 @@ public class ClaridadDiamante implements CatalogoConfigurable{
     private ConfiguracionCatalogo configuracion;
 
     /**
+     * Rango del catálogo. Contiene la definición del catálogo en sí.
+     */
+    @ManyToOne
+    @JoinColumn(name = "id_rango")
+    private RangoPeso rango;
+
+    /**
      * Permite obtener la cadena completa de los valores de los atributos de la clase.
      *
      * @return Cadena con los valores de los atributos de la clase.
@@ -81,6 +88,7 @@ public class ClaridadDiamante implements CatalogoConfigurable{
                 ", abreviatura='" + abreviatura + '\'' +
                 ", etiqueta='" + etiqueta + '\'' +
                 ", configuracion=" + ((configuracion != null) ? configuracion.toString() : "null") +
+                ", rango=" + ((rango != null) ? rango.toString() : "null") +
                 '}';
     }
 
@@ -158,4 +166,12 @@ public class ClaridadDiamante implements CatalogoConfigurable{
     public void setEtiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
     }
+
+	public RangoPeso getRango() {
+		return rango;
+	}
+
+	public void setRango(RangoPeso rango) {
+		this.rango = rango;
+	}
 }

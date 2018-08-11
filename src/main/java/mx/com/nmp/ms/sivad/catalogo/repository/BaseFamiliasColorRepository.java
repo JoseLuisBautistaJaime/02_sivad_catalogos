@@ -47,6 +47,14 @@ public interface BaseFamiliasColorRepository<T extends BaseColor> extends JpaRep
      * @return Proyección que contiene los elementos del catálogo.
      */
     List<FCWithoutDependenciesProjection> findAllWithoutDependenciesByRangoIdElemento(Long idRango);
+
+    /**
+     * Recupera todos los elementos del catálogo sin dependecias.
+     * @see FCWithoutDependenciesProjection
+     *
+     * @return Proyección que contiene los elementos del catálogo.
+     */
+    List<FCWithoutDependenciesProjection> findAllWithoutDependenciesBy();
     
     /**
      * Recupera los elementos by rango

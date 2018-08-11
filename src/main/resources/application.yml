@@ -14,3 +14,4 @@ info:
 microservicio:
   cache: # Hibernate 2nd level cache, used by CacheConfiguration
     timeToLiveSeconds: 3600
+  rango: 2

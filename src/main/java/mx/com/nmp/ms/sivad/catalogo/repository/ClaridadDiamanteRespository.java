@@ -19,8 +19,9 @@ public interface ClaridadDiamanteRespository extends JpaRepository<ClaridadDiama
      * Recupera un elemento del catálogo.
      *
      * @param abreviatura Abreviatura del elemento a recuperar.
+     * @param abreviatura Id Rango.
      *
      * @return Elemento del catálogo o {@literal null} si no existe.
      */
-    ClaridadDiamante findByAbreviatura(String abreviatura);
+    ClaridadDiamante findByAbreviaturaAndRangoIdElemento(String abreviatura, Long idRango);
 }

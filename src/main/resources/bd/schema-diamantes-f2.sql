@@ -25,8 +25,10 @@ CREATE INDEX cat_rango_peso_abreviatura ON cat_rango_peso(abreviatura);
 -- Se agrega la configuracion de los rangos
 
 INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (19, 'Rango Pesos', 'RangoPeso', '0.01_0.29', 'Catalogo Rango Pesos');
-INSERT INTO cat_rango_peso (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, '0.01_0.29', '0.01 al 0.29', 19);
-INSERT INTO cat_rango_peso (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, '0.30_20', '0.30 al 20', 19);
+INSERT INTO cat_rango_peso (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, '0', '0', 19);
+INSERT INTO cat_rango_peso (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, '0.01_0.29', '0.01 al 0.29', 19);
+INSERT INTO cat_rango_peso (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, '0.30_20', '0.30 al 20', 19);
+
 
 
 -- Se agrega nuevo campo rango a todas las tablas de colores
@@ -43,8 +45,6 @@ ALTER TABLE cat_diamante_grado_color ADD (
 ALTER TABLE cat_diamante_grupo_color ADD (
 	id_rango BIGINT NOT NULL DEFAULT 1
 );
-
-
 ALTER TABLE cat_diamante_color_escala_color ADD (
     id_rango BIGINT NOT NULL DEFAULT 1
 );
@@ -54,6 +54,24 @@ ALTER TABLE cat_diamante_grado_color_color ADD (
 ALTER TABLE cat_diamante_escala_color_grupo_color ADD (
     id_rango BIGINT NOT NULL DEFAULT 1
 );
+ALTER TABLE cat_claridad_diamante ADD (
+	id_rango BIGINT NOT NULL DEFAULT 1
+);
+
+
+-- Se agrega llave foranea
+
+ALTER TABLE cat_diamante_color ADD CONSTRAINT FK_cat_diamante_color_id_rango
+FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
+
+ALTER TABLE cat_diamante_escala_color ADD CONSTRAINT FK_cat_diamante_escala_color_id_rango
+FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
+
+ALTER TABLE cat_diamante_grado_color ADD CONSTRAINT FK_cat_diamante_grado_color_id_rango
+FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
+
+ALTER TABLE cat_diamante_grupo_color ADD CONSTRAINT FK_cat_diamante_grupo_color_id_rango
+FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
 
 ALTER TABLE cat_diamante_color_escala_color ADD CONSTRAINT FK_cat_diamante_color_escala_color_id_rango
 FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
@@ -64,17 +82,9 @@ FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
 ALTER TABLE cat_diamante_escala_color_grupo_color ADD CONSTRAINT FK_cat_diamante_escala_color_grupo_color_id_rango
 FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
 
+ALTER TABLE cat_claridad_diamante ADD CONSTRAINT FK_cat_claridad_diamante_id_rango
+FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
 
--- Se agrega llave foranea
-
-ALTER TABLE cat_diamante_color ADD CONSTRAINT FK_cat_diamante_color_id_rango
-FOREIGN KEY(id_rango) REFERENCES cat_diamante_color(elemento_id);
-ALTER TABLE cat_diamante_escala_color ADD CONSTRAINT FK_cat_diamante_escala_color_id_rango
-FOREIGN KEY(id_rango) REFERENCES cat_diamante_escala_color(elemento_id);
-ALTER TABLE cat_diamante_grado_color ADD CONSTRAINT FK_cat_diamante_grado_color_id_rango
-FOREIGN KEY(id_rango) REFERENCES cat_diamante_grado_color(elemento_id);
-ALTER TABLE cat_diamante_grupo_color ADD CONSTRAINT FK_cat_diamante_grupo_color_id_rango
-FOREIGN KEY(id_rango) REFERENCES cat_diamante_grupo_color(elemento_id);
 
 
 -- Se elimina llave unica

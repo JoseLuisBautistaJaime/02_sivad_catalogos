@@ -125,7 +125,7 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * @return Objeto {@link T} con todos los elementos.
      */
     @Transactional(readOnly = true)
-    public List<T> getAllByRango(Long idRango) {
+    public List<T> getAll(Long idRango) {
         return getRepository().findAllByRangoIdElemento(idRango);
     }
 
@@ -136,8 +136,18 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
      */
     @Transactional(readOnly = true)
-    public List<FCWithoutDependenciesProjection> getAllWithoutDependenciesByRango(Long idRango) {
+    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies(Long idRango) {
         return getRepository().findAllWithoutDependenciesByRangoIdElemento(idRango);
+    }
+
+    /**
+     * Permite recuperar todos los elementos del catálogo, sin las dependencias.
+     *
+     * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
+     */
+    @Transactional(readOnly = true)
+    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies() {
+        return getRepository().findAllWithoutDependenciesBy();
     }
 
     /**

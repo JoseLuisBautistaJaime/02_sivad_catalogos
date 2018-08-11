@@ -83,11 +83,12 @@ public class ClaridadDiamanteService {
      * Permite eliminar el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura.
+     * @param idRango Identificador del Rango
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public void delete(@HasText String abreviatura) throws CatalogoNotFoundException {
+    public void delete(@HasText String abreviatura, Long idRango) throws CatalogoNotFoundException {
         LOGGER.info(">> delete: [{}]", abreviatura);
-        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviatura(abreviatura);
+        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
 
             if(ObjectUtils.isEmpty(result)){
                 String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
@@ -102,13 +103,14 @@ public class ClaridadDiamanteService {
      * Permite obtener el elemento del catálogo que coincida con la abreviatura indicada.
      *
      * @param abreviatura La abreviatura
+     * @param idRango Id Rango
      * @return Objeto {@link ClaridadDiamante} con el elemento que coincida con la abreviatura indicada.
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
     @Transactional(readOnly = true)
-    public ClaridadDiamante get(@HasText String abreviatura) throws CatalogoNotFoundException{
+    public ClaridadDiamante get(@HasText String abreviatura, Long idRango) throws CatalogoNotFoundException{
         LOGGER.info(">> get: [{}]", abreviatura);
-        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviatura(abreviatura);
+        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
 
             if(ObjectUtils.isEmpty(result)){
                 String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
@@ -139,16 +141,17 @@ public class ClaridadDiamanteService {
      * Permite actualizar el elemento del catálogo que corresponde a la abreviatura indicada.
      *
      * @param abreviatura La abreviatura actual del elemento.
+     * @param idRango Rango
      * @param claridadDiamante Elemento del catálogo con la información que se quiere actualizar.
      * @return El elemento actualizado.
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public ClaridadDiamante update(@HasText String abreviatura, @NotNull ClaridadDiamante claridadDiamante)
+    public ClaridadDiamante update(@HasText String abreviatura, Long idRango, @NotNull ClaridadDiamante claridadDiamante)
             throws CatalogoNotFoundException {
         LOGGER.info(">> update: [{}]", abreviatura);
         LOGGER.info(">> nueva abreviatura: [{}]", claridadDiamante.getAbreviatura());
         LOGGER.info(">> nueva etiqueta: [{}]", claridadDiamante.getEtiqueta());
-        ClaridadDiamante claridadDiamanteOriginal = claridadDiamanteRespository.findByAbreviatura(abreviatura);
+        ClaridadDiamante claridadDiamanteOriginal = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
 
             if(ObjectUtils.isEmpty(claridadDiamanteOriginal)){
                 String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";

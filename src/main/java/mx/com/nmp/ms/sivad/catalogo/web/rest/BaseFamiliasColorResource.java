@@ -45,8 +45,7 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      * @return ResponseEntity
      */
     public ResponseEntity<Catalogo> getAll() {
-    	Long idRango = 1L;
-        List<T> result = getService().getAllByRango(idRango);
+        List<T> result = getService().getAll();
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {
@@ -64,8 +63,8 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      *
      * @return ResponseEntity
      */
-    protected ResponseEntity<Catalogo> getAllByRango(Long idRango) {
-        List<T> result = getService().getAllByRango(idRango);
+    protected ResponseEntity<Catalogo> getAll(Long idRango) {
+        List<T> result = getService().getAll(idRango);
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {
@@ -86,8 +85,7 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      */
     @SuppressWarnings("WeakerAccess")
     public ResponseEntity<Catalogo> getAllWithoutDependencies() {
-    	Long idRango = 1L;
-        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependenciesByRango(idRango);
+        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependencies();
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {
@@ -108,7 +106,7 @@ abstract class BaseFamiliasColorResource<T extends BaseColor> {
      */
     @SuppressWarnings("WeakerAccess")
     public ResponseEntity<Catalogo> getAllWithoutDependencies(Long idRango) {
-        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependenciesByRango(idRango);
+        List<FCWithoutDependenciesProjection> result = getService().getAllWithoutDependencies(idRango);
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {

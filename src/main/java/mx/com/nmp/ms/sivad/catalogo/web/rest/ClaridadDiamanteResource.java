@@ -73,7 +73,7 @@ public class ClaridadDiamanteResource {
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = "dependencias")
     @Timed
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "rango", required = false) Long idRango) {
         if (dependencias) {
             LOGGER.warn("El catalogo ClaridadDiamante no contiene dependencias.");
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
@@ -93,11 +93,11 @@ public class ClaridadDiamanteResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
+    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura, Long idRango) {
         LOGGER.info(">> get: [{}]", abreviatura);
 
         try {
-            return new ResponseEntity<>(CatalogoFactory.build(claridadDiamanteService.get(abreviatura)), HttpStatus.OK);
+            return new ResponseEntity<>(CatalogoFactory.build(claridadDiamanteService.get(abreviatura, idRango)), HttpStatus.OK);
         } catch (CatalogoNotFoundException e) {
             LOGGER.warn("El elemento del catalogo no existe. Excepcion: [{}]", e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

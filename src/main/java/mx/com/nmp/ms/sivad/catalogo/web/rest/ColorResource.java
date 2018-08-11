@@ -94,7 +94,7 @@ public class ColorResource extends BaseFamiliasColorResource<Color> {
     	}
     	
         if (dependencias) {
-            return super.getAllByRango(idRango);
+            return super.getAll(idRango);
         } else {
             return getAll();
         }
