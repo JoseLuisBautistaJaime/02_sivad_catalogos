@@ -120,6 +120,19 @@ public class GradoColorService {
     }
 
     /**
+     * Permite recuperar un elemento del catálogo.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @param idRango Id del rango de la tabla RangoPeso
+     *
+     * @return Objeto {@link Catalogo} con el elemento especificado.
+     */
+    @Transactional(readOnly = true)
+    public GradoColor getOne(@HasText String abreviatura, Long idRango) {
+        return gradoColorRepository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
+    }
+
+    /**
      * Actualiza la fecha de ultima actualización de la configuración del catálogo.
      *
      * @return Regresa el objeto {@link ConfiguracionCatalogo} modificado.

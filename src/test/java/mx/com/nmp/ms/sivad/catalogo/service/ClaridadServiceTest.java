@@ -40,6 +40,7 @@ public class ClaridadServiceTest {
     private static final String ABREVIATURA_PRUEBA = "ABREVIATURA_PRUEBA";
     private static final String ETIQUETA_PRUEBA_EDIT = "ETIQUETA_PRUEBA_EDIT";
     private static final String ABREVIATURA_PRUEBA_EDIT = "ABREVIATURA_PRUEBA_E";
+    private static final Long ID_RANGO = 1L;
 
     @Inject
     private ClaridadDiamanteService claridadDiamanteService;
@@ -98,7 +99,7 @@ public class ClaridadServiceTest {
         assertNotNull(clariAdd);
 
         ClaridadDiamante claridadDiamanteEdit = createElement(ETIQUETA_PRUEBA_EDIT, ABREVIATURA_PRUEBA_EDIT);
-        ClaridadDiamante claridadUpdate =  claridadDiamanteService.update(ABREVIATURA_PRUEBA, claridadDiamanteEdit );
+        ClaridadDiamante claridadUpdate =  claridadDiamanteService.update(ABREVIATURA_PRUEBA, ID_RANGO, claridadDiamanteEdit);
 
         assertEquals(ABREVIATURA_PRUEBA_EDIT, claridadUpdate.getAbreviatura());
         assertEquals(ETIQUETA_PRUEBA_EDIT, claridadUpdate.getEtiqueta());
@@ -117,8 +118,8 @@ public class ClaridadServiceTest {
         ClaridadDiamante claridadAdd = claridadDiamanteService.save(claridadDiamante);
         assertNotNull(claridadAdd);
 
-        assertNotNull(claridadDiamanteService.get(ABREVIATURA_PRUEBA));
-        claridadDiamanteService.delete(ABREVIATURA_PRUEBA);
+        assertNotNull(claridadDiamanteService.get(ABREVIATURA_PRUEBA, ID_RANGO));
+        claridadDiamanteService.delete(ABREVIATURA_PRUEBA, ID_RANGO);
 
     }
 

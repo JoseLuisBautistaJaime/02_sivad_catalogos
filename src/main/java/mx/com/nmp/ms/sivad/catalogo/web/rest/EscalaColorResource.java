@@ -78,12 +78,22 @@ public class EscalaColorResource extends BaseFamiliasColorResource<EscalaColor> 
     @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
-            params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
+            params = {"dependencias", "idRango"})
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "idRango", required = false) Long idRango) {
         if (dependencias) {
-            return super.getAll();
+        	if (idRango != null) {
+        		return super.getAll(idRango);
+        	}
+        	else {
+        		return super.getAll();
+        	}
         } else {
-            return getAll();
+        	if (idRango != null) {
+        		return super.getAllWithoutDependencies(idRango);
+        	}
+        	else {
+        		return super.getAllWithoutDependencies();
+        	}
         }
     }
 

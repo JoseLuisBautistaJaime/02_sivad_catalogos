@@ -96,14 +96,19 @@ public class GradoColorResource {
     @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
-            params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
+            params = {"dependencias", "idRango" })
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "idRango", required = false) Long idRango) {
         if (dependencias) {
             LOGGER.warn("El catálogo no contiene dependencias.");
             return new ResponseEntity<>(NOT_ACCEPTABLE);
         }
 
-        return getAll();
+        if (idRango != null) {
+        	return getAll();
+        }
+        else {
+        	return getAll();
+        }
     }
 
     /**
@@ -118,8 +123,15 @@ public class GradoColorResource {
     @RequestMapping(value = "/{abreviatura}",
             method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
-        GradoColor result = gradoColorService.getOne(abreviatura);
+    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura, @RequestParam(value = "idRango", required = false) Long idRango) {
+    	
+    	GradoColor result = null;
+    	if (idRango != null) {
+    		result = gradoColorService.getOne(abreviatura, idRango);
+    	}
+    	else {
+    		result = gradoColorService.getOne(abreviatura);
+    	}
 
         if (ObjectUtils.isEmpty(result)) {
             LOGGER.warn("El elemento del catálogo Grado Color con abreviatura = {}, no existe.", abreviatura);

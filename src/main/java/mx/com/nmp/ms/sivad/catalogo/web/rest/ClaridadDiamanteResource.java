@@ -71,9 +71,9 @@ public class ClaridadDiamanteResource {
      */
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
-            params = "dependencias")
+            params = {"dependencias", "idRango"})
     @Timed
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "rango", required = false) Long idRango) {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "idRango", required = false) Long idRango) {
         if (dependencias) {
             LOGGER.warn("El catalogo ClaridadDiamante no contiene dependencias.");
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
@@ -94,7 +94,7 @@ public class ClaridadDiamanteResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Catalogo> get(@PathVariable String abreviatura, Long idRango) {
-        LOGGER.info(">> get: [{}]", abreviatura);
+        LOGGER.info(">> get: [{}, {}]", abreviatura, idRango);
 
         try {
             return new ResponseEntity<>(CatalogoFactory.build(claridadDiamanteService.get(abreviatura, idRango)), HttpStatus.OK);

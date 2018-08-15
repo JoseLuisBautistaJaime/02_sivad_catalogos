@@ -10,12 +10,9 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.catalogo.domain.Color;
 import mx.com.nmp.ms.sivad.catalogo.domain.GradoColor;
-import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.service.BaseFamiliasColorService;
 import mx.com.nmp.ms.sivad.catalogo.service.ColorService;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,22 +78,23 @@ public class ColorResource extends BaseFamiliasColorResource<Color> {
     @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
-            params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "rango", required = false) String rango) {
+            params = {"dependencias", "idRango"})
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "idRango", required = false) Long idRango) {
 
-    	// Rango
-    	Long idRango = 1L;
-    	if (StringUtils.isNotBlank(rango)) {
-    		RangoPeso rangoPeso = colorService.getRangoPeso(rango);
-    		if (rangoPeso != null) {
-    			idRango = rangoPeso.getIdElemento();
-    		}
-    	}
-    	
         if (dependencias) {
-            return super.getAll(idRango);
+        	if (idRango != null) {
+        		return super.getAll(idRango);
+        	}
+        	else {
+        		return super.getAll();
+        	}
         } else {
-            return getAll();
+        	if (idRango != null) {
+        		return super.getAllWithoutDependencies(idRango);
+        	}
+        	else {
+        		return super.getAllWithoutDependencies();
+        	}
         }
     }
 
