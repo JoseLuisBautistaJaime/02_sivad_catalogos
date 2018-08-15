@@ -108,6 +108,17 @@ public class GradoColorService {
     }
 
     /**
+     * Permite recuperar todos los elementos del catálogo.
+     * @param idRango Identificador de rango
+     *
+     * @return Objeto {@link Catalogo} con todos los elementos.
+     */
+    @Transactional(readOnly = true)
+    public List<GradoColor> getAll(Long idRango) {
+        return gradoColorRepository.findByRangoIdElemento(idRango);
+    }
+
+    /**
      * Permite recuperar un elemento del catálogo.
      *
      * @param abreviatura Abreviatura del elemento a recuperar.

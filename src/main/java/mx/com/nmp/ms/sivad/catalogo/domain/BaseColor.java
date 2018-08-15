@@ -33,7 +33,7 @@ import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_
 @MappedSuperclass
 @Cache(usage = NONSTRICT_READ_WRITE)
 @EntityListeners(JournalEntityListener.class)
-@JsonIgnoreProperties({"idElemento", "configuracion"})
+@JsonIgnoreProperties({"idElemento", "configuracion", "rango"})
 public abstract class BaseColor implements CatalogoConfigurable {
     private static final long serialVersionUID = 5974580214479800292L;
 

@@ -5,6 +5,9 @@
 package mx.com.nmp.ms.sivad.catalogo.repository;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.ClaridadDiamante;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +27,13 @@ public interface ClaridadDiamanteRespository extends JpaRepository<ClaridadDiama
      * @return Elemento del catálogo o {@literal null} si no existe.
      */
     ClaridadDiamante findByAbreviaturaAndRangoIdElemento(String abreviatura, Long idRango);
+
+    /**
+     * Recupera un elemento del catálogo.
+     *
+     * @param abreviatura Id Rango.
+     *
+     * @return Elemento del catálogo o {@literal null} si no existe.
+     */
+    List<ClaridadDiamante> findByRangoIdElemento(Long idRango);
 }

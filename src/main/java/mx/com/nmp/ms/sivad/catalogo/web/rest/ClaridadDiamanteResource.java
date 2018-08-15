@@ -43,21 +43,28 @@ public class ClaridadDiamanteResource {
 
     /**
      * GET      / : Obtener todos los elementos del catálogo.
+     * @param idRango Identificador del rango
      *
      * @return ResponseEntity con status 200 (OK) y la lista de elementos del catálogo en el body.
      */
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Catalogo> getAll() {
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "idRango", required = false) Long idRango) {
         LOGGER.info(">> getAll");
-        List<ClaridadDiamante> result = claridadDiamanteService.getAll();
+        List<ClaridadDiamante> result = null;
+        if (idRango != null) {
+        	result = claridadDiamanteService.getAll(idRango);
+        }
+        else {
+        	result = claridadDiamanteService.getAll();
+        }
 
-            if(ObjectUtils.isEmpty(result)) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(CatalogoFactory.build(claridadDiamanteService.getAll()), HttpStatus.OK);
-            }
+        if(ObjectUtils.isEmpty(result)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(CatalogoFactory.build(result), HttpStatus.OK);
+        }
     }
 
     /**
@@ -79,7 +86,7 @@ public class ClaridadDiamanteResource {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        return getAll();
+        return getAll(idRango);
     }
 
     /**

@@ -54,6 +54,7 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
 
     /**
      * GET /familia3 : Recuperar todos los elementos del catalogo.
+     * @param idRango Identificador del rango
      *
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link GrupoColor}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
@@ -62,8 +63,13 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
     @Override
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> getAll() {
-        return getAllWithoutDependencies();
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "idRango", required = false) Long idRango) {
+    	if (idRango != null) {
+    		return getAllWithoutDependencies(idRango);
+    	}
+    	else {
+    		return getAllWithoutDependencies();
+    	}
     }
 
     /**

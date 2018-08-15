@@ -24,7 +24,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "cat_claridad_diamante")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIgnoreProperties({"idElemento", "configuracion"})
+@JsonIgnoreProperties({"idElemento", "configuracion", "rango"})
 @EntityListeners(JournalEntityListener.class)
 public class ClaridadDiamante implements CatalogoConfigurable{
 
@@ -83,7 +83,7 @@ public class ClaridadDiamante implements CatalogoConfigurable{
      */
     @Override
     public String toString() {
-        return "TipoPiedraComplementaria{" +
+        return "ClaridadDiamante{" +
                 "idElemento=" + idElemento +
                 ", abreviatura='" + abreviatura + '\'' +
                 ", etiqueta='" + etiqueta + '\'' +

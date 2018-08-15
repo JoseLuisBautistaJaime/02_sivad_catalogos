@@ -53,6 +53,7 @@ public class EscalaColorResource extends BaseFamiliasColorResource<EscalaColor> 
 
     /**
      * GET /familia2 : Recuperar todos los elementos del catalogo.
+     * @param idRango Identificador del rango 
      *
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link EscalaColor}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
@@ -61,8 +62,13 @@ public class EscalaColorResource extends BaseFamiliasColorResource<EscalaColor> 
     @Override
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> getAll() {
-        return super.getAllWithoutDependencies();
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "idRango", required = false) Long idRango) {
+    	if (idRango != null) {
+    		return super.getAllWithoutDependencies(idRango);
+    	}
+    	else {
+    		return super.getAllWithoutDependencies();
+    	}
     }
 
     /**

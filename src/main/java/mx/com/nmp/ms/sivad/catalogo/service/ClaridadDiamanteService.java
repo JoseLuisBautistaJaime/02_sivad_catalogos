@@ -138,6 +138,23 @@ public class ClaridadDiamanteService {
     }
 
     /**
+     * Permite obtener todos los elementos del catálogo.
+     * @return List ClaridadDiamante con la lista de elementos
+     */
+    @Transactional(readOnly = true)
+    public List<ClaridadDiamante> getAll(Long idRango){
+        LOGGER.info(">> getAll");
+        List<ClaridadDiamante> result = claridadDiamanteRespository.findByRangoIdElemento(idRango);
+
+            if(ObjectUtils.isEmpty(result)) {
+                LOGGER.warn("El catalogo ClaridadDiamante no contiene elementos.");
+                return new ArrayList<>();
+            }
+
+        return result;
+    }
+
+    /**
      * Permite actualizar el elemento del catálogo que corresponde a la abreviatura indicada.
      *
      * @param abreviatura La abreviatura actual del elemento.
