@@ -4,6 +4,7 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import mx.com.nmp.ms.arquetipo.annotation.journal.JournalData;
 import mx.com.nmp.ms.arquetipo.journal.listener.JournalEntityListener;
@@ -13,7 +14,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.List;
 
 /**
  * Entidad que representa el catálogo de Claridad de Diamante
@@ -75,6 +79,26 @@ public class ClaridadDiamante implements CatalogoConfigurable{
     @ManyToOne
     @JoinColumn(name = "id_rango")
     private RangoPeso rango;
+
+    /**
+     * Indica si la claridad del diamante es padre
+     */
+    @NotNull
+    @Column(name = "padre", nullable = false)
+    @JournalData
+    @JsonIgnore
+    private boolean padre;
+
+    /**
+     * Elementos del catálogo {@link GradoColor} padres de esté elemento del catálogo Color
+     */
+    @ManyToMany(fetch = EAGER)
+    @JsonIgnoreProperties({"etiqueta","rango", "padres", "padre"})
+    @JoinTable(name = "cat_claridad_diamante_claridad",
+    		joinColumns = {@JoinColumn(name = "elemento_hijo", referencedColumnName="elemento_id"),@JoinColumn(name = "id_rango", referencedColumnName="id_rango")},
+            inverseJoinColumns = @JoinColumn(name = "elemento_padre")
+            )
+    private List<ClaridadDiamante> padres;
 
     /**
      * Permite obtener la cadena completa de los valores de los atributos de la clase.
@@ -173,5 +197,39 @@ public class ClaridadDiamante implements CatalogoConfigurable{
 
 	public void setRango(RangoPeso rango) {
 		this.rango = rango;
+	}
+
+    /**
+     * Obtiene la lista de padres de esté elemento.
+     *
+     * @return Lista de padres de esté elemento.
+     */
+    public List<ClaridadDiamante> getPadres() {
+        return padres;
+    }
+
+    /**
+     * Establece la lista de padres de esté elemento.
+     *
+     * @param padres Nueva lista de padres de esté elemento.
+     */
+    public void setPadres(List<ClaridadDiamante> padres) {
+        this.padres = padres;
+    }
+
+    /**
+     * Padre
+     * @return
+     */
+	public boolean isPadre() {
+		return padre;
+	}
+
+	/**
+	 * Padre
+	 * @param padre
+	 */
+	public void setPadre(boolean padre) {
+		this.padre = padre;
 	}
 }

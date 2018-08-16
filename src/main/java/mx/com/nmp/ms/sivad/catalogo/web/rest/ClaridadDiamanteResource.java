@@ -10,6 +10,9 @@ import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.ClaridadDiamanteService;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controlador REST utilizado para obtener la información del catálogo Claridad Diamante.
@@ -63,6 +67,14 @@ public class ClaridadDiamanteResource {
         if(ObjectUtils.isEmpty(result)) {
             return new ResponseEntity<>(HttpStatus.OK);
         }else {
+        	
+        	// Remover padres
+        	CollectionUtils.filter(result, new Predicate() {
+				public boolean evaluate(Object object) {
+					return !((ClaridadDiamante)object).isPadre();
+				}
+			});
+
             return new ResponseEntity<>(CatalogoFactory.build(result), HttpStatus.OK);
         }
     }
@@ -81,12 +93,34 @@ public class ClaridadDiamanteResource {
             params = {"dependencias", "idRango"})
     @Timed
     public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "idRango", required = false) Long idRango) {
-        if (dependencias) {
-            LOGGER.warn("El catalogo ClaridadDiamante no contiene dependencias.");
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        //if (dependencias) {
+        //    LOGGER.warn("El catalogo ClaridadDiamante no contiene dependencias.");
+        //    return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        //}
+
+    	// Remover padres
+    	LOGGER.info(">> getAll");
+        List<ClaridadDiamante> result = null;
+        if (idRango != null) {
+        	result = claridadDiamanteService.getAll(idRango);
+        }
+        else {
+        	result = claridadDiamanteService.getAll();
         }
 
-        return getAll(idRango);
+        if(ObjectUtils.isEmpty(result)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+        	
+        	// Remover padres
+        	CollectionUtils.filter(result, new Predicate() {
+				public boolean evaluate(Object object) {
+					return !((ClaridadDiamante)object).isPadre();
+				}
+			});
+
+            return new ResponseEntity<>(CatalogoFactory.build(result), HttpStatus.OK);
+        }
     }
 
     /**

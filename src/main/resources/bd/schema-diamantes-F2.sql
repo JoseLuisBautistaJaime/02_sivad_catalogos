@@ -22,6 +22,18 @@ CREATE INDEX cat_rango_peso_elemento_id ON cat_rango_peso(elemento_id);
 CREATE INDEX cat_rango_peso_abreviatura ON cat_rango_peso(abreviatura);
 
 
+--
+-- Nueva tabla relacion claridad padre - hijo
+--
+DROP TABLE IF EXISTS cat_claridad_diamante_claridad;
+CREATE TABLE cat_claridad_diamante_claridad(
+    elemento_padre BIGINT NOT NULL,
+    elemento_hijo BIGINT NOT NULL,
+    id_rango BIGINT NOT NULL DEFAULT 1
+    PRIMARY KEY (elemento_padre, elemento_hijo, id_rango)
+);
+
+
 -- Se agrega la configuracion de los rangos
 
 INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (19, 'Rango Pesos', 'RangoPeso', '0.01_0.29', 'Catalogo Rango Pesos');
@@ -55,7 +67,8 @@ ALTER TABLE cat_diamante_escala_color_grupo_color ADD (
     id_rango BIGINT NOT NULL DEFAULT 1
 );
 ALTER TABLE cat_claridad_diamante ADD (
-	id_rango BIGINT NOT NULL DEFAULT 1
+	id_rango BIGINT NOT NULL DEFAULT 1,
+	padre TINYINT(1) NOT NULL DEFAULT '0'
 );
 
 
@@ -85,6 +98,8 @@ FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
 ALTER TABLE cat_claridad_diamante ADD CONSTRAINT FK_cat_claridad_diamante_id_rango
 FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
 
+ALTER TABLE cat_claridad_diamante_claridad ADD CONSTRAINT FK_cat_claridad_diamante_claridad_id_rango
+FOREIGN KEY(id_rango) REFERENCES cat_rango_peso(elemento_id);
 
 
 -- Se elimina llave unica
@@ -93,6 +108,7 @@ ALTER TABLE cat_diamante_color DROP INDEX UK_CAT_DIAMANTE_COLOR_ABREVIATURA;
 ALTER TABLE cat_diamante_escala_color DROP INDEX UK_CAT_DIAMANTE_ESCALA_COLOR_ABREVIATURA;
 ALTER TABLE cat_diamante_grado_color DROP INDEX UK_CAT_DIAMANTE_GRADO_COLOR_ABREVIATURA;
 ALTER TABLE cat_diamante_grupo_color DROP INDEX UK_CAT_CAT_DIAMANTE_GRUPO_COLOR_ABREVIATURA;
+ALTER TABLE cat_claridad_diamante DROP INDEX UK_CAT_CLARIDAD_DIAMANTE_ABREVIATURA;
 
 
 -- Se agrega llave unica (abreviatura y rango)
