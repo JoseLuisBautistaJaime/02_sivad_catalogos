@@ -24,6 +24,7 @@ import org.springframework.util.ObjectUtils;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
 
 /**
  * Servicio que expone los metodos para la administración del catálogo de Claridad Diamante
@@ -199,5 +200,27 @@ public class ClaridadDiamanteService {
         throw e;
     }
 
+    }
+    
+    /**
+     * Permite recuperar todos los elementos del catálogo, sin las dependencias.
+     * @param idRango
+     *
+     * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
+     */
+    @Transactional(readOnly = true)
+    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies(Long idRango) {
+        return claridadDiamanteRespository.findAllWithoutDependenciesByRangoIdElementoAndPadreFalse(
+            idRango);
+    }
+
+    /**
+     * Permite recuperar todos los elementos del catálogo, sin las dependencias.
+     *
+     * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
+     */
+    @Transactional(readOnly = true)
+    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies() {
+        return claridadDiamanteRespository.findAllWithoutDependenciesBy();
     }
 }

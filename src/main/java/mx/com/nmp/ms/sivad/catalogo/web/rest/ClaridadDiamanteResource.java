@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
+import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
 
 /**
  * Controlador REST utilizado para obtener la información del catálogo Claridad Diamante.
@@ -56,27 +57,19 @@ public class ClaridadDiamanteResource {
     @Timed
     public ResponseEntity<Catalogo> getAll(@RequestParam(value = "idRango", required = false) Long idRango) {
         LOGGER.info(">> getAll");
-        List<ClaridadDiamante> result = null;
+        List<FCWithoutDependenciesProjection> result =  null;
         if (idRango != null) {
-        	result = claridadDiamanteService.getAll(idRango);
-        }
-        else {
-        	result = claridadDiamanteService.getAll();
+            result = claridadDiamanteService.getAllWithoutDependencies(idRango);
+        }else {
+            result = claridadDiamanteService.getAllWithoutDependencies();
         }
 
         if(ObjectUtils.isEmpty(result)) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
-        	
-        	// Remover padres
-        	CollectionUtils.filter(result, new Predicate() {
-				public boolean evaluate(Object object) {
-					return !((ClaridadDiamante)object).isPadre();
-				}
-			});
-
-            return new ResponseEntity<>(CatalogoFactory.build(result), HttpStatus.OK);
         }
+        Catalogo catalogo = CatalogoFactory.build(result.get(0).getConfiguracion(),result);
+
+        return new ResponseEntity<>(catalogo, HttpStatus.OK);
     }
 
     /**
@@ -100,27 +93,36 @@ public class ClaridadDiamanteResource {
 
     	// Remover padres
     	LOGGER.info(">> getAll");
-        List<ClaridadDiamante> result = null;
-        if (idRango != null) {
-        	result = claridadDiamanteService.getAll(idRango);
-        }
-        else {
-        	result = claridadDiamanteService.getAll();
-        }
-
-        if(ObjectUtils.isEmpty(result)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else {
-        	
-        	// Remover padres
-        	CollectionUtils.filter(result, new Predicate() {
-				public boolean evaluate(Object object) {
-					return !((ClaridadDiamante)object).isPadre();
-				}
-			});
-
+        
+        if (dependencias) {
+            List<ClaridadDiamante> result = null;
+            if (idRango != null) {
+                result = claridadDiamanteService.getAll(idRango);
+            }else {
+                result = claridadDiamanteService.getAll();
+            }
+            
+            if(ObjectUtils.isEmpty(result)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            
             return new ResponseEntity<>(CatalogoFactory.build(result), HttpStatus.OK);
+        }else{
+            List<FCWithoutDependenciesProjection> result =  null;
+            if (idRango != null) {
+                result = claridadDiamanteService.getAllWithoutDependencies(idRango);
+            }else {
+                result = claridadDiamanteService.getAllWithoutDependencies();
+            }
+            
+            if(ObjectUtils.isEmpty(result)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            Catalogo catalogo = CatalogoFactory.build(result.get(0).getConfiguracion(),result);
+            
+            return new ResponseEntity<>(catalogo, HttpStatus.OK);
         }
+       
     }
 
     /**

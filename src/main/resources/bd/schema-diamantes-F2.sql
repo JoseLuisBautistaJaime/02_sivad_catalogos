@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS cat_claridad_diamante_claridad;
 CREATE TABLE cat_claridad_diamante_claridad(
     elemento_padre BIGINT NOT NULL,
     elemento_hijo BIGINT NOT NULL,
-    id_rango BIGINT NOT NULL DEFAULT 1
+    id_rango BIGINT NOT NULL DEFAULT 1,
     PRIMARY KEY (elemento_padre, elemento_hijo, id_rango)
 );
 
