@@ -36,7 +36,7 @@ public interface ClaridadDiamanteRespository extends JpaRepository<ClaridadDiama
      *
      * @return Elemento del catálogo o {@literal null} si no existe.
      */
-    List<ClaridadDiamante> findByRangoIdElemento(Long idRango);
+    List<ClaridadDiamante> findByRangoIdElementoAndPadreFalse(Long idRango);
     
     /**
      * Recupera todos los elementos del catálogo sin dependecias.

@@ -145,7 +145,7 @@ public class ClaridadDiamanteService {
     @Transactional(readOnly = true)
     public List<ClaridadDiamante> getAll(Long idRango){
         LOGGER.info(">> getAll");
-        List<ClaridadDiamante> result = claridadDiamanteRespository.findByRangoIdElemento(idRango);
+        List<ClaridadDiamante> result = claridadDiamanteRespository.findByRangoIdElementoAndPadreFalse(idRango);
 
             if(ObjectUtils.isEmpty(result)) {
                 LOGGER.warn("El catalogo ClaridadDiamante no contiene elementos.");
