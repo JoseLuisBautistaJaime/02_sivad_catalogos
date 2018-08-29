@@ -37,7 +37,7 @@ public interface BaseFamiliasColorRepository<T extends BaseColor> extends JpaRep
      *
      * @return Elemento del catálogo o {@literal null} si no existe.
      */
-    T findByAbreviaturaAndRango(String abreviatura, Long idRango);
+    T findByAbreviaturaAndRangoIdElemento(String abreviatura, Long idRango);
 
     /**
      * Recupera todos los elementos del catálogo sin dependecias.

@@ -19,8 +19,10 @@ class colorfamilia1 extends basefamiliascolor<Color> {
                       @Usage("Abreviatura elemento")
                       @Required @Option(names = ["e", "elemento"]) String elemento,
                       @Usage("Abreviaturas padres. Catálogo Color")
-                      @Required @Argument List<String> padres) {
-        super.agregarPadres(context, elemento, padres);
+                      @Required @Argument List<String> padres,
+                      @Usage("IdRango")
+                      @Required @Argument int idRango) {
+        super.agregarPadres(context, elemento, padres, idRango);
     }
 
     @Usage("""Permite desasignar un padre al elemento del catálogo.
@@ -30,8 +32,10 @@ class colorfamilia1 extends basefamiliascolor<Color> {
                       @Usage("Abreviatura elemento")
                       @Required @Option(names = ["e", "elemento"]) String elemento,
                       @Usage("Abreviatura padre. Catálogo Color")
-                      @Required @Argument String padre) {
-        super.eliminarPadre(context, elemento, padre);
+                      @Required @Argument String padre,
+                      @Usage("IdRango")
+                      @Required @Argument int idRango) {
+        super.eliminarPadre(context, elemento, padre, idRango);
     }
 
     @Override

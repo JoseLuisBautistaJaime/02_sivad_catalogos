@@ -36,17 +36,33 @@ abstract class basefamiliascolor<T extends BaseColor> {
         }
     }
 
-    @Usage("Permite recuperar el elemento del catálogo que coincida con la abreviatura indicada")
+    @Usage("Permite recuperar todos los elementos del catálogo por rango")
     @Command
-    def elemento(InvocationContext context,
-                 @Usage("Abreviatura del elemento a recuperar")
-                 @Required @Argument String abreviatura) {
-        def catalogo = getServicio(context).getOne(abreviatura)
+    def elementosrango(InvocationContext context,
+    		@Usage("Identificador del rango del elemento a recuperar")
+			@Required @Argument int idRango) {
+        def catalogo = getServicio(context).getAllWithoutDependencies(idRango)
 
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            out.println("El elemento del cat\u00e1logo con abreviatura [${abreviatura}] no existe.")
+            out.println("El catálogo no contiene elementos.")
+        }
+    }
+
+    @Usage("Permite recuperar el elemento del catálogo que coincida con la abreviatura indicada")
+    @Command
+    def elemento(InvocationContext context,
+                 @Usage("Abreviatura del elemento a recuperar")
+                 @Required @Argument String abreviatura,
+         		@Usage("Identificador del rango del elemento a recuperar")
+				@Required @Argument int idRango) {
+        def catalogo = getServicio(context).getOne(abreviatura, idRango)
+
+        if (catalogo) {
+            mostrarTablaResultados(catalogo)
+        } else {
+            out.println("El elemento del cat\u00e1logo con abreviatura [${abreviatura}, ${idRango}] no existe.")
         }
     }
 
@@ -54,8 +70,9 @@ abstract class basefamiliascolor<T extends BaseColor> {
     @Command
     def agregar(InvocationContext context,
                 @Usage("Abreviatura") @Required @Option(names = ["a", "abreviatura"]) String abreviatura,
-                @Usage("Etiqueta") @Required @Option(names = ["e", "etiqueta"]) String etiqueta) {
-        def tp = getGenericClass().newInstance([abreviatura: abreviatura, etiqueta: etiqueta])
+                @Usage("Etiqueta") @Required @Option(names = ["e", "etiqueta"]) String etiqueta,
+                @Usage("Id Rango") @Required  @Option(names = ["i", "idRango"]) int idRango) {
+        def tp = getGenericClass().newInstance([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRango])])
 
         try {
             def elemento = getServicio(context).save(tp)
@@ -66,7 +83,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
             out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            out.println("Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta}).")
+            out.println("Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta}, ${idRango}).")
         }
     }
 
@@ -75,6 +92,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
     def modificar(InvocationContext context,
                   @Usage("Abreviatura actual del elemento a actualizar")
                   @Required @Option(names = ["i", "abreviaturaActual"]) String abrAnterior,
+                  @Required @Option(names = ["r", "idRangoActual"]) String idRangoAnterior,
                   @Usage("Abreviatura") @Option(names = ["a", "abreviatura"]) String abreviatura,
                   @Usage("Etiqueta") @Option(names = ["e", "etiqueta"]) String etiqueta) {
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
@@ -83,10 +101,10 @@ abstract class basefamiliascolor<T extends BaseColor> {
             return
         }
 
-        def tp = getGenericClass().newInstance([abreviatura: abreviatura, etiqueta: etiqueta])
+        def tp = getGenericClass().newInstance([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRango])])
 
         try {
-            def elemento = getServicio(context).update(tp, abrAnterior)
+            def elemento = getServicio(context).update(tp, abrAnterior, idRangoAnterior)
             out.println("El elemento con abreviatura [" + abrAnterior + "] ha sido modificado.")
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
@@ -105,9 +123,11 @@ abstract class basefamiliascolor<T extends BaseColor> {
     @Command
     def eliminar(InvocationContext context,
                  @Usage("Abreviatura del elemento a eliminar")
-                 @Required @Argument String abreviatura) {
+                 @Required @Argument String abreviatura,
+                 @Usage("IdRango del elemento a eliminar")
+                 @Required @Argument int idRango) {
         try {
-            getServicio(context).delete(abreviatura)
+            getServicio(context).delete(abreviatura, idRango)
             out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del catálogo.")
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
@@ -139,18 +159,37 @@ Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()
         }
     }
 
+    @Usage("Muestra graficamente la relación del elemento y rango con sus padres. Relación Hijo Padre")
+    @Command
+    def relacionrango(InvocationContext context,
+                 @Usage("Abreviatura del elemento a recuperar.")
+                 @Required @Argument String abreviatura,
+                 @Usage("IdRango del elemento a recuperar")
+                 @Required @Argument int idRango) {
+        def elemento = getServicio(context).getOne(abreviatura, idRango)
+
+        if (elemento) {
+            def arbol = new UIBuilder()
+            mostrarArbolPadres(arbol, elemento)
+            arbol
+        } else {
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
+        }
+    }
+
     /**
      * Permite agregar padres a un elemento del catálogo
      *
      * @param context Contexto.
      * @param elemento Abreviatura del elemento al cual se le agregaran los padres.
      * @param padres Lista con las abreviaturas de los elementos que serán padres.
+     * @param idRango Identificador del rango
      *
      * @return Mensaje con el estado de la operación
      */
-    protected void agregarPadres(InvocationContext context, String elemento, List<String> padres) {
+    protected void agregarPadres(InvocationContext context, String elemento, List<String> padres, int idRango) {
         try {
-            def result = getServicio(context).addPadres(elemento, padres);
+            def result = getServicio(context).addPadres(elemento, padres, idRango);
             List<String> pAgregados = [];
 
             result.padres.each { p ->
@@ -195,12 +234,13 @@ ${msj}""", red);
      * @param context Contexto.
      * @param elemento Abreviatura del elemento al cual se le eliminara el padre.
      * @param padre Abreviaturas del elemento padre.
+     * @param idRango Identificador del rango
      *
      * @return Mensaje con el estado de la operación
      */
-    protected void eliminarPadre(InvocationContext context, String elemento, String padre) {
+    protected void eliminarPadre(InvocationContext context, String elemento, String padre, int idRango) {
         try {
-            getServicio(context).removePadre(elemento, padre)
+            getServicio(context).removePadre(elemento, padre, idRango)
             out.println("""Desasignación ejecutada correctamente.
 Se desasigno el padre: ${padre} del elemento con abreviatura: ${elemento}.""");
         } catch (CatalogoNotFoundException e) {
@@ -248,12 +288,14 @@ Se desasigno el padre: ${padre} del elemento con abreviatura: ${elemento}.""");
             header(decoration: bold, foreground: black, background: white) {
                 label('Abreviatura')
                 label('Etiqueta')
+                label('Rango')
             }
 
             elementos.each { elemento ->
                 row {
                     label(elemento.abreviatura, foreground: green)
                     label(elemento.etiqueta, foreground: yellow)
+                    label(elemento.rango.idElemento, foreground: grey)
                 }
             }
         }

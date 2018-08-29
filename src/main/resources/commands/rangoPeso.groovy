@@ -7,9 +7,9 @@
  */
 package commands
 
-import mx.com.nmp.ms.sivad.catalogo.domain.GradoColor
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException
-import mx.com.nmp.ms.sivad.catalogo.service.GradoColorService
+import mx.com.nmp.ms.sivad.catalogo.service.RangoPesoService
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
 import org.crsh.cli.Option
@@ -27,9 +27,9 @@ import org.springframework.util.ObjectUtils
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
-@Usage("Administración del catálogo Color")
-class color {
-    Logger LOGGER = LoggerFactory.getLogger(color.class)
+@Usage("Administración del catálogo Rago Pesos")
+class rangoPeso {
+    Logger LOGGER = LoggerFactory.getLogger(RangoPeso.class)
 
     @Usage("Permite recuperar todos los elementos del catálogo.")
     @Command
@@ -43,28 +43,12 @@ class color {
         }
     }
 
-    @Usage("Permite recuperar todos los elementos del catálogo por rango.")
-    @Command
-    def elementosrango(InvocationContext context,
-    			@Usage("Identificador del rango")
-    			@Required @Argument int idRango) {
-        def catalogo = getServicio(context).getAll(idRango)
-
-        if (catalogo) {
-            mostrarTablaResultados(catalogo)
-        } else {
-            out.println("El catálogo no contiene elementos para el rango.")
-        }
-    }
-
-    @Usage("Permite recuperar el elemento del catálogo que coincida con la abreviatura y rango indicado")
+    @Usage("Permite recuperar el elemento del catálogo que coincida con la abreviatura")
     @Command
     def elemento(InvocationContext context,
                  @Usage("Abreviatura del elemento a recuperar")
-                 @Required @Argument String abreviatura,
-                 @Usage("Identificador del rango")
-    			@Required @Argument int idRango) {
-        def catalogo = getServicio(context).getOne(abreviatura, idRango)
+                 @Required @Argument String abreviatura) {
+        def catalogo = getServicio(context).getOne(abreviatura)
 
         if (catalogo) {
             mostrarTablaResultados(catalogo)
@@ -77,20 +61,19 @@ class color {
     @Command
     def agregar(InvocationContext context,
                 @Usage("Abreviatura") @Required @Option(names = ["a", "abreviatura"]) String abreviatura,
-                @Usage("Etiqueta") @Required @Option(names = ["e", "etiqueta"]) String etiqueta,
-                @Usage("Identificador del rango") @Required @Option(names= ["i", "idRango"]) int idRango) {
-        def gc = new GradoColor([abreviatura: abreviatura, etiqueta: etiqueta, rango: new Rango([idElemento : idRango])])
+                @Usage("Etiqueta") @Required @Option(names = ["e", "etiqueta"]) String etiqueta) {
+        def gc = new RangoPeso([abreviatura: abreviatura, etiqueta: etiqueta])
 
         try {
             def elemento = getServicio(context).save(gc)
-            out.println("El elemento con abreviatura [${abreviatura}] y rango [${idRango}] fue agregado correctamente al catálogo.")
+            out.println("El elemento con abreviatura [${abreviatura}] fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}] y rango [${idRango}].")
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            out.println("Ocurrió un error al guardar el elemento GradoColor(${abreviatura}, ${etiqueta}, ${idRango}).")
+            out.println("Ocurrió un error al guardar el elemento RangoPeso(${abreviatura}, ${etiqueta}).")
         }
     }
 
@@ -99,30 +82,29 @@ class color {
     def modificar(InvocationContext context,
                   @Usage("Abreviatura actual del elemento a actualizar")
                   @Required @Option(names = ["i", "abreviaturaActual"]) String abrAnterior,
-                  @Usage("Identificador del rango de la abreviatura a actualizar") @Required @Option(names= ["r", "idRango"]) int idRangoAnterior,
                   @Usage("Abreviatura") @Option(names = ["a", "abreviatura"]) String abreviatura,
                   @Usage("Etiqueta") @Option(names = ["e", "etiqueta"]) String etiqueta) {
-        if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta) || ObjectUtils.isEmpty(idRangoAnterior)) {
-            out.println("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta] y [r, idRango]) " +
+        if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
+            out.println("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta]) " +
                 "para realizar la actualización.")
             return
         }
 
-        def gc = new GradoColor([abreviatura: abreviatura, etiqueta: etiqueta, rango: new Rango([idElemento : idRango])])
+        def gc = new RangoPeso([abreviatura: abreviatura, etiqueta: etiqueta])
 
         try {
-            def elemento = getServicio(context).update(gc, abrAnterior, idRangoAnterior)
-            out.println("El elemento con abreviatura [" + abrAnterior + "," + idRangoAnterior + "] ha sido modificado.")
+            def elemento = getServicio(context).update(gc, abrAnterior)
+            out.println("El elemento con abreviatura [" + abrAnterior + "] ha sido modificado.")
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            out.println("El elemento del catálogo con abreviatura [${abrAnterior}, ${idRangoAnterior}] no existe.")
+            out.println("El elemento del catálogo con abreviatura [${abrAnterior}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}, ${idRangoAnterior}].")
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            out.println("Ocurrió un error al actualizar el elemento GradoColor(${abreviatura}, ${etiqueta}).")
+            out.println("Ocurrió un error al actualizar el elemento RangoPeso(${abreviatura}, ${etiqueta}).")
         }
     }
 
@@ -130,23 +112,21 @@ class color {
     @Command
     def eliminar(InvocationContext context,
                  @Usage("Abreviatura del elemento a eliminar")
-                 @Required @Argument String abreviatura,
-                 @Usage("Identificador del rango del elemento a eliminar")
-                 @Required @Argument int idRango) {
+                 @Required @Argument String abreviatura) {
         try {
-            getServicio(context).delete(abreviatura, idRango)
-            out.println("El elemento con abreviatura y rango [${abreviatura}, ${idRango}] fue eliminado correctamente del cat\u00e1logo.")
+            getServicio(context).delete(abreviatura)
+            out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del cat\u00e1logo.")
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            out.println("El elemento del cat\u00e1logo con abreviatura y rango [${abreviatura}, ${idRango}] no existe.")
+            out.println("El elemento del cat\u00e1logo con abreviatura [${abreviatura}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            out.println("""Ocurrió un error al eliminar el elemento abreviatura y rango: ${abreviatura}, ${idRango}
+            out.println("""Ocurrió un error al eliminar el elemento abreviatura: ${abreviatura}
 Violación de integridad referencial.
-Existen referencias a éste elemento en el catálogo Color Familia 1.""")
+Existen referencias a éste elemento en el catálogo Rango Peso.""")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            out.println("Ocurrió un error al eliminar el elemento con abreviatura y rango: ${abreviatura}, ${idRango}")
+            out.println("Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}")
         }
     }
 
@@ -160,16 +140,16 @@ Existen referencias a éste elemento en el catálogo Color Familia 1.""")
     private def mostrarTablaResultados(elementos) {
         new UIBuilder().table(separator: dashed, overflow: Overflow.HIDDEN, rightCellPadding: 1) {
             header(decoration: bold, foreground: black, background: white) {
+                label('Id')
                 label('Abreviatura')
                 label('Etiqueta')
-                label('IdRango')
             }
 
             elementos.each { elemento ->
                 row {
+                	label(elemento.idElemento, foreground: green)
                     label(elemento.abreviatura, foreground: green)
                     label(elemento.etiqueta, foreground: yellow)
-                    label(elemento.rango.idElemento, foreground: gray)
                 }
             }
         }
@@ -180,7 +160,7 @@ Existen referencias a éste elemento en el catálogo Color Familia 1.""")
      *
      * @return Servicio a utilizar.
      */
-    private static GradoColorService getServicio(InvocationContext context) {
-        context.attributes['spring.beanfactory'].getBean(GradoColorService)
+    private static RangoPesoService getServicio(InvocationContext context) {
+        context.attributes['spring.beanfactory'].getBean(RangoPesoService)
     }
 }

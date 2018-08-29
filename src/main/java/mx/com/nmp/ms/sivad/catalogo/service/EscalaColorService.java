@@ -64,7 +64,7 @@ public class EscalaColorService extends BaseFamiliasColorService<EscalaColor> {
         List<Color> result = new ArrayList<>();
 
         for (String p : padres) {
-            Color padre = colorRepository.findByAbreviaturaAndRango(p, idRango);
+            Color padre = colorRepository.findByAbreviaturaAndRangoIdElemento(p, idRango);
 
             if (!ObjectUtils.isEmpty(padre)) {
                 result.add(padre);
@@ -92,7 +92,7 @@ public class EscalaColorService extends BaseFamiliasColorService<EscalaColor> {
      */
     public EscalaColor removePadre(@HasText String elemento, @HasText String padre, @NotNull Long idRango) {
         EscalaColor hijo = obtenerElemento(elemento, idRango);
-        Color result = colorRepository.findByAbreviaturaAndRango(padre, idRango);
+        Color result = colorRepository.findByAbreviaturaAndRangoIdElemento(padre, idRango);
         validarPadres(result, Color.class);
 
         if (hijo.getPadres() == null || !hijo.getPadres().remove(result)) {

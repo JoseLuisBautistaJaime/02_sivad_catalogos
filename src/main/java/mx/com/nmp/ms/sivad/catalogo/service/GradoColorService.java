@@ -68,13 +68,14 @@ public class GradoColorService {
      *
      * @param elemento Elemento modificado.
      * @param abreviatura Abreviatura que identifica el elementos que será modificado.
+     * @param idRango Rango de la abreviatura que sera modificado
      *
      * @return El objeto {@link GradoColor} que fue actualizado.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a actualizar.
      */
-    public GradoColor update(@NotNull GradoColor elemento, @HasText String abreviatura) {
-        GradoColor gc = obtenerElemento(abreviatura);
+    public GradoColor update(@NotNull GradoColor elemento, @HasText String abreviatura, @NotNull Long idRango) {
+        GradoColor gc = obtenerElemento(abreviatura, idRango);
         actualizarCatalogo(gc, elemento);
 
         return gradoColorRepository.saveAndFlush(gc);
@@ -84,13 +85,14 @@ public class GradoColorService {
      * Permite eliminar un elemento del catálogo.
      *
      * @param abreviatura Abreviatura del elemento a eliminar.
+     * @param idRango Identificador del rango de la abreviatura
      *
      * @return El objeto {@link GradoColor} que fue eliminado.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a eliminar.
      */
-    public GradoColor delete(@HasText String abreviatura) {
-        GradoColor gc = obtenerElemento(abreviatura);
+    public GradoColor delete(@HasText String abreviatura, @NotNull Long idRango) {
+        GradoColor gc = obtenerElemento(abreviatura, idRango);
         actualizarConfiguracion();
         gradoColorRepository.delete(gc);
 
@@ -158,14 +160,15 @@ public class GradoColorService {
      * Lee un elemento del catálogo filtrando por {@code abreviatura}
      *
      * @param abreviatura Abreviatura del elemento a recuperar.
+     * @param idRango Identificador del rango de la abreviatura
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a recuperar.
      */
-    private GradoColor obtenerElemento(String abreviatura) {
-        GradoColor gc = gradoColorRepository.findByAbreviatura(abreviatura);
+    private GradoColor obtenerElemento(String abreviatura, Long idRango) {
+        GradoColor gc = gradoColorRepository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
 
         if (ObjectUtils.isEmpty(gc)) {
-            String mensaje = String.format("El elemento con GradoColor.abreviatura = %s, no existe.", abreviatura);
+            String mensaje = String.format("El elemento con GradoColor.abreviatura = %s e idRango = %d, no existe.", abreviatura, idRango);
             LOGGER.warn(mensaje);
             throw new CatalogoNotFoundException(mensaje, GradoColor.class);
         }

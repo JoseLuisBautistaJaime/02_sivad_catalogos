@@ -9,34 +9,37 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.arquetipo.annotation.validation.HasText;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
-import mx.com.nmp.ms.sivad.catalogo.domain.BaseColor;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
-import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
 import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
-import mx.com.nmp.ms.sivad.catalogo.repository.BaseFamiliasColorRepository;
+import mx.com.nmp.ms.sivad.catalogo.repository.RangoPesoRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
- * Clase que agrupa la funcionalidad en común para los catálogos familias de color.
- *
- * @param <T> Catálogo que será soportado, debe ser un sub tipo de {@link BaseColor}
+ * Servicio que nos permite administrar el catálogo {@link RangoPeso}
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
-@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
-public abstract class BaseFamiliasColorService<T extends BaseColor> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFamiliasColorService.class);
+@Service
+@Transactional
+public class RangoPesoService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RangoPesoService.class);
+
+    @Inject
+    private RangoPesoRepository rangoPesoRepository;
 
     @Inject
     private ConfiguracionCatalogoService configuracionCatalogoService;
@@ -44,7 +47,7 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
     /**
      * Constructor.
      */
-    BaseFamiliasColorService() {
+    public RangoPesoService() {
         super();
     }
 
@@ -53,12 +56,12 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @param elemento Elemento a guardar.
      *
-     * @return El objeto {@link T} que fue creado.
+     * @return El objeto {@link RangoPeso} que fue creado.
      */
-    public T save(@Valid T elemento) {
+    public RangoPeso save(@Valid RangoPeso elemento) {
         elemento.setConfiguracion(actualizarConfiguracion());
 
-        return getRepository().save(elemento);
+        return rangoPesoRepository.save(elemento);
     }
 
     /**
@@ -66,14 +69,13 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @param elemento Elemento modificado.
      * @param abreviatura Abreviatura que identifica el elementos que será modificado.
-     * @param idRango
      *
-     * @return El objeto {@link T} que fue actualizado.
+     * @return El objeto {@link RangoPeso} que fue actualizado.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a actualizar.
      */
-    public T update(@NotNull T elemento, @HasText String abreviatura, @NotNull Long idRango) {
-        T cc = obtenerElemento(abreviatura, idRango);
+    public RangoPeso update(@NotNull RangoPeso elemento, @HasText String abreviatura) {
+        RangoPeso cc = obtenerElemento(abreviatura);
         actualizarCatalogo(cc, elemento);
 
         return getRepository().saveAndFlush(cc);
@@ -83,14 +85,13 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * Permite eliminar un elemento del catálogo.
      *
      * @param abreviatura Abreviatura del elemento a eliminar.
-     * @param idRango
      *
-     * @return El objeto {@link T} que fue eliminado.
+     * @return El objeto {@link RangoPeso} que fue eliminado.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a eliminar.
      */
-    public T delete(@HasText String abreviatura, @NotNull Long idRango) {
-        T cc = obtenerElemento(abreviatura, idRango);
+    public RangoPeso delete(@HasText String abreviatura) {
+        RangoPeso cc = obtenerElemento(abreviatura);
         actualizarConfiguracion();
         getRepository().delete(cc);
 
@@ -100,10 +101,10 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
     /**
      * Permite recuperar todos los elementos del catálogo. Se incluyen dependencias.
      *
-     * @return Objeto {@link T} con todos los elementos.
+     * @return Objeto {@link RangoPeso} con todos los elementos.
      */
     @Transactional(readOnly = true)
-    public List<T> getAll() {
+    public List<RangoPeso> getAll() {
         return getRepository().findAll();
     }
 
@@ -111,43 +112,11 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * Permite recuperar el rango peso
      * @param idRango
      *
-     * @return Objeto {@link T} con todos los elementos.
+     * @return Objeto {@link RangoPeso} con todos los elementos.
      */
     @Transactional(readOnly = true)
     public RangoPeso getRangoPeso(String abreviatura) {
-        return getRepository().findRangoPesoByAbreviatura(abreviatura);
-    }
-
-    /**
-     * Permite recuperar todos los elementos del catálogo. Se incluyen dependencias.
-     * @param idRango
-     *
-     * @return Objeto {@link T} con todos los elementos.
-     */
-    @Transactional(readOnly = true)
-    public List<T> getAll(Long idRango) {
-        return getRepository().findAllByRangoIdElemento(idRango);
-    }
-
-    /**
-     * Permite recuperar todos los elementos del catálogo, sin las dependencias.
-     * @param idRango
-     *
-     * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
-     */
-    @Transactional(readOnly = true)
-    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies(Long idRango) {
-        return getRepository().findAllWithoutDependenciesByRangoIdElemento(idRango);
-    }
-
-    /**
-     * Permite recuperar todos los elementos del catálogo, sin las dependencias.
-     *
-     * @return Objeto {@link FCWithoutDependenciesProjection} con todos los elementos.
-     */
-    @Transactional(readOnly = true)
-    public List<FCWithoutDependenciesProjection> getAllWithoutDependencies() {
-        return getRepository().findAllWithoutDependenciesBy();
+        return getRepository().findByAbreviatura(abreviatura);
     }
 
     /**
@@ -155,51 +124,11 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @param abreviatura Abreviatura del elemento a recuperar.
      *
-     * @return Objeto {@link T} con el elemento especificado.
-     */
-    @Transactional(readOnly = true)
-    public T getOne(@HasText String abreviatura, @NotNull Long idRango) {
-        return getRepository().findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
-    }
-
-    /**
-     * Permite recuperar un elemento del catálogo.
-     *
-     * @param abreviatura Abreviatura del elemento a recuperar.
-     *
-     * @return Objeto {@link T} con el elemento especificado.
+     * @return Objeto {@link RangoPeso} con el elemento especificado.
      */
     @Transactional(readOnly = true)
     public RangoPeso getOne(@HasText String abreviatura) {
-        return getRepository().findRangoPesoByAbreviatura(abreviatura);
-    }
-
-    /**
-     * Regresa el repositorio a utilizar segun el valor de {@code T}
-     *
-     * @return Repositorio a utilizar.
-     */
-    protected abstract BaseFamiliasColorRepository<T> getRepository();
-
-    /**
-     * Regresa la configuración del catálogo a utilizar segun el valor de {@code T}
-     *
-     * @return Configuración del catálogo a utilizar
-     */
-    protected abstract ConfiguracionCatalogoEnum getConfiguracionCatalogo();
-
-    /**
-     * Verifica si el elemento recuperado es valido
-     *
-     * @param obj Elemento a validar.
-     * @param clazz Class del elemento.
-     */
-    protected static void validarPadres(Object obj, Class<?> clazz) {
-        if (ObjectUtils.isEmpty(obj)) {
-            String msj = "No se encontro la lista de padres.";
-            LOGGER.warn(msj);
-            throw new CatalogoNotFoundException(msj, clazz);
-        }
+        return getRepository().findByAbreviatura(abreviatura);
     }
 
     /**
@@ -222,8 +151,8 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento a recuperar.
      */
-    protected T obtenerElemento(String abreviatura, Long idRango) {
-        T cc = getRepository().findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
+    protected RangoPeso obtenerElemento(String abreviatura) {
+        RangoPeso cc = getRepository().findByAbreviatura(abreviatura);
 
         if (ObjectUtils.isEmpty(cc)) {
             String mensaje = String.format("El elemento con %s.abreviatura = %s, no existe.",
@@ -235,13 +164,13 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
         return cc;
     }
 
-    /**
-     * Actualiza un objeto {@link T} apartir de otro.
+	/**
+     * Actualiza un objeto {@link RangoPeso} apartir de otro.
      *
      * @param original Objeto original a ser actualizado.
      * @param nuevo Objeto con las modificaciones.
      */
-    private void actualizarCatalogo(T original, T nuevo) {
+    private void actualizarCatalogo(RangoPeso original, RangoPeso nuevo) {
         if (ObjectUtils.isEmpty(nuevo.getAbreviatura())) {
             LOGGER.warn("{}.abreviatura = null, se deja valor anterior {}", getGenericClass().getSimpleName(),
                     original.getAbreviatura());
@@ -263,9 +192,21 @@ public abstract class BaseFamiliasColorService<T extends BaseColor> {
      * @return Tipo ParameterizedType
      */
     @SuppressWarnings("unchecked")
-    private Class<T> getGenericClass() {
+    private Class<RangoPeso> getGenericClass() {
         ParameterizedType pt = (ParameterizedType) getClass().getGenericSuperclass();
 
-        return (Class<T>) pt.getActualTypeArguments()[0];
+        return (Class<RangoPeso>) pt.getActualTypeArguments()[0];
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected RangoPesoRepository getRepository() {
+        return rangoPesoRepository;
+    }
+
+    protected ConfiguracionCatalogoEnum getConfiguracionCatalogo() {
+        return ConfiguracionCatalogoEnum.RANGO_PESO;
+    }
+
 }
