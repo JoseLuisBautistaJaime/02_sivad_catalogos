@@ -11,7 +11,8 @@ DELETE FROM cat_diamante_color WHERE id_rango IN (2,3);
 DELETE FROM cat_diamante_grado_color WHERE id_rango IN (2,3);
 DELETE FROM cat_claridad_diamante WHERE id_rango IN (2,3);
 
-DELETE FROM cat_sub_corte WHERE ELEMENTO_ID='15';
+DELETE FROM cat_sub_corte WHERE corte = 2;
+DELETE FROM cat_corte WHERE elemento_id = 2;
 
 
 -- Catalogo Grupo Color - Rango 0.01 al 0.29
@@ -186,8 +187,8 @@ INSERT INTO cat_diamante_grado_color_color(elemento_hijo, elemento_padre, id_ran
 
 
 -- Claridad - Rango 0.01 al 0.29
-INSERT INTO cat_claridad_diamante(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(7,'IF-VVS','IF-VVS',11,2);
-INSERT INTO cat_claridad_diamante(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(8,'VS','VS',11,2);
+INSERT INTO cat_claridad_diamante(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(7,'IF','IF-VVS',11,2);
+INSERT INTO cat_claridad_diamante(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(8,'VS1','VS',11,2);
 INSERT INTO cat_claridad_diamante(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(9,'SI1','SI1',11,2);
 INSERT INTO cat_claridad_diamante(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(10,'SI2','SI2',11,2);
 INSERT INTO cat_claridad_diamante(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(11,'I1','I1',11,2);
