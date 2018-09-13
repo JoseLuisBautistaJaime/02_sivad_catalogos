@@ -9,6 +9,7 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.EscalaColor;
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,35 +50,35 @@ public class EscalaColorServiceITest {
 
     @Test(expected = CatalogoNotFoundException.class)
     public void saveSinConfiguracionTest() {
-        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     @Test(expected = ConstraintViolationException.class)
     public void saveSinDatosTest() {
-        test.save(creatEntidad(null, null));
+        test.save(creatEntidad(null, null, null));
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     @Test(expected = ConstraintViolationException.class)
     public void saveDatosVaciosTest() {
-        test.save(creatEntidad("", ""));
+        test.save(creatEntidad("", "", 0L));
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     @Test(expected = DataIntegrityViolationException.class)
     public void saveDuplicadoTest() {
-        test.save(creatEntidad(ABREVIATURA_INCOLORO, ETIQUETA_INCOLORO));
+        test.save(creatEntidad(ABREVIATURA_INCOLORO, ETIQUETA_INCOLORO, RANGO_DEFAULT));
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     public void saveTest() {
-        EscalaColor result = test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        EscalaColor result = test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getIdElemento());
     }
@@ -89,40 +90,40 @@ public class EscalaColorServiceITest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateAbreviaturaObjNullTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), null, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), null, RANGO_DEFAULT);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateAbreviaturaObjVaciaTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), "  ", RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), "  ", RANGO_DEFAULT);
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     @Test(expected = CatalogoNotFoundException.class)
     public void updateSinDatosNoElementoTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_XXX, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_XXX, RANGO_DEFAULT);
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     @Test(expected = CatalogoNotFoundException.class)
     public void updateNoElementoTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_XXX, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_XXX, RANGO_DEFAULT);
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     @Test(expected = DataIntegrityViolationException.class)
     public void updateDuplicadoTest() {
-        test.update(creatEntidad(ABREVIATURA_CASI_INCOLORO, ETIQUETA_TEST), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_CASI_INCOLORO, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     public void updateAbrNullTest() {
-        EscalaColor result = test.update(creatEntidad(null, ETIQUETA_TEST), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
+        EscalaColor result = test.update(creatEntidad(null, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_INCOLORO);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_TEST);
@@ -132,7 +133,7 @@ public class EscalaColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     public void updateEtqNullTest() {
-        EscalaColor result = test.update(creatEntidad(ABREVIATURA_TEST, null), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
+        EscalaColor result = test.update(creatEntidad(ABREVIATURA_TEST, null, RANGO_DEFAULT), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_TEST);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_INCOLORO);
@@ -143,7 +144,7 @@ public class EscalaColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     public void updateAmbNullTest() {
-        EscalaColor result = test.update(creatEntidad(null, null), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
+        EscalaColor result = test.update(creatEntidad(null, null, null), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_INCOLORO);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_INCOLORO);
@@ -153,7 +154,7 @@ public class EscalaColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     public void updateTest() {
-        EscalaColor result = test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
+        EscalaColor result = test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_INCOLORO, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_TEST);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_TEST);
@@ -223,7 +224,7 @@ public class EscalaColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     public void addPadresSiPadreTest() {
-        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
         EscalaColor result = test.addPadres(ABREVIATURA_TEST,
             Arrays.asList("BLANCO_NATURAL", "BLANCO_COMERCIAL"), RANGO_DEFAULT);
         Assert.assertNotNull(result);
@@ -256,7 +257,7 @@ public class EscalaColorServiceITest {
     @Sql("/bd/test-data-diamante_escala_color-h2.sql")
     @Test(expected = IndexOutOfBoundsException.class)
     public void removePadresPadresNullTest() {
-        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
         test.removePadre(ABREVIATURA_TEST, "COLOR_D_E", RANGO_DEFAULT);
     }
 
@@ -271,11 +272,15 @@ public class EscalaColorServiceITest {
         Assert.assertEquals(result.getPadres().size(), 0);
     }
 
-    private static EscalaColor creatEntidad(String abr, String etq) {
+    private static EscalaColor creatEntidad(String abr, String etq, Long rango) {
         EscalaColor co = new EscalaColor();
 
         co.setAbreviatura(abr);
         co.setEtiqueta(etq);
+
+        RangoPeso rangoPeso = new RangoPeso();
+        rangoPeso.setIdElemento(rango);
+        co.setRango(rangoPeso);
 
         return co;
     }

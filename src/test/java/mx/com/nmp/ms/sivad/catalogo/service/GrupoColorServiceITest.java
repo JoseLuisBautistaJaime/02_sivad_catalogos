@@ -9,6 +9,7 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.GrupoColor;
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,35 +50,35 @@ public class GrupoColorServiceITest {
 
     @Test(expected = CatalogoNotFoundException.class)
     public void saveSinConfiguracionTest() {
-        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     @Test(expected = ConstraintViolationException.class)
     public void saveSinDatosTest() {
-        test.save(creatEntidad(null, null));
+        test.save(creatEntidad(null, null, null));
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     @Test(expected = ConstraintViolationException.class)
     public void saveDatosVaciosTest() {
-        test.save(creatEntidad("", ""));
+        test.save(creatEntidad("", "", 0L));
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     @Test(expected = DataIntegrityViolationException.class)
     public void saveDuplicadoTest() {
-        test.save(creatEntidad(ABREVIATURA_D_E, ETIQUETA_D_E));
+        test.save(creatEntidad(ABREVIATURA_D_E, ETIQUETA_D_E, RANGO_DEFAULT));
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     public void saveTest() {
-        GrupoColor result = test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        GrupoColor result = test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getIdElemento());
     }
@@ -89,40 +90,40 @@ public class GrupoColorServiceITest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateAbreviaturaObjNullTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), null, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), null, RANGO_DEFAULT);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateAbreviaturaObjVaciaTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), "  ", RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), "  ", RANGO_DEFAULT);
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     @Test(expected = CatalogoNotFoundException.class)
     public void updateSinDatosNoElementoTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_XXX, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_XXX, RANGO_DEFAULT);
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     @Test(expected = CatalogoNotFoundException.class)
     public void updateNoElementoTest() {
-        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_XXX, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_XXX, RANGO_DEFAULT);
     }
 
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     @Test(expected = DataIntegrityViolationException.class)
     public void updateDuplicadoTest() {
-        test.update(creatEntidad(ABREVIATURA_F_G, ETIQUETA_TEST), ABREVIATURA_D_E, RANGO_DEFAULT);
+        test.update(creatEntidad(ABREVIATURA_F_G, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_D_E, RANGO_DEFAULT);
     }
 
     @Test
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     public void updateAbrNullTest() {
-        GrupoColor result = test.update(creatEntidad(null, ETIQUETA_TEST), ABREVIATURA_D_E, RANGO_DEFAULT);
+        GrupoColor result = test.update(creatEntidad(null, ETIQUETA_TEST, null), ABREVIATURA_D_E, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_D_E);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_TEST);
@@ -132,7 +133,7 @@ public class GrupoColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     public void updateEtqNullTest() {
-        GrupoColor result = test.update(creatEntidad(ABREVIATURA_TEST, null), ABREVIATURA_D_E, RANGO_DEFAULT);
+        GrupoColor result = test.update(creatEntidad(ABREVIATURA_TEST, null, null), ABREVIATURA_D_E, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_TEST);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_D_E);
@@ -143,7 +144,7 @@ public class GrupoColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     public void updateAmbNullTest() {
-        GrupoColor result = test.update(creatEntidad(null, null), ABREVIATURA_D_E, RANGO_DEFAULT);
+        GrupoColor result = test.update(creatEntidad(null, null, null), ABREVIATURA_D_E, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_D_E);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_D_E);
@@ -153,7 +154,7 @@ public class GrupoColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     public void updateTest() {
-        GrupoColor result = test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST), ABREVIATURA_D_E, RANGO_DEFAULT);
+        GrupoColor result = test.update(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT), ABREVIATURA_D_E, RANGO_DEFAULT);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getAbreviatura(), ABREVIATURA_TEST);
         Assert.assertEquals(result.getEtiqueta(), ETIQUETA_TEST);
@@ -215,7 +216,7 @@ public class GrupoColorServiceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     public void addPadresSiPadreTest() {
-        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
         GrupoColor result = test.addPadres(ABREVIATURA_TEST,
             Arrays.asList("CASI_INCOLORO", "AMARILLO_TENUE"), RANGO_DEFAULT);
         Assert.assertNotNull(result);
@@ -248,7 +249,7 @@ public class GrupoColorServiceITest {
     @Sql("/bd/test-data-diamante_grupo_color-h2.sql")
     @Test(expected = IndexOutOfBoundsException.class)
     public void removePadresPadresNullTest() {
-        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST));
+        test.save(creatEntidad(ABREVIATURA_TEST, ETIQUETA_TEST, RANGO_DEFAULT));
         test.removePadre(ABREVIATURA_TEST, "AMARILLO_TENUE", RANGO_DEFAULT);
     }
 
@@ -262,11 +263,15 @@ public class GrupoColorServiceITest {
         Assert.assertEquals(result.getPadres().size(), 0);
     }
 
-    private static GrupoColor creatEntidad(String abr, String etq) {
+    private static GrupoColor creatEntidad(String abr, String etq, Long rango) {
         GrupoColor co = new GrupoColor();
 
         co.setAbreviatura(abr);
         co.setEtiqueta(etq);
+
+        RangoPeso rangoPeso = new RangoPeso();
+        rangoPeso.setIdElemento(rango);
+        co.setRango(rangoPeso);
 
         return co;
     }
