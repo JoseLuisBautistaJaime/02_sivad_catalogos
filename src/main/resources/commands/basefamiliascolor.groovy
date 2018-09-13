@@ -1,6 +1,7 @@
 package commands
 
 import mx.com.nmp.ms.sivad.catalogo.domain.BaseColor
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException
 import mx.com.nmp.ms.sivad.catalogo.service.BaseFamiliasColorService
 import org.crsh.cli.Argument
@@ -80,7 +81,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
-            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}].")
+            out.println("Ya existe un elemento del cat\u00e1logo con abreviatura [${abreviatura}, ${idRango}].")
         } catch (Exception e) {
             LOGGER.error("Ocurrió un error al guardar el elemento", e)
             out.println("Ocurrió un error al guardar el elemento ${getGenericClass().simpleName}(${abreviatura}, ${etiqueta}, ${idRango}).")
@@ -92,7 +93,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
     def modificar(InvocationContext context,
                   @Usage("Abreviatura actual del elemento a actualizar")
                   @Required @Option(names = ["i", "abreviaturaActual"]) String abrAnterior,
-                  @Required @Option(names = ["r", "idRangoActual"]) String idRangoAnterior,
+                  @Required @Option(names = ["r", "idRangoActual"]) int idRangoAnterior,
                   @Usage("Abreviatura") @Option(names = ["a", "abreviatura"]) String abreviatura,
                   @Usage("Etiqueta") @Option(names = ["e", "etiqueta"]) String etiqueta) {
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta)) {
@@ -109,7 +110,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
             mostrarTablaResultados([elemento])
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
-            out.println("El elemento del catálogo con abreviatura [${abrAnterior}] no existe.")
+            out.println("El elemento del catálogo con abreviatura [${abrAnterior}, ${idRangoAnterior}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al actualizar el elemento", e)
             out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
@@ -131,7 +132,7 @@ abstract class basefamiliascolor<T extends BaseColor> {
             out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del catálogo.")
         } catch (CatalogoNotFoundException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
-            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}, ${idRango}] no existe.")
         } catch (DataIntegrityViolationException e) {
             LOGGER.error("Ocurrió un error al eliminar el elemento", e)
             out.println("""Ocurrió un error al eliminar el elemento con abreviatura: ${abreviatura}
@@ -144,7 +145,7 @@ Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()
     }
 
     @Usage("Muestra graficamente la relación del elemento con sus padres. Relación Hijo Padre")
-    @Command
+    //@Command
     def relacion(InvocationContext context,
                  @Usage("Abreviatura del elemento a recuperar.")
                  @Required @Argument String abreviatura) {
@@ -173,7 +174,7 @@ Existen referencias a éste elemento en el catálogo Color ${buscarReferencias()
             mostrarArbolPadres(arbol, elemento)
             arbol
         } else {
-            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}, ${idRango}] no existe.")
         }
     }
 

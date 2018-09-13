@@ -65,7 +65,7 @@ public class ColorService extends BaseFamiliasColorService<Color> {
         List<GradoColor> result = new ArrayList<>();
 
         for (String p : padres) {
-            GradoColor padre = gradoColorRepository.findByAbreviatura(p);
+            GradoColor padre = gradoColorRepository.findByAbreviaturaAndRangoIdElemento(p, idRango);
 
             if (!ObjectUtils.isEmpty(padre)) {
                 result.add(padre);
@@ -93,7 +93,7 @@ public class ColorService extends BaseFamiliasColorService<Color> {
      */
     public Color removePadre(@HasText String elemento, @HasText String padre, @NotNull Long idRango) {
         Color hijo = obtenerElemento(elemento, idRango);
-        GradoColor result = gradoColorRepository.findByAbreviatura(padre);
+        GradoColor result = gradoColorRepository.findByAbreviaturaAndRangoIdElemento(padre, idRango);
         validarPadres(result, GradoColor.class);
 
         if (hijo.getPadres() == null || !hijo.getPadres().remove(result)) {

@@ -164,11 +164,13 @@ public class ClaridadDiamanteService {
      * @return El elemento actualizado.
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public ClaridadDiamante update(@HasText String abreviatura, Long idRango, @NotNull ClaridadDiamante claridadDiamante)
+    public ClaridadDiamante update(@HasText String abreviatura, Long idRango, @NotNull ClaridadDiamante claridadDiamante,
+                                   boolean ingresoPadre)
             throws CatalogoNotFoundException {
         LOGGER.info(">> update: [{}]", abreviatura);
         LOGGER.info(">> nueva abreviatura: [{}]", claridadDiamante.getAbreviatura());
         LOGGER.info(">> nueva etiqueta: [{}]", claridadDiamante.getEtiqueta());
+        LOGGER.info(">> nueva bandera: [{}]", claridadDiamante.isPadre());
         ClaridadDiamante claridadDiamanteOriginal = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
 
             if(ObjectUtils.isEmpty(claridadDiamanteOriginal)){
@@ -188,6 +190,12 @@ public class ClaridadDiamanteService {
                 claridadDiamanteOriginal.setEtiqueta(claridadDiamante.getEtiqueta());
             }
 
+        if (ingresoPadre) {
+            claridadDiamanteOriginal.setPadre(claridadDiamante.isPadre());
+        } else {
+            LOGGER.warn("No se definio nueva bandera padre. Se conserva la bandera actual [{}].", claridadDiamante.isPadre());
+        }
+
         claridadDiamanteOriginal.getConfiguracion().setUltimaActualizacion(new DateTime());
 
         try {
@@ -201,7 +209,7 @@ public class ClaridadDiamanteService {
     }
 
     }
-    
+
     /**
      * Permite recuperar todos los elementos del catálogo, sin las dependencias.
      * @param idRango

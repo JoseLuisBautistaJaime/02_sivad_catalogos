@@ -8,6 +8,7 @@
 package commands
 
 import mx.com.nmp.ms.sivad.catalogo.domain.GradoColor
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException
 import mx.com.nmp.ms.sivad.catalogo.service.GradoColorService
 import org.crsh.cli.Argument
@@ -69,7 +70,7 @@ class color {
         if (catalogo) {
             mostrarTablaResultados(catalogo)
         } else {
-            out.println("El elemento del catálogo con abreviatura [${abreviatura}] no existe.")
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}] y rango [${idRango}] no existe.")
         }
     }
 
@@ -79,7 +80,7 @@ class color {
                 @Usage("Abreviatura") @Required @Option(names = ["a", "abreviatura"]) String abreviatura,
                 @Usage("Etiqueta") @Required @Option(names = ["e", "etiqueta"]) String etiqueta,
                 @Usage("Identificador del rango") @Required @Option(names= ["i", "idRango"]) int idRango) {
-        def gc = new GradoColor([abreviatura: abreviatura, etiqueta: etiqueta, rango: new Rango([idElemento : idRango])])
+        def gc = new GradoColor([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRango])])
 
         try {
             def elemento = getServicio(context).save(gc)
@@ -108,7 +109,7 @@ class color {
             return
         }
 
-        def gc = new GradoColor([abreviatura: abreviatura, etiqueta: etiqueta, rango: new Rango([idElemento : idRango])])
+        def gc = new GradoColor([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento : idRango])])
 
         try {
             def elemento = getServicio(context).update(gc, abrAnterior, idRangoAnterior)

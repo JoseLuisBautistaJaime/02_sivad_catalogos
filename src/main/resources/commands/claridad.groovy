@@ -8,7 +8,7 @@
 package commands
 
 import mx.com.nmp.ms.sivad.catalogo.domain.ClaridadDiamante
-import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoDuplicateKeyException
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso
 import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException
 import mx.com.nmp.ms.sivad.catalogo.service.ClaridadDiamanteService
 import org.crsh.cli.*
@@ -44,7 +44,7 @@ class claridad {
                 @Usage("Identificador del rango") @Option(names = ["i", "idRango"]) @Required int idRango,
                 @Usage("padre (0=false, 1=true)") @Option(names = ["p", "padre"]) @Required int padre) {
         try {
-            def claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta, rango: new Rango([idElemento : idRango]), padre: padre])
+            def claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRango]), padre: padre])
             def elemento = getServicio(context).save(claridadDiamante)
             out.println("El elemento con abreviatura [${abreviatura}] fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
@@ -105,7 +105,7 @@ class claridad {
         if (result) {
             mostrarTablaResultados(result)
         } else {
-            out.println("El catálogo no contiene elementos.")
+            out.println("El catálogo no contiene elementos con el rango [${idRango}].")
         }
     }
 
@@ -123,7 +123,7 @@ class claridad {
                  @Usage("Identificador del rango") @Required @Argument int idRango) {
         try {
             getServicio(context).delete(abreviatura, idRango)
-            out.println("El elemento con abreviatura [${abreviatura}] fue eliminado correctamente del catálogo.")
+            out.println("El elemento con abreviatura [${abreviatura}, ${idRango}] fue eliminado correctamente del catálogo.")
         } catch (CatalogoNotFoundException e) {
             out.println("El elemento del catálogo con abreviatura [${abreviatura}, ${idRango}] no existe.")
         }
@@ -142,18 +142,38 @@ class claridad {
     @Command
     def modificar(InvocationContext context,
                   @Usage("Abreviatura actual del elemento a actualizar") @Option(names = ["i", "abreviaturaActual"]) @Required String abreviaturaActual,
-                  @Usage("Identificador del rango del elemento") @Option(names = ["r", "idRangoActual"]) @Required String idRangoActual,
+                  @Usage("Identificador del rango del elemento") @Option(names = ["r", "idRangoActual"]) @Required int idRangoActual,
                   @Usage("Abreviatura") @Option(names = ["a", "abreviatura"]) String abreviatura,
                   @Usage("Etiqueta") @Option(names = ["e", "etiqueta"]) String etiqueta,
-                  @Usage("Padre (0=false, 1=true)") @Option(names = ["p", "padre"]) int padre) {
+                  @Usage("Padre (0=false, 1=true)") @Option(names = ["p", "padre"]) String padre) {
 
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta) && ObjectUtils.isEmpty(padre)) {
             out.println("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta] y [r, idRangoActual]) " +
                     "para realizar la actualización.")
         } else {
+
+            int padreInt
+            if (!ObjectUtils.isEmpty(padre)) {
+                if (padre != "1" && padre != "0") {
+                    out.println("El atributo ([p, padre]) solo permite los valores 0=false o 1=true")
+                    return
+                } else {
+                    padreInt = Integer.valueOf(padre);
+                }
+            }
+
             try {
-                def claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRangoActual]), padre: padre])
-                def elemento = getServicio(context).update(abreviaturaActual, idRangoActual, claridadDiamante)
+                def claridadDiamante
+                def elemento
+
+                if (ObjectUtils.isEmpty(padre)) {
+                    claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRangoActual]), padre: 0])
+                    elemento = getServicio(context).update(abreviaturaActual, idRangoActual, claridadDiamante, false)
+                } else {
+                    claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRangoActual]), padre: padreInt])
+                    elemento = getServicio(context).update(abreviaturaActual, idRangoActual, claridadDiamante, true)
+                }
+
                 out.println("El elemento con abreviatura ["+ abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {

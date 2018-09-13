@@ -155,10 +155,9 @@ public class RangoPesoService {
         RangoPeso cc = getRepository().findByAbreviatura(abreviatura);
 
         if (ObjectUtils.isEmpty(cc)) {
-            String mensaje = String.format("El elemento con %s.abreviatura = %s, no existe.",
-                    getGenericClass().getSimpleName(), abreviatura);
+            String mensaje = String.format("El elemento con RangoPeso.abreviatura = %s, no existe.", abreviatura);
             LOGGER.warn(mensaje);
-            throw new CatalogoNotFoundException(mensaje, getGenericClass());
+            throw new CatalogoNotFoundException(mensaje, RangoPeso.class);
         }
 
         return cc;
@@ -172,14 +171,14 @@ public class RangoPesoService {
      */
     private void actualizarCatalogo(RangoPeso original, RangoPeso nuevo) {
         if (ObjectUtils.isEmpty(nuevo.getAbreviatura())) {
-            LOGGER.warn("{}.abreviatura = null, se deja valor anterior {}", getGenericClass().getSimpleName(),
+            LOGGER.warn("RangoPeso.abreviatura = null, se deja valor anterior {}",
                     original.getAbreviatura());
         } else {
             original.setAbreviatura(nuevo.getAbreviatura());
         }
 
         if (ObjectUtils.isEmpty(nuevo.getEtiqueta())) {
-            LOGGER.warn("{}.etiqueta = null, se deja valor anterior {}", getGenericClass().getSimpleName(),
+            LOGGER.warn("RangoPeso.etiqueta = null, se deja valor anterior {}",
                     original.getEtiqueta());
         } else {
             original.setEtiqueta(nuevo.getEtiqueta());
