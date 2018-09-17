@@ -11,8 +11,7 @@ DELETE FROM cat_diamante_color WHERE id_rango IN (2,3);
 DELETE FROM cat_diamante_grado_color WHERE id_rango IN (2,3);
 DELETE FROM cat_claridad_diamante WHERE id_rango IN (2,3);
 
-DELETE FROM cat_sub_corte WHERE corte = 2;
-DELETE FROM cat_corte WHERE elemento_id = 2;
+DELETE FROM cat_sub_corte WHERE ELEMENTO_ID='15';
 
 
 -- Catalogo Grupo Color - Rango 0.01 al 0.29
