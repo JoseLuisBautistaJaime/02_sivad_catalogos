@@ -121,4 +121,6 @@ ALTER TABLE cat_diamante_grado_color ADD CONSTRAINT UK_CAT_DIAMANTE_GRADO_COLOR_
 UNIQUE(abreviatura, id_rango);
 ALTER TABLE cat_diamante_grupo_color ADD CONSTRAINT UK_CAT_DIAMANTE_GRUPO_COLOR_ABR_RANGO
 UNIQUE(abreviatura, id_rango);
+ALTER TABLE cat_claridad_diamante ADD CONSTRAINT UK_CAT_DIAMANTE_CLARIDAD_ABR_RANGO_PADRE
+UNIQUE(abreviatura, id_rango, padre);
 

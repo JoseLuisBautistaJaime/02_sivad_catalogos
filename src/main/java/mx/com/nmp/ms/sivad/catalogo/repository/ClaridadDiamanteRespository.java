@@ -32,12 +32,33 @@ public interface ClaridadDiamanteRespository extends JpaRepository<ClaridadDiama
     /**
      * Recupera un elemento del catálogo.
      *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @param abreviatura Id Rango.
+     *
+     * @return Elemento del catálogo o {@literal null} si no existe.
+     */
+    List<ClaridadDiamante> findAllByAbreviaturaAndRangoIdElemento(String abreviatura, Long idRango);
+
+    /**
+     * Recupera un elemento del catálogo.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @param abreviatura Id Rango.
+     * @param padre Bandera que indica si la claridad es padre o hijo
+     *
+     * @return Elemento del catálogo o {@literal null} si no existe.
+     */
+    ClaridadDiamante findByAbreviaturaAndRangoIdElementoAndPadre(String abreviatura, Long idRango, boolean padre);
+
+    /**
+     * Recupera un elemento del catálogo.
+     *
      * @param abreviatura Id Rango.
      *
      * @return Elemento del catálogo o {@literal null} si no existe.
      */
     List<ClaridadDiamante> findByRangoIdElementoAndPadreFalse(Long idRango);
-    
+
     /**
      * Recupera todos los elementos del catálogo sin dependecias.
      * @param idRango

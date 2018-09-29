@@ -121,7 +121,7 @@ public class GradoColorResourceITest {
      */
     @Test
     public void getAllSinDatosDependenciasTrueTest() throws Exception {
-        test.perform(get("/catalogos/diamantes/colores?dependencias=true"))
+        test.perform(get("/catalogos/diamantes/colores?dependencias=true&idRango=1"))
                 .andExpect(status().isNotAcceptable())
                 .andExpect(content().bytes(new byte[0]));
     }
@@ -135,7 +135,7 @@ public class GradoColorResourceITest {
     @Transactional
     @Sql("/bd/test-data-diamante_grado_color-h2.sql")
     public void getAllDependenciasTrueTest() throws Exception {
-        test.perform(get("/catalogos/diamantes/colores?dependencias=true"))
+        test.perform(get("/catalogos/diamantes/colores?dependencias=true&idRango=1"))
                 .andExpect(status().isNotAcceptable())
                 .andExpect(content().bytes(new byte[0]));
     }
@@ -147,7 +147,7 @@ public class GradoColorResourceITest {
      */
     @Test
     public void getAllDependenciasSinValorTest() throws Exception {
-        test.perform(get("/catalogos/diamantes/colores?dependencias="))
+        test.perform(get("/catalogos/diamantes/colores?dependencias=&idRango="))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().bytes(new byte[0]));
     }

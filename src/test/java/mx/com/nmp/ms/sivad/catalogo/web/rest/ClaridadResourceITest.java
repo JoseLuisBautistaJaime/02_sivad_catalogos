@@ -3,8 +3,10 @@ package mx.com.nmp.ms.sivad.catalogo.web.rest;
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.ClaridadDiamante;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.repository.ClaridadDiamanteRespository;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
+import mx.com.nmp.ms.sivad.catalogo.repository.RangoPesoRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
@@ -54,8 +56,12 @@ public class ClaridadResourceITest {
     @Inject
     private ConfiguracionCatalogoRepository configuracionCatalogoRepository;
 
+    @Inject
+    private RangoPesoRepository rangoPesoRepository;
+
     private MockMvc mockClaridadDiamanteService;
     private ConfiguracionCatalogo configuracionCatalogo;
+    private RangoPeso rangoPeso;
 
     private ClaridadDiamante prueba1;
     private ClaridadDiamante prueba2;
@@ -70,7 +76,7 @@ public class ClaridadResourceITest {
     public void initTest() {
 
         configuracionCatalogoRepository.deleteAll();
-        
+
         ConfiguracionCatalogo configuracionCatalogoPrueba = new ConfiguracionCatalogo();
         configuracionCatalogoPrueba.setTipo(TIPO_PRUEBA);
         configuracionCatalogoPrueba.setDescripcion(DESCRIPCION_PRUEBA);
@@ -81,15 +87,24 @@ public class ClaridadResourceITest {
 
         configuracionCatalogoRepository.save(configuracionCatalogo);
 
+        RangoPeso rangoPesoPrueba = new RangoPeso();
+        rangoPesoPrueba.setAbreviatura("0");
+        rangoPesoPrueba.setConfiguracion(configuracionCatalogo);
+        rangoPesoPrueba.setEtiqueta("Default");
+
+        rangoPeso = rangoPesoRepository.save(rangoPesoPrueba);
+
         ClaridadDiamante claridadDiamanteA = new ClaridadDiamante();
         claridadDiamanteA.setEtiqueta(ETIQUETA_PRUEBA_A);
         claridadDiamanteA.setAbreviatura(ABREVIATURA_PRUEBA_A);
         claridadDiamanteA.setConfiguracion(configuracionCatalogo);
+        claridadDiamanteA.setRango(rangoPeso);
 
         ClaridadDiamante claridadDiamanteB = new ClaridadDiamante();
         claridadDiamanteB.setEtiqueta(ETIQUETA_PRUEBA_B);
         claridadDiamanteB.setAbreviatura(ABREVIATURA_PRUEBA_B);
         claridadDiamanteB.setConfiguracion(configuracionCatalogo);
+        claridadDiamanteB.setRango(rangoPeso);
 
         prueba1 = claridadDiamanteRespository.save(claridadDiamanteA);
         prueba2 = claridadDiamanteRespository.save(claridadDiamanteB);
@@ -123,7 +138,7 @@ public class ClaridadResourceITest {
     @Test
     @Transactional
     public void testResourceGet() throws Exception {
-        mockClaridadDiamanteService.perform(get("/catalogos/diamantes/claridades/BB"))
+        mockClaridadDiamanteService.perform(get("/catalogos/diamantes/claridades/BB/?idRango=" + rangoPeso.getIdElemento()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.Catalogo.dominio").value(configuracionCatalogo.getDominio()))

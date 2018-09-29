@@ -93,7 +93,7 @@ public class ClaridadDiamanteResource {
 
     	// Remover padres
     	LOGGER.info(">> getAll");
-        
+
         if (dependencias) {
             List<ClaridadDiamante> result = null;
             if (idRango != null) {
@@ -101,11 +101,11 @@ public class ClaridadDiamanteResource {
             }else {
                 result = claridadDiamanteService.getAll();
             }
-            
+
             if(ObjectUtils.isEmpty(result)) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
-            
+
             return new ResponseEntity<>(CatalogoFactory.build(result), HttpStatus.OK);
         }else{
             List<FCWithoutDependenciesProjection> result =  null;
@@ -114,15 +114,15 @@ public class ClaridadDiamanteResource {
             }else {
                 result = claridadDiamanteService.getAllWithoutDependencies();
             }
-            
+
             if(ObjectUtils.isEmpty(result)) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             Catalogo catalogo = CatalogoFactory.build(result.get(0).getConfiguracion(),result);
-            
+
             return new ResponseEntity<>(catalogo, HttpStatus.OK);
         }
-       
+
     }
 
     /**
@@ -134,13 +134,14 @@ public class ClaridadDiamanteResource {
      */
     @RequestMapping(value = "/{abreviatura}",
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            params = "idRango")
     @Timed
-    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura, Long idRango) {
+    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura, @RequestParam(value = "idRango", required = true) Long idRango) {
         LOGGER.info(">> get: [{}, {}]", abreviatura, idRango);
 
         try {
-            return new ResponseEntity<>(CatalogoFactory.build(claridadDiamanteService.get(abreviatura, idRango)), HttpStatus.OK);
+            return new ResponseEntity<>(CatalogoFactory.build(claridadDiamanteService.getAll(abreviatura, idRango)), HttpStatus.OK);
         } catch (CatalogoNotFoundException e) {
             LOGGER.warn("El elemento del catalogo no existe. Excepcion: [{}]", e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

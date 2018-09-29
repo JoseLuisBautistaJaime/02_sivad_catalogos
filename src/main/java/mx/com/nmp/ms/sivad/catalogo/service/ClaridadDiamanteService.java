@@ -85,16 +85,17 @@ public class ClaridadDiamanteService {
      *
      * @param abreviatura La abreviatura.
      * @param idRango Identificador del Rango
+     * @param padre Bandera que indica si la claridad es padre o hijo     *
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public void delete(@HasText String abreviatura, Long idRango) throws CatalogoNotFoundException {
+    public void delete(@HasText String abreviatura, Long idRango, boolean padre) throws CatalogoNotFoundException {
         LOGGER.info(">> delete: [{}]", abreviatura);
-        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
+        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElementoAndPadre(abreviatura, idRango, padre);
 
-            if(ObjectUtils.isEmpty(result)){
-                String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
-                throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
-            }
+        if(ObjectUtils.isEmpty(result)){
+            String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+            throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
+        }
 
         result.getConfiguracion().setUltimaActualizacion(new DateTime());
         claridadDiamanteRespository.delete(result);
@@ -109,14 +110,36 @@ public class ClaridadDiamanteService {
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
     @Transactional(readOnly = true)
-    public ClaridadDiamante get(@HasText String abreviatura, Long idRango) throws CatalogoNotFoundException{
+    public List<ClaridadDiamante> getAll(@HasText String abreviatura, Long idRango) throws CatalogoNotFoundException{
         LOGGER.info(">> get: [{}]", abreviatura);
-        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
+        List<ClaridadDiamante> result = claridadDiamanteRespository.findAllByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
 
             if(ObjectUtils.isEmpty(result)){
-                String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+                String mensaje = "El catalogo ClaridadDiamante no contiene elementos con la abreviatura [" +  abreviatura + "] y el rango [" + idRango + "].";
                 throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
             }
+
+        return result;
+    }
+
+    /**
+     * Permite obtener el elemento del catálogo que coincida con la abreviatura indicada.
+     *
+     * @param abreviatura La abreviatura
+     * @param idRango Id Rango
+     * @param padre Bandera que indica si la claridad es padre o hijo
+     * @return Objeto {@link ClaridadDiamante} con el elemento que coincida con la abreviatura indicada.
+     * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
+     */
+    @Transactional(readOnly = true)
+    public ClaridadDiamante get(@HasText String abreviatura, Long idRango, boolean padre) throws CatalogoNotFoundException{
+        LOGGER.info(">> get: [{}]", abreviatura);
+        ClaridadDiamante result = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElementoAndPadre(abreviatura, idRango, padre);
+
+        if(ObjectUtils.isEmpty(result)){
+            String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+            throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
+        }
 
         return result;
     }
@@ -160,35 +183,36 @@ public class ClaridadDiamanteService {
      *
      * @param abreviatura La abreviatura actual del elemento.
      * @param idRango Rango
+     * @param padre Bandera que indica si la claridad es padre o hijo     *
      * @param claridadDiamante Elemento del catálogo con la información que se quiere actualizar.
      * @return El elemento actualizado.
      * @throws CatalogoNotFoundException En caso de no encontrar un elemento que coincida con la abreviatura.
      */
-    public ClaridadDiamante update(@HasText String abreviatura, Long idRango, @NotNull ClaridadDiamante claridadDiamante,
+    public ClaridadDiamante update(@HasText String abreviatura, Long idRango, boolean padre, @NotNull ClaridadDiamante claridadDiamante,
                                    boolean ingresoPadre)
-            throws CatalogoNotFoundException {
+        throws CatalogoNotFoundException {
         LOGGER.info(">> update: [{}]", abreviatura);
         LOGGER.info(">> nueva abreviatura: [{}]", claridadDiamante.getAbreviatura());
         LOGGER.info(">> nueva etiqueta: [{}]", claridadDiamante.getEtiqueta());
         LOGGER.info(">> nueva bandera: [{}]", claridadDiamante.isPadre());
-        ClaridadDiamante claridadDiamanteOriginal = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElemento(abreviatura, idRango);
+        ClaridadDiamante claridadDiamanteOriginal = claridadDiamanteRespository.findByAbreviaturaAndRangoIdElementoAndPadre(abreviatura, idRango, padre);
 
-            if(ObjectUtils.isEmpty(claridadDiamanteOriginal)){
-                String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
-                throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
-            }
+        if(ObjectUtils.isEmpty(claridadDiamanteOriginal)){
+            String mensaje = "El catalogo ClaridadDiamante no contiene un elemento con la abreviatura [" +  abreviatura + "].";
+            throw new CatalogoNotFoundException(mensaje, ClaridadDiamante.class);
+        }
 
-            if (ObjectUtils.isEmpty(claridadDiamante.getAbreviatura())) {
-                LOGGER.warn("No se definio nueva abreviatura. Se conserva la abreviatura actual [{}].", claridadDiamanteOriginal.getAbreviatura());
-            } else {
-                claridadDiamanteOriginal.setAbreviatura(claridadDiamante.getAbreviatura());
-            }
+        if (ObjectUtils.isEmpty(claridadDiamante.getAbreviatura())) {
+            LOGGER.warn("No se definio nueva abreviatura. Se conserva la abreviatura actual [{}].", claridadDiamanteOriginal.getAbreviatura());
+        } else {
+            claridadDiamanteOriginal.setAbreviatura(claridadDiamante.getAbreviatura());
+        }
 
-            if (ObjectUtils.isEmpty(claridadDiamante.getEtiqueta())) {
-                LOGGER.warn("No se definio nueva etiqueta. Se conserva la etiqueta actual [{}].", claridadDiamante.getEtiqueta());
-            } else {
-                claridadDiamanteOriginal.setEtiqueta(claridadDiamante.getEtiqueta());
-            }
+        if (ObjectUtils.isEmpty(claridadDiamante.getEtiqueta())) {
+            LOGGER.warn("No se definio nueva etiqueta. Se conserva la etiqueta actual [{}].", claridadDiamante.getEtiqueta());
+        } else {
+            claridadDiamanteOriginal.setEtiqueta(claridadDiamante.getEtiqueta());
+        }
 
         if (ingresoPadre) {
             claridadDiamanteOriginal.setPadre(claridadDiamante.isPadre());
@@ -201,12 +225,12 @@ public class ClaridadDiamanteService {
         try {
             return claridadDiamanteRespository.saveAndFlush(claridadDiamanteOriginal);
         } catch (DataIntegrityViolationException e) {
-        String mensaje = "Ya existe un elemento con la abreviatura:" + claridadDiamante.getAbreviatura();
-        if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn(mensaje + " Excepcion: {}", e);
+            String mensaje = "Ya existe un elemento con la abreviatura:" + claridadDiamante.getAbreviatura();
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(mensaje + " Excepcion: {}", e);
+            }
+            throw e;
         }
-        throw e;
-    }
 
     }
 

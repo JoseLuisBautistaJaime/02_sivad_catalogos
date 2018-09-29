@@ -49,7 +49,7 @@ class claridad {
             out.println("El elemento con abreviatura [${abreviatura}] fue agregado correctamente al catálogo.")
             mostrarTablaResultados([elemento])
         } catch (DataIntegrityViolationException e) {
-            out.println("Ya existe un elemento del catálogo con abreviatura y rango [${abreviatura}, ${idRango}].")
+            out.println("Ya existe un elemento del catálogo con abreviatura, rango y padre [${abreviatura}, ${idRango}, ${padre}].")
         }
     }
 
@@ -64,11 +64,13 @@ class claridad {
     @Command
     def elemento(InvocationContext context,
                  @Usage("Abreviatura del elemento a recuperar") @Required @Argument String abreviatura,
-                 @Usage("Identificador del rango") @Required @Argument int idRango) {
+                 @Usage("Identificador del rango") @Option(names = ["i", "idRango"]) @Required int idRango,
+                 @Usage("padre (0=false, 1=true)") @Option(names = ["p", "padre"]) @Required int padre) {
         try {
-            mostrarTablaResultados([getServicio(context).get(abreviatura, idRango)])
+            boolean padreBoolean = padre == 1 ? true : false;
+            mostrarTablaResultados([getServicio(context).get(abreviatura, idRango, padreBoolean)])
         } catch (CatalogoNotFoundException e) {
-            out.println("El elemento del catálogo con abreviatura [${abreviatura}, ${idRango}] no existe.")
+            out.println("El elemento del catálogo con abreviatura, rango y padre [${abreviatura}, ${idRango}, ${padre}] no existe.")
         }
     }
 
@@ -99,7 +101,7 @@ class claridad {
     @Usage("Permite recuperar todos los elementos del catálogo por rango")
     @Command
     def elementosrango(InvocationContext context,
-    				@Usage("Identificador del rango") @Required @Argument int idRango) {
+                       @Usage("Identificador del rango") @Required @Argument int idRango) {
         def result = getServicio(context).getAll(idRango);
 
         if (result) {
@@ -120,12 +122,15 @@ class claridad {
     @Command
     def eliminar(InvocationContext context,
                  @Usage("Abreviatura del elemento a eliminar") @Required @Argument String abreviatura,
-                 @Usage("Identificador del rango") @Required @Argument int idRango) {
+                 @Usage("Identificador del rango") @Option(names = ["i", "idRango"]) @Required int idRango,
+                 @Usage("padre (0=false, 1=true)") @Option(names = ["p", "padre"]) @Required int padre) {
         try {
-            getServicio(context).delete(abreviatura, idRango)
-            out.println("El elemento con abreviatura [${abreviatura}, ${idRango}] fue eliminado correctamente del catálogo.")
+            boolean padreBoolean = padre == 1 ? true : false;
+
+            getServicio(context).delete(abreviatura, idRango, padreBoolean)
+            out.println("El elemento con abreviatura [${abreviatura}, ${idRango}, ${padre}] fue eliminado correctamente del catálogo.")
         } catch (CatalogoNotFoundException e) {
-            out.println("El elemento del catálogo con abreviatura [${abreviatura}, ${idRango}] no existe.")
+            out.println("El elemento del catálogo con abreviatura [${abreviatura}, ${idRango}, ${padre}] no existe.")
         }
     }
 
@@ -143,13 +148,14 @@ class claridad {
     def modificar(InvocationContext context,
                   @Usage("Abreviatura actual del elemento a actualizar") @Option(names = ["i", "abreviaturaActual"]) @Required String abreviaturaActual,
                   @Usage("Identificador del rango del elemento") @Option(names = ["r", "idRangoActual"]) @Required int idRangoActual,
+                  @Usage("Bandera Padre actual (0=false, 1=true)") @Option(names = ["p", "padreActual"]) @Required int padreActual,
                   @Usage("Abreviatura") @Option(names = ["a", "abreviatura"]) String abreviatura,
                   @Usage("Etiqueta") @Option(names = ["e", "etiqueta"]) String etiqueta,
-                  @Usage("Padre (0=false, 1=true)") @Option(names = ["p", "padre"]) String padre) {
+                  @Usage("Nueva bandera Padre (0=false, 1=true)") @Option(names = ["d", "padre"]) String padre) {
 
         if (ObjectUtils.isEmpty(abreviatura) && ObjectUtils.isEmpty(etiqueta) && ObjectUtils.isEmpty(padre)) {
             out.println("Se requiere al menos uno de los atributos ([a, abreviatura] o [e, etiqueta] y [r, idRangoActual]) " +
-                    "para realizar la actualización.")
+                "para realizar la actualización.")
         } else {
 
             int padreInt
@@ -165,21 +171,22 @@ class claridad {
             try {
                 def claridadDiamante
                 def elemento
+                boolean padreBoolean = padreActual == 1 ? true : false;
 
                 if (ObjectUtils.isEmpty(padre)) {
                     claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRangoActual]), padre: 0])
-                    elemento = getServicio(context).update(abreviaturaActual, idRangoActual, claridadDiamante, false)
+                    elemento = getServicio(context).update(abreviaturaActual, idRangoActual, padreBoolean, claridadDiamante, false)
                 } else {
                     claridadDiamante = new ClaridadDiamante([abreviatura: abreviatura, etiqueta: etiqueta, rango: new RangoPeso([idElemento: idRangoActual]), padre: padreInt])
-                    elemento = getServicio(context).update(abreviaturaActual, idRangoActual, claridadDiamante, true)
+                    elemento = getServicio(context).update(abreviaturaActual, idRangoActual, padreBoolean, claridadDiamante, true)
                 }
 
                 out.println("El elemento con abreviatura ["+ abreviaturaActual + "] ha sido modificado.")
                 mostrarTablaResultados([elemento])
             } catch (CatalogoNotFoundException e) {
-                out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}, ${idRangoActual}] no existe.")
+                out.println("El elemento del catálogo con abreviatura [${abreviaturaActual}, ${idRangoActual}, ${padreActual}] no existe.")
             } catch (DataIntegrityViolationException e) {
-                out.println("Ya existe un elemento del catálogo con abreviatura [${abreviatura}].")
+                out.println("Ya existe un elemento del catálogo con abreviatura, rango y padre [${abreviatura}, ${idRango}, ${padre}].")
             }
         }
     }
