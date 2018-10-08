@@ -15,6 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class AppProperties {
 
     private final Cache cache = new Cache();
+    private Long rango;
 
     private final Mail mail = new Mail();
 
@@ -68,4 +69,12 @@ public class AppProperties {
             this.plataforma = plataforma;
         }
     }
+
+	public Long getRango() {
+		return rango;
+	}
+
+	public void setRango(Long rango) {
+		this.rango = rango;
+	}
 }

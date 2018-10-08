@@ -136,7 +136,7 @@ public class GrupoColorResourceITest {
     public void getAllDependenciasTrueTest() throws Exception {
         ConfiguracionCatalogoEnum tpe = ConfiguracionCatalogoEnum.GRUPO_COLOR;
 
-        test.perform(get("/catalogos/diamantes/color/familia3?dependencias=true"))
+        test.perform(get("/catalogos/diamantes/color/familia3?dependencias=true&idRango=1"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
@@ -158,7 +158,7 @@ public class GrupoColorResourceITest {
      */
     @Test
     public void getAllDependenciasSinValorTest() throws Exception {
-        test.perform(get("/catalogos/diamantes/color/familia3?dependencias="))
+        test.perform(get("/catalogos/diamantes/color/familia3?dependencias=&idRango="))
             .andExpect(status().isBadRequest())
             .andExpect(content().bytes(new byte[0]));
     }

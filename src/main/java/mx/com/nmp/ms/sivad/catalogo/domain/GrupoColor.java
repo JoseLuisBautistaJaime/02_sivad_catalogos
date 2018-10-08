@@ -32,9 +32,9 @@ public class GrupoColor extends BaseColor {
      * Elementos del catálogo {@link EscalaColor} padres de esté elemento del catálogo Grupo Color
      */
     @ManyToMany(fetch = EAGER)
-    @JsonIgnoreProperties("etiqueta")
+    @JsonIgnoreProperties({"etiqueta","rango"})
     @JoinTable(name = "cat_diamante_escala_color_grupo_color",
-            joinColumns = @JoinColumn(name = "elemento_hijo"),
+    		joinColumns = {@JoinColumn(name = "elemento_hijo", referencedColumnName="elemento_id"),@JoinColumn(name = "id_rango", referencedColumnName="id_rango")},
             inverseJoinColumns = @JoinColumn(name = "elemento_padre"))
     private List<EscalaColor> padres;
 

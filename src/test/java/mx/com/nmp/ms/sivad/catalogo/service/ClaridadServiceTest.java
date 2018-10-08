@@ -3,6 +3,7 @@ package mx.com.nmp.ms.sivad.catalogo.service;
 import mx.com.nmp.ms.sivad.catalogo.CatalogosApplication;
 import mx.com.nmp.ms.sivad.catalogo.domain.ClaridadDiamante;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.repository.ConfiguracionCatalogoRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,7 @@ public class ClaridadServiceTest {
     private static final String ABREVIATURA_PRUEBA = "ABREVIATURA_PRUEBA";
     private static final String ETIQUETA_PRUEBA_EDIT = "ETIQUETA_PRUEBA_EDIT";
     private static final String ABREVIATURA_PRUEBA_EDIT = "ABREVIATURA_PRUEBA_E";
+    private static final Long ID_RANGO = 1L;
 
     @Inject
     private ClaridadDiamanteService claridadDiamanteService;
@@ -89,16 +92,17 @@ public class ClaridadServiceTest {
      */
     @Test
     @Transactional
+    @Sql("/bd/test-data-diamante_claridad-h2.sql")
     public void testActualizar() {
         LOGGER.info(">> testActualizar");
 
-        ClaridadDiamante claridadDiamante = createElement(ETIQUETA_PRUEBA, ABREVIATURA_PRUEBA);
+        ClaridadDiamante claridadDiamante = createElement(ETIQUETA_PRUEBA, ABREVIATURA_PRUEBA, ID_RANGO);
         ClaridadDiamante clariAdd = claridadDiamanteService.save(claridadDiamante);
 
         assertNotNull(clariAdd);
 
-        ClaridadDiamante claridadDiamanteEdit = createElement(ETIQUETA_PRUEBA_EDIT, ABREVIATURA_PRUEBA_EDIT);
-        ClaridadDiamante claridadUpdate =  claridadDiamanteService.update(ABREVIATURA_PRUEBA, claridadDiamanteEdit );
+        ClaridadDiamante claridadDiamanteEdit = createElement(ETIQUETA_PRUEBA_EDIT, ABREVIATURA_PRUEBA_EDIT, ID_RANGO);
+        ClaridadDiamante claridadUpdate =  claridadDiamanteService.update(ABREVIATURA_PRUEBA, ID_RANGO, false, claridadDiamanteEdit, false);
 
         assertEquals(ABREVIATURA_PRUEBA_EDIT, claridadUpdate.getAbreviatura());
         assertEquals(ETIQUETA_PRUEBA_EDIT, claridadUpdate.getEtiqueta());
@@ -110,22 +114,26 @@ public class ClaridadServiceTest {
      */
     @Test
     @Transactional
+    @Sql("/bd/test-data-diamante_claridad-h2.sql")
     public void testEliminar() {
         LOGGER.info(">> testEliminar");
 
-        ClaridadDiamante claridadDiamante = createElement(ETIQUETA_PRUEBA, ABREVIATURA_PRUEBA);
+        ClaridadDiamante claridadDiamante = createElement(ETIQUETA_PRUEBA, ABREVIATURA_PRUEBA, ID_RANGO);
         ClaridadDiamante claridadAdd = claridadDiamanteService.save(claridadDiamante);
         assertNotNull(claridadAdd);
 
-        assertNotNull(claridadDiamanteService.get(ABREVIATURA_PRUEBA));
-        claridadDiamanteService.delete(ABREVIATURA_PRUEBA);
+        assertNotNull(claridadDiamanteService.get(ABREVIATURA_PRUEBA, ID_RANGO, false));
+        claridadDiamanteService.delete(ABREVIATURA_PRUEBA, ID_RANGO, false);
 
     }
 
-    private ClaridadDiamante createElement(String ETIQUETA, String ABREVIATURA ){
+    private ClaridadDiamante createElement(String ETIQUETA, String ABREVIATURA, Long rango){
         ClaridadDiamante claridadDiamante = new ClaridadDiamante();
         claridadDiamante.setEtiqueta(ETIQUETA);
         claridadDiamante.setAbreviatura(ABREVIATURA);
+        RangoPeso rangoPeso = new RangoPeso();
+        rangoPeso.setIdElemento(rango);
+        claridadDiamante.setRango(rangoPeso);
         return claridadDiamante;
     }
 

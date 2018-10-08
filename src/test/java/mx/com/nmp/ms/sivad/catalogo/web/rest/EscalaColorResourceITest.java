@@ -130,7 +130,7 @@ public class EscalaColorResourceITest {
     public void getAllDependenciasTrueTest() throws Exception {
         ConfiguracionCatalogoEnum tpe = ConfiguracionCatalogoEnum.ESCALA_COLOR;
 
-        test.perform(get("/catalogos/diamantes/color/familia2?dependencias=true"))
+        test.perform(get("/catalogos/diamantes/color/familia2?dependencias=true&idRango=1"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath(DOMINIO_PATH).value(tpe.getDominioUnwrap()))
@@ -150,7 +150,7 @@ public class EscalaColorResourceITest {
      */
     @Test
     public void getAllDependenciasSinValorTest() throws Exception {
-        test.perform(get("/catalogos/diamantes/color/familia2?dependencias="))
+        test.perform(get("/catalogos/diamantes/color/familia2?dependencias=&idRango="))
             .andExpect(status().isBadRequest())
             .andExpect(content().bytes(new byte[0]));
     }

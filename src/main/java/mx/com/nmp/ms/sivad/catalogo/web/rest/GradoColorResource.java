@@ -62,6 +62,7 @@ public class GradoColorResource {
 
     /**
      * GET /colores : Recuperar todos los elementos del catalogo.
+     * @param idRango Identificador del rango
      *
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link GradoColor}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
@@ -69,8 +70,15 @@ public class GradoColorResource {
     @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> getAll() {
-        List<GradoColor> result = gradoColorService.getAll();
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "idRango", required = false) Long idRango) {
+        List<GradoColor> result = null;
+        if (idRango != null) {
+        	result = gradoColorService.getAll(idRango);
+        }
+        else {
+        	result = gradoColorService.getAll();
+        }
+
         Catalogo catalogo = null;
 
         if (ObjectUtils.isEmpty(result)) {
@@ -96,14 +104,14 @@ public class GradoColorResource {
     @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
-            params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
+            params = {"dependencias", "idRango" })
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "idRango", required = false) Long idRango) {
         if (dependencias) {
             LOGGER.warn("El catálogo no contiene dependencias.");
             return new ResponseEntity<>(NOT_ACCEPTABLE);
         }
 
-        return getAll();
+    	return getAll(idRango);
     }
 
     /**
@@ -118,8 +126,15 @@ public class GradoColorResource {
     @RequestMapping(value = "/{abreviatura}",
             method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura) {
-        GradoColor result = gradoColorService.getOne(abreviatura);
+    public ResponseEntity<Catalogo> get(@PathVariable String abreviatura, @RequestParam(value = "idRango", required = false) Long idRango) {
+    	
+    	GradoColor result = null;
+    	if (idRango != null) {
+    		result = gradoColorService.getOne(abreviatura, idRango);
+    	}
+    	else {
+    		result = gradoColorService.getOne(abreviatura);
+    	}
 
         if (ObjectUtils.isEmpty(result)) {
             LOGGER.warn("El elemento del catálogo Grado Color con abreviatura = {}, no existe.", abreviatura);
