@@ -91,11 +91,7 @@
             <artifactId>arquetipo-starter</artifactId>
             <version>${nmp.arquetipo.version}</version>
         </dependency>
-        <dependency>
-            <groupId>mx.com.nmp.ms</groupId>
-            <artifactId>arquetipo-starter</artifactId>
-            <version>${nmp.arquetipo.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
