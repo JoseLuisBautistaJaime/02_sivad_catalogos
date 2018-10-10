@@ -9,4 +9,4 @@ applications:
     spring.profiles.active: cloud,swagger
     TZ: America/Mexico_City
   services:
-    - sivad-catalogos-bd
+    - 1775-sivar-catalogos-bd
