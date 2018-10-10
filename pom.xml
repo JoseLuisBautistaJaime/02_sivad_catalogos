@@ -98,6 +98,11 @@
             <groupId>mx.com.nmp.ms</groupId>
             <artifactId>arquetipo-core</artifactId>
             <version>${nmp.arquetipo.version}</version>
+        </dependency>
+     <!--   <dependency>
+            <groupId>mx.com.nmp.ms</groupId>
+            <artifactId>arquetipo-core</artifactId>
+            <version>${nmp.arquetipo.version}</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/lib/arquetipo-core-0.8.12-SNAPSHOT.jar</systemPath>
         </dependency>
@@ -107,6 +112,11 @@
             <version>${nmp.arquetipo.version}</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/lib/arquetipo-mail-starter-0.8.12-SNAPSHOT.jar</systemPath>
+        </dependency> -->
+        <dependency>
+            <groupId>mx.com.nmp.ms</groupId>
+            <artifactId>arquetipo-mail-starter</artifactId>
+            <version>${nmp.arquetipo.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -180,19 +190,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hibernate4</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
 
-		<dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hibernate4</artifactId>
-        </dependency>
 
         <!-- Spring Cloud -->
         <dependency>
@@ -620,5 +623,15 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <repositories>
+        <!--other repositories if any-->
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/repo</url>
+        </repository>
+    </repositories>
+
 
 </project>
