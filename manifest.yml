@@ -6,4 +6,4 @@ applications:
   env:
     TZ: America/Mexico_City
   services:
-    - 1775-sivar-catalogos-bd
+    - dev1775-catalogos-sivaddb
