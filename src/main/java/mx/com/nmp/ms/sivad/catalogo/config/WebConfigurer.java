@@ -43,7 +43,7 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         if (env.acceptsProfiles(NmpProfile.DEV)) {
-            initH2Console(servletContext);
+            //initH2Console(servletContext);
         }
         LOGGER.info("Se configuro la aplicacion Web");
     }
@@ -64,11 +64,12 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
     /**
      * Inicializa consola H2.
      */
+    /*
     private void initH2Console(ServletContext servletContext) {
         LOGGER.debug("Inicializando consola H2");
         ServletRegistration.Dynamic h2ConsoleServlet = servletContext.addServlet("H2Console", new org.h2.server.web.WebServlet());
         h2ConsoleServlet.addMapping("/h2-console/*");
         h2ConsoleServlet.setInitParameter("-properties", "src/main/resources/");
         h2ConsoleServlet.setLoadOnStartup(1);
-    }
+    }*/
 }
