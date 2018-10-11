@@ -11,8 +11,6 @@ import mx.com.nmp.ms.sivad.catalogo.exception.CatalogoNotFoundException;
 import mx.com.nmp.ms.sivad.catalogo.factory.CatalogoFactory;
 import mx.com.nmp.ms.sivad.catalogo.service.ClaridadDiamanteService;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.stream.Collectors;
 import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
 
 /**
