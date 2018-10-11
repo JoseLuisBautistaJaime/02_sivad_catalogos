@@ -1,6 +1,6 @@
 ---
 applications:
-- name: sivad-catalogos
+- name: dev1775-catalogos-sivad
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   path: target/sivad-catalogos-0.9.0-SNAPSHOT.jar
   env:
