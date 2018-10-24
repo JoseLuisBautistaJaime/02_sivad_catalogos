@@ -320,8 +320,23 @@ DELETE FROM cat_diamante_grado_color WHERE id_rango IN (2,3);
 DELETE FROM cat_claridad_diamante WHERE id_rango IN (2,3);
 
 DELETE FROM cat_sub_corte WHERE ELEMENTO_ID='15';
+DELETE FROM cat_sub_corte WHERE ELEMENTO_ID='16';
 UPDATE cat_sub_corte SET corte='1' WHERE corte = '2';
+UPDATE cat_sub_corte SET etiqueta='Brillante Redondo' WHERE elemento_id='1';
+UPDATE cat_sub_corte SET etiqueta='Acojinado' WHERE elemento_id='3';
+UPDATE cat_sub_corte SET etiqueta='Radiante' WHERE elemento_id='12';
+UPDATE cat_sub_corte SET etiqueta='Trillante' WHERE elemento_id='14';
 
+
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (16, 1, 'TP', 'Trapecio');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (17, 1, '8X', '8x8');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (18, 1, 'OT', 'Otro');
+--Se homologan los nombres del catálogo como en Midas
+UPDATE cat_rango_oro SET etiqueta='Rotas y Pedacería' WHERE elemento_id=1;
+UPDATE cat_rango_oro SET etiqueta='Personalizado' WHERE elemento_id=2;
+UPDATE cat_rango_oro SET etiqueta='Sin Personalizar' WHERE elemento_id=3;
+UPDATE cat_rango_oro SET etiqueta='Buen Estado Sin Personalizar' WHERE elemento_id=4;
+UPDATE cat_rango_oro SET etiqueta='Piezas Nuevas y Marcas Comerciales' WHERE elemento_id=5;
 
 -- Catalogo Grupo Color - Rango 0.01 al 0.29
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(7,'F','D-F',17,2);
