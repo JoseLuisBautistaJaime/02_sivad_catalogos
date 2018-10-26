@@ -28,7 +28,7 @@ UPDATE cat_rango_oro SET etiqueta='Rotas y Pedacería' WHERE elemento_id=1;
 UPDATE cat_rango_oro SET etiqueta='Personalizado' WHERE elemento_id=2;
 UPDATE cat_rango_oro SET etiqueta='Sin Personalizar' WHERE elemento_id=3;
 UPDATE cat_rango_oro SET etiqueta='Buen Estado Sin Personalizar' WHERE elemento_id=4;
-UPDATE cat_rango_oro SET etiqueta='Piezas Nuevas y Marcas Comerciales' WHERE elemento_id=5;
+UPDATE cat_rango_oro SET etiqueta='Marcas Comerciales y Piezas Nuevas' WHERE elemento_id=5;
 
 -- Catalogo Grupo Color - Rango 0.01 al 0.29
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(7,'F','D-F',17,2);
