@@ -331,12 +331,18 @@ UPDATE cat_sub_corte SET etiqueta='Trillante' WHERE elemento_id='14';
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (16, 1, 'TP', 'Trapecio');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (17, 1, '8X', '8x8');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (18, 1, 'OT', 'Otro');
---Se homologan los nombres del catálogo como en Midas
+-- Se homologan los nombres del catálogo como en Midas
 UPDATE cat_rango_oro SET etiqueta='Rotas y Pedacería' WHERE elemento_id=1;
 UPDATE cat_rango_oro SET etiqueta='Personalizado' WHERE elemento_id=2;
 UPDATE cat_rango_oro SET etiqueta='Sin Personalizar' WHERE elemento_id=3;
 UPDATE cat_rango_oro SET etiqueta='Buen Estado Sin Personalizar' WHERE elemento_id=4;
-UPDATE cat_rango_oro SET etiqueta='Piezas Nuevas y Marcas Comerciales' WHERE elemento_id=5;
+UPDATE cat_rango_oro SET etiqueta='Marcas Comerciales y Piezas Nuevas' WHERE elemento_id=5;
+
+-- Se agregan los elemntos en calidad ley faltantes
+INSERT INTO cat_calidad_ley (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'CL_950', '0.950', 5);
+INSERT INTO cat_calidad_ley (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (7, 'CL_850', '0.850', 5);
+INSERT INTO cat_calidad_ley (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, 'CL_800', '0.800', 5);
+
 
 -- Catalogo Grupo Color - Rango 0.01 al 0.29
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(7,'F','D-F',17,2);
@@ -355,8 +361,8 @@ INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_conf
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(18,'I','H-I',17,3);
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(19,'J','I-J',17,3);
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(20,'K','J-K',17,3);
-INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(21,'M','L-M',17,3);
-INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(22,'N','M-N',17,3);
+INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(21,'L','L-M',17,3);
+INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(22,'M','M-N',17,3);
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(23,'R','O-R',17,3);
 INSERT INTO cat_diamante_grupo_color(elemento_id, abreviatura, etiqueta, id_configuracion, id_rango) VALUES(24,'Z','S-Z',17,3);
 
