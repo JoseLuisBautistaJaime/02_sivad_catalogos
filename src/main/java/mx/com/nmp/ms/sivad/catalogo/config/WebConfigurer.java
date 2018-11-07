@@ -14,15 +14,8 @@ import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletCont
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -34,7 +27,7 @@ import javax.servlet.ServletRegistration;
  * @author osanchez
  */
 @Configuration
-public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
+public class WebConfigurer implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebConfigurer.class);
 
@@ -43,9 +36,6 @@ public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletCon
 
     @Inject
     private AppProperties appProperties;
-    
-    @Inject
-    private ApplicationProperties applicationProperties;
 
     @Autowired(required = false)
     private MetricRegistry metricRegistry;
@@ -80,30 +70,6 @@ public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletCon
         h2ConsoleServlet.addMapping("/h2-console/*");
         h2ConsoleServlet.setInitParameter("-properties", "src/main/resources/");
         h2ConsoleServlet.setLoadOnStartup(1);
-    }
-
-
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = applicationProperties.getCors();
-        if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
-        	LOGGER.info("Registrando filtro CORS..." + config.getAllowedOrigins());
-            source.registerCorsConfiguration("/**", config);
-        }
-        CorsFilter corsFilter = new CorsFilter(source);
-        return corsFilter;
-    }
-
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-    	LOGGER.info("Realizando el registro de filtros CORS desde Adapter...");
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("PUT", "DELETE", "POST", "GET")
-                .allowedHeaders("*")
-                .allowCredentials(false).maxAge(3600);
     }
 
 }
