@@ -59,12 +59,12 @@ public class EscalaColorService extends BaseFamiliasColorService<EscalaColor> {
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento hijo, o ningún padre de la lista.
      */
-    public EscalaColor addPadres(@HasText String elemento, @NotNull List<String> padres) {
-        EscalaColor hijo = obtenerElemento(elemento);
+    public EscalaColor addPadres(@HasText String elemento, @NotNull List<String> padres, @NotNull Long idRango) {
+        EscalaColor hijo = obtenerElemento(elemento, idRango);
         List<Color> result = new ArrayList<>();
 
         for (String p : padres) {
-            Color padre = colorRepository.findByAbreviatura(p);
+            Color padre = colorRepository.findByAbreviaturaAndRangoIdElemento(p, idRango);
 
             if (!ObjectUtils.isEmpty(padre)) {
                 result.add(padre);
@@ -83,15 +83,16 @@ public class EscalaColorService extends BaseFamiliasColorService<EscalaColor> {
      *
      * @param elemento Abrevitura del elemento a modificar.
      * @param padre Abreviatura del elemento padre.
+     * @param idRango Rango
      *
      * @return Elemento al que se le desasigno el padre.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento hijo o el padre.
      * @throws IndexOutOfBoundsException Cuando el elemento hijo no contenga padres o el padre especificado.
      */
-    public EscalaColor removePadre(@HasText String elemento, @HasText String padre) {
-        EscalaColor hijo = obtenerElemento(elemento);
-        Color result = colorRepository.findByAbreviatura(padre);
+    public EscalaColor removePadre(@HasText String elemento, @HasText String padre, @NotNull Long idRango) {
+        EscalaColor hijo = obtenerElemento(elemento, idRango);
+        Color result = colorRepository.findByAbreviaturaAndRangoIdElemento(padre, idRango);
         validarPadres(result, Color.class);
 
         if (hijo.getPadres() == null || !hijo.getPadres().remove(result)) {

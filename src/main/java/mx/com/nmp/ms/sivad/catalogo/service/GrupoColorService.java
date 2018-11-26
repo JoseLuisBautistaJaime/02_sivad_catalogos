@@ -59,12 +59,12 @@ public class GrupoColorService extends BaseFamiliasColorService<GrupoColor> {
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento hijo, o ningún padre de la lista.
      */
-    public GrupoColor addPadres(@HasText String elemento, @NotNull List<String> padres) {
-        GrupoColor hijo = obtenerElemento(elemento);
+    public GrupoColor addPadres(@HasText String elemento, @NotNull List<String> padres, @NotNull Long idRango) {
+        GrupoColor hijo = obtenerElemento(elemento, idRango);
         List<EscalaColor> result = new ArrayList<>();
 
         for (String p : padres) {
-            EscalaColor padre = escalaColorRepository.findByAbreviatura(p);
+            EscalaColor padre = escalaColorRepository.findByAbreviaturaAndRangoIdElemento(p, idRango);
 
             if (!ObjectUtils.isEmpty(padre)) {
                 result.add(padre);
@@ -83,15 +83,16 @@ public class GrupoColorService extends BaseFamiliasColorService<GrupoColor> {
      *
      * @param elemento Abrevitura del elemento a modificar.
      * @param padre Abreviatura del elemento padre.
+     * @param idRango Rango
      *
      * @return Elemento al que se le desasigno el padre.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento hijo o el padre.
      * @throws IndexOutOfBoundsException Cuando el elemento hijo no contenga padres o el padre especificado.
      */
-    public GrupoColor removePadre(@HasText String elemento, @HasText String padre) {
-        GrupoColor hijo = obtenerElemento(elemento);
-        EscalaColor result = escalaColorRepository.findByAbreviatura(padre);
+    public GrupoColor removePadre(@HasText String elemento, @HasText String padre, @NotNull Long idRango) {
+        GrupoColor hijo = obtenerElemento(elemento, idRango);
+        EscalaColor result = escalaColorRepository.findByAbreviaturaAndRangoIdElemento(padre, idRango);
         validarPadres(result, EscalaColor.class);
 
         if (hijo.getPadres() == null || !hijo.getPadres().remove(result)) {

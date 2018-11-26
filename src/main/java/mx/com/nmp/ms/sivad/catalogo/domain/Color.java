@@ -32,10 +32,11 @@ public class Color extends BaseColor {
      * Elementos del catálogo {@link GradoColor} padres de esté elemento del catálogo Color
      */
     @ManyToMany(fetch = EAGER)
-    @JsonIgnoreProperties("etiqueta")
+    @JsonIgnoreProperties({"etiqueta","rango"})
     @JoinTable(name = "cat_diamante_grado_color_color",
-            joinColumns = @JoinColumn(name = "elemento_hijo"),
-            inverseJoinColumns = @JoinColumn(name = "elemento_padre"))
+    		joinColumns = {@JoinColumn(name = "elemento_hijo", referencedColumnName="elemento_id"),@JoinColumn(name = "id_rango", referencedColumnName="id_rango")},
+            inverseJoinColumns = @JoinColumn(name = "elemento_padre")
+            )
     private List<GradoColor> padres;
 
     /**

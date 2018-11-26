@@ -8,6 +8,7 @@
 package mx.com.nmp.ms.sivad.catalogo.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
 import mx.com.nmp.ms.sivad.catalogo.domain.EscalaColor;
 import mx.com.nmp.ms.sivad.catalogo.domain.GrupoColor;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
@@ -53,6 +54,7 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
 
     /**
      * GET /familia3 : Recuperar todos los elementos del catalogo.
+     * @param idRango Identificador del rango
      *
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link GrupoColor}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
@@ -61,8 +63,13 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
     @Override
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Catalogo> getAll() {
-        return super.getAllWithoutDependencies();
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "idRango", required = false) Long idRango) {
+    	if (idRango != null) {
+    		return getAllWithoutDependencies(idRango);
+    	}
+    	else {
+    		return getAllWithoutDependencies();
+    	}
     }
 
     /**
@@ -71,6 +78,7 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
      * Contiene dependecia de hijo-padre con el catálogo {@link EscalaColor} como rol padre.
      *
      * @param dependencias Indica si deben recuperarse las dependecias del catálogo.
+     * @param rango Id del rango del catalogo rango pesos
      *
      * @return ResponseEntity con status 200 (OK) y el catálogo {@link GrupoColor}
      *         ResponseEntity con status 404 (Not Found) si el catálogo no contiene elementos.
@@ -78,12 +86,22 @@ public class GrupoColorResource extends BaseFamiliasColorResource<GrupoColor> {
     @Timed
     @RequestMapping(method = GET,
             produces = APPLICATION_JSON_VALUE,
-            params = "dependencias")
-    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias) {
+            params = {"dependencias", "idRango"} )
+    public ResponseEntity<Catalogo> getAll(@RequestParam(value = "dependencias", required = false) boolean dependencias, @RequestParam(value = "idRango", required = false) Long idRango) {
         if (dependencias) {
-            return super.getAll();
+        	if (idRango != null) {
+        		return super.getAll(idRango);
+        	}
+        	else {
+        		return super.getAll();
+        	}
         } else {
-            return getAll();
+        	if (idRango != null) {
+        		return getAllWithoutDependencies(idRango);
+        	}
+        	else {
+        		return getAllWithoutDependencies();
+        	}
         }
     }
 

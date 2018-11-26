@@ -7,6 +7,7 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -46,6 +47,13 @@ public class Catalogo implements Serializable {
      * Elemento para describir el propósito del catálogo o proveer información adicional para su utilización.
      */
     private String descripcion;
+
+    /**
+     * Indica el rango de peso que agrupa el catalogo
+     */
+    @JsonProperty(value="rango")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String rango;
 
     /**
      * Fecha de última actualización del catálogo.
@@ -139,6 +147,22 @@ public class Catalogo implements Serializable {
     }
 
     /**
+     * Obtiene el rango de peso que agrupa el catalogo
+     * @return
+     */
+	public String getRango() {
+		return rango;
+	}
+
+	/**
+	 * Setea el rango de peso que agrupa el catalogo
+	 * @param rango
+	 */
+	public void setRango(String rango) {
+		this.rango = rango;
+	}
+
+    /**
      * Obtiene el valor de fechaUltimaActualizacion.
      *
      * @return Valor de fechaUltimaActualizacion.
@@ -173,4 +197,5 @@ public class Catalogo implements Serializable {
     public void setElementos(List<? extends Serializable> elementos) {
         this.elementos = elementos;
     }
+
 }

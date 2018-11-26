@@ -54,17 +54,18 @@ public class ColorService extends BaseFamiliasColorService<Color> {
      *
      * @param elemento Abrevitura del elemento a modificar.
      * @param padres Abreviaturas de los elementos padre.
+     * @param idRango Rango del elemento
      *
      * @return Elemento al que se le agregaron los padres.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento hijo, o ningún padre de la lista.
      */
-    public Color addPadres(@HasText String elemento, @NotNull List<String> padres) {
-        Color hijo = obtenerElemento(elemento);
+    public Color addPadres(@HasText String elemento, @NotNull List<String> padres, @NotNull Long idRango) {
+        Color hijo = obtenerElemento(elemento, idRango);
         List<GradoColor> result = new ArrayList<>();
 
         for (String p : padres) {
-            GradoColor padre = gradoColorRepository.findByAbreviatura(p);
+            GradoColor padre = gradoColorRepository.findByAbreviaturaAndRangoIdElemento(p, idRango);
 
             if (!ObjectUtils.isEmpty(padre)) {
                 result.add(padre);
@@ -83,15 +84,16 @@ public class ColorService extends BaseFamiliasColorService<Color> {
      *
      * @param elemento Abrevitura del elemento a modificar.
      * @param padre Abreviatura del elemento padre.
+     * @param idRango Rango
      *
      * @return Elemento al que se le desasigno el padre.
      *
      * @throws CatalogoNotFoundException Cuando no existe el elemento hijo o el padre.
      * @throws IndexOutOfBoundsException Cuando el elemento hijo no contenga padres o el padre especificado.
      */
-    public Color removePadre(@HasText String elemento, @HasText String padre) {
-        Color hijo = obtenerElemento(elemento);
-        GradoColor result = gradoColorRepository.findByAbreviatura(padre);
+    public Color removePadre(@HasText String elemento, @HasText String padre, @NotNull Long idRango) {
+        Color hijo = obtenerElemento(elemento, idRango);
+        GradoColor result = gradoColorRepository.findByAbreviaturaAndRangoIdElemento(padre, idRango);
         validarPadres(result, GradoColor.class);
 
         if (hijo.getPadres() == null || !hijo.getPadres().remove(result)) {

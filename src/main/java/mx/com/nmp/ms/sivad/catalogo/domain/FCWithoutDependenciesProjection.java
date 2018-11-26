@@ -31,6 +31,13 @@ public interface FCWithoutDependenciesProjection extends Serializable {
     String getEtiqueta();
 
     /**
+     * Indica que se debe recuperar el rango.
+     * @return na
+     */
+    @JsonIgnore
+    RangoPeso getRango();
+
+    /**
      * Indica que se debe recuperar la configuración del catálogo.
      * @return na
      */

@@ -7,8 +7,12 @@
  */
 package mx.com.nmp.ms.sivad.catalogo.factory;
 
+import mx.com.nmp.ms.sivad.catalogo.domain.BaseColor;
 import mx.com.nmp.ms.sivad.catalogo.domain.CatalogoConfigurable;
+import mx.com.nmp.ms.sivad.catalogo.domain.ClaridadDiamante;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
+import mx.com.nmp.ms.sivad.catalogo.domain.FCWithoutDependenciesProjection;
+import mx.com.nmp.ms.sivad.catalogo.domain.RangoPeso;
 import mx.com.nmp.ms.sivad.catalogo.dto.Catalogo;
 
 import java.io.Serializable;
@@ -39,6 +43,7 @@ public final class CatalogoFactory {
     public static Catalogo build(ConfiguracionCatalogo configuracion, List<? extends Serializable> elementos) {
         Catalogo catalogo = getCatalogo(configuracion);
         catalogo.setElementos(elementos);
+        catalogo.setRango(getRango(elementos));
         return catalogo;
     }
 
@@ -63,6 +68,7 @@ public final class CatalogoFactory {
     public static Catalogo build(List<? extends CatalogoConfigurable> elementos) {
         Catalogo catalogo = getCatalogo(getConfiguracion(elementos));
         catalogo.setElementos(elementos);
+        catalogo.setRango(getRango(elementos));
         return catalogo;
     }
 
@@ -95,4 +101,29 @@ public final class CatalogoFactory {
     private static ConfiguracionCatalogo getConfiguracion(List<? extends CatalogoConfigurable> ccs) {
         return ccs.get(0).getConfiguracion();
     }
+
+    /**
+     * Obtiene el rango si es un catalogo de colores
+     * @param elementos
+     * @return
+     */
+	private static String getRango(List<? extends Serializable> elementos) {
+		String rango = null;
+		if (elementos != null && elementos.size() > 1) {
+        	if (elementos.get(0) instanceof BaseColor) {
+        		RangoPeso rangoPeso = ((BaseColor)elementos.get(0)).getRango();
+        		rango = rangoPeso != null ? rangoPeso.getEtiqueta() : null;
+        	}
+        	if (elementos.get(0) instanceof FCWithoutDependenciesProjection) {
+        		RangoPeso rangoPeso = ((FCWithoutDependenciesProjection)elementos.get(0)).getRango();
+        		rango = rangoPeso != null ? rangoPeso.getEtiqueta() : null;
+        	}
+        	if (elementos.get(0) instanceof ClaridadDiamante) {
+        		RangoPeso rangoPeso = ((ClaridadDiamante)elementos.get(0)).getRango();
+        		rango = rangoPeso != null ? rangoPeso.getEtiqueta() : null;
+        	}
+        }
+		return rango;
+	}
+
 }

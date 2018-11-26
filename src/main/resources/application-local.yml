@@ -26,7 +26,8 @@ spring:
         url: jdbc:mysql://localhost:3306/sivad-catalogos?useUnicode=true&characterEncoding=utf8&useSSL=false
         name: sivad_catalogos
         username: root
-        password: password
+        password: 
+        max-active: 153
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -49,3 +50,12 @@ spring:
 # ===================================================================
 # Propiedades especificas de la aplicacion (microservicio)
 # ===================================================================
+application:
+    # por defecto cors esta desactivado, descomentar las siguientes lineas para activarlo
+    cors:
+      allowed-origins: "*"
+      allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+      allowed-headers: "*"
+      exposed-headers:
+      allow-credentials: true
+      max-age: 1800

@@ -8,6 +8,9 @@
 package mx.com.nmp.ms.sivad.catalogo.repository;
 
 import mx.com.nmp.ms.sivad.catalogo.domain.GradoColor;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -25,4 +28,24 @@ public interface GradoColorRepository extends JpaRepository<GradoColor, Long> {
      * @return Elemento del catálogo o {@literal null} si no existe.
      */
     GradoColor findByAbreviatura(String abreviatura);
+    
+    /**
+     * Recupera un elemento del catálogo.
+     *
+     * @param abreviatura Abreviatura del elemento a recuperar.
+     * @param idRango Identificador de la tabla RangoPeso
+     *
+     * @return Elemento del catálogo o {@literal null} si no existe.
+     */
+    GradoColor findByAbreviaturaAndRangoIdElemento(String abreviatura, Long idRango);
+    
+    /**
+     * Recupera un elemento del catálogo.
+     *
+     * @param idRango Identificador de la tabla RangoPeso
+     *
+     * @return Elemento del catálogo o {@literal null} si no existe.
+     */
+    List<GradoColor> findByRangoIdElemento(Long idRango);
+
 }

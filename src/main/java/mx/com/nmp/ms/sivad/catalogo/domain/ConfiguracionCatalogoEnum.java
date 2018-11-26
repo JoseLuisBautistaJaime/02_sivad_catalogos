@@ -33,7 +33,8 @@ public enum ConfiguracionCatalogoEnum {
     TIPO_PRENDA("TipoPrenda", DominioEnum.ALHAJAS),
     RANGO_ORO("RangoOro", DominioEnum.ALHAJAS),
     RANGO_METAL("RangoMetal", DominioEnum.ALHAJAS),
-    CORTE("Corte", DominioEnum.DIAMANTES);
+    CORTE("Corte", DominioEnum.DIAMANTES),
+    RANGO_PESO("RangoPeso", DominioEnum.DIAMANTES);
 
     private String tipo;
     private DominioEnum dominio;
