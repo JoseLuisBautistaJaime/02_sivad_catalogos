@@ -45,6 +45,13 @@ INSERT INTO cat_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VAL
 --
 INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'AU_AM', 'Amarillo', 3);
 INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'AU_BL', 'Blanco', 3);
+INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'AU_RO', 'Rojo', 3);
+INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (4, 'AU_RS', 'Rosa', 3);
+INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (5, 'AU_VE', 'Verde', 3);
+INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'AU_AZ', 'Azul', 3);
+INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (7, 'AU_PU', 'Purpura', 3);
+INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, 'AU_NE', 'Negro', 3);
+INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (9, 'AU_CO', 'Combinado', 3);
 
 --
 -- INICIA - DATOS CATÁLOGO: 'QUILATAJE ORO'
