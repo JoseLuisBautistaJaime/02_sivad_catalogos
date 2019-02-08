@@ -643,3 +643,139 @@ UNIQUE(abreviatura, id_rango);
 ALTER TABLE cat_claridad_diamante ADD CONSTRAINT UK_CAT_DIAMANTE_CLARIDAD_ABR_RANGO_PADRE
 UNIQUE(abreviatura, id_rango, padre);
 
+
+---------------------------------------------------------------------------------------------------------------------
+------------------------ SISTEMA DE OPERACION PRENDARIA EMERGENTE F1 --------------------------------
+---------------------------------------------------------------------------------------------------------------------
+
+
+DROP TABLE IF EXISTS cat_perfil;
+CREATE TABLE cat_perfil
+(
+    id_elemento BIGINT AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
+
+
+DROP TABLE IF EXISTS cat_ramo;
+CREATE TABLE cat_ramo
+(
+    id_elemento BIGINT AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
+
+DROP TABLE IF EXISTS cat_subramo;
+CREATE TABLE cat_subramo
+(
+    id_elemento BIGINT AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
+
+DROP TABLE IF EXISTS cat_sucursal;
+CREATE TABLE cat_sucursal
+(
+    id_elemento BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
+
+
+DROP TABLE IF EXISTS cat_tipo_contrato;
+CREATE TABLE cat_tipo_contrato
+(
+    id_elemento BIGINT AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
+
+DROP TABLE IF EXISTS cat_operacion_caja;
+CREATE TABLE cat_operacion_caja
+(
+    id_elemento BIGINT AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
+
+DROP TABLE IF EXISTS cat_ramo_subramo;
+CREATE TABLE cat_ramo_subramo(
+    elemento_padre BIGINT NOT NULL,
+    elemento_hijo BIGINT NOT NULL,
+    PRIMARY KEY (elemento_padre, elemento_hijo)
+);
+
+
+
+ALTER TABLE cat_perfil ADD CONSTRAINT uk_cat_perfil_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_perfil ADD CONSTRAINT fk_cat_perfil_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_perfil_elemento_id ON cat_perfil(id_elemento);
+CREATE INDEX cat_perfil_abreviatura ON cat_perfil(abreviatura);
+
+ALTER TABLE cat_ramo ADD CONSTRAINT uk_cat_ramo_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_ramo ADD CONSTRAINT fk_cat_ramo_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_ramo_elemento_id ON cat_ramo(id_elemento);
+CREATE INDEX cat_ramo_abreviatura ON cat_ramo(abreviatura);
+
+ALTER TABLE cat_subramo ADD CONSTRAINT uk_cat_subramo_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_subramo ADD CONSTRAINT fk_cat_subramo_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_subramo_elemento_id ON cat_subramo(id_elemento);
+CREATE INDEX cat_subramo_abreviatura ON cat_subramo(abreviatura);
+
+
+ALTER TABLE cat_sucursal ADD CONSTRAINT uk_cat_sucursal_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_sucursal ADD CONSTRAINT fk_cat_sucursal_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_sucursal_elemento_id ON cat_sucursal(id_elemento);
+CREATE INDEX cat_sucursal_abreviatura ON cat_sucursal(abreviatura);
+
+ALTER TABLE cat_tipo_contrato ADD CONSTRAINT uk_cat_tipo_contrato_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_tipo_contrato ADD CONSTRAINT fk_cat_tipo_contrato_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_tipo_contrato_elemento_id ON cat_tipo_contrato(id_elemento);
+CREATE INDEX cat_tipo_contrato_abreviatura ON cat_tipo_contrato(abreviatura);
+
+ALTER TABLE cat_operacion_caja ADD CONSTRAINT uk_cat_operacion_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_operacion_caja ADD CONSTRAINT fk_cat_operacion_caja_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_operacion_caja_elemento_id ON cat_operacion_caja(id_elemento);
+CREATE INDEX cat_operacion_caja_abreviatura ON cat_operacion_caja(abreviatura);
+
+ALTER TABLE cat_ramo_subramo ADD CONSTRAINT fk_cat_ramo_subramo_elemento_padre
+FOREIGN KEY(elemento_padre) REFERENCES cat_ramo(id_elemento);
+ALTER TABLE cat_ramo_subramo ADD CONSTRAINT fk_cat_ramo_subramo_elemento_hijo
+FOREIGN KEY(elemento_hijo) REFERENCES cat_subramo(id_elemento);

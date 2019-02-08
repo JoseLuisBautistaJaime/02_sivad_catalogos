@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author ngonzalez
  */
 @Repository
-public interface QuilatajeOroRepository extends JpaRepository<QuilatajeOro, Long> {
+public interface QuilatajeOroRepository extends CatalogoRepository<QuilatajeOro> {
 
     /**
      * Utilizado para obtener la entidad de tipo "QuilatajeOro" por coincidencia exacta del atributo "abreviatura".
@@ -22,6 +22,6 @@ public interface QuilatajeOroRepository extends JpaRepository<QuilatajeOro, Long
      * @param abreviatura La abreviatura.
      * @return La entidad que coincida con la abreviatura indicada.
      */
-    QuilatajeOro findByAbreviatura(String abreviatura);
+//    QuilatajeOro findByAbreviatura(String abreviatura);
 
 }

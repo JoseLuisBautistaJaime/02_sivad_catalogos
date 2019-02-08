@@ -17,7 +17,13 @@ public enum DominioEnum {
     // Ordenar alfabéticamente.
 
     ALHAJAS("Alhajas"),
-    DIAMANTES("Diamantes");
+    DIAMANTES("Diamantes"),
+    PERFILES("Perfiles"),
+    RAMOS("Ramos"),
+    SUBRAMOS("Subramos"),
+    SUCURSALES("Sucursales"),
+    TIPOSCONTRATOS("Contratos"),
+    OPERACIONES("Operaciones");
 
     private String dominio;
 

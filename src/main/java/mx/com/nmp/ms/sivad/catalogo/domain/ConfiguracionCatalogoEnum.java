@@ -34,8 +34,14 @@ public enum ConfiguracionCatalogoEnum {
     RANGO_ORO("RangoOro", DominioEnum.ALHAJAS),
     RANGO_METAL("RangoMetal", DominioEnum.ALHAJAS),
     CORTE("Corte", DominioEnum.DIAMANTES),
-    RANGO_PESO("RangoPeso", DominioEnum.DIAMANTES);
-
+    RANGO_PESO("RangoPeso", DominioEnum.DIAMANTES),
+    PERFILES("Perfil", DominioEnum.PERFILES),
+    RAMOS("Ramo",DominioEnum.RAMOS),
+    SUBRAMOS("Subramo",DominioEnum.SUBRAMOS),
+    SUCURSALES("Sucursal",DominioEnum.SUCURSALES),
+    TIPO_CONTRATOS("TipoContrato",DominioEnum.TIPOSCONTRATOS),
+    OPERACIONES_CAJA("OperacionesCaja",DominioEnum.OPERACIONES);
+    
     private String tipo;
     private DominioEnum dominio;
 

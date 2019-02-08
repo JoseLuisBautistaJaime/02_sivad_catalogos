@@ -4,36 +4,36 @@
 
 
 --
--- INICIA - DATOS CONFIGURACI√ìN CAT√ÅLOGO
+-- INICIA - DATOS CONFIGURACI”N CAT¡LOGO
 --
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (1, 'Alhajas', 'CondicionPrenda', 'EX', 'Cat√°logo de Condiciones de la Prenda');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (2, 'Alhajas', 'Metal', 'AU', 'Cat√°logo de Metales');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (3, 'Alhajas', 'ColorOro', 'Cat√°logo de Color Oro');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (4, 'Alhajas', 'QuilatajeOro', 'Cat√°logo de Quilataje Oro');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (5, 'Alhajas', 'CalidadLey', 'Cat√°logo de Calidades Ley');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (6, 'Alhajas', 'RangoOro', 'Cat√°logo de Rango Oro');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (7, 'Alhajas', 'RangoMetal', 'Cat√°logo de Rango Metal');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (8, 'Diamantes', 'MotivoBajaPrestamo', 'MTA', 'Cat√°logo de Motivos de Baja de Pr√©stamo');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (9, 'Diamantes', 'CertificadoDiamantes', 'Cat√°logo de Certificados de Diamante');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (10, 'Diamantes', 'TipoPiedraComplementaria', 'Cat√°logo de Tipos de Piedra Complementaria');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (11, 'Diamantes', 'ClaridadDiamante', 'Cat√°logo de Claridades de Diamante');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (12, 'Diamantes', 'Corte', 'Cat√°logo de Cortes de Diamante');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (13, 'Alhajas', 'TipoPrenda', 'ANILLO', 'Cat√°logo que define los tipos de prenda.');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (14, 'Diamantes', 'GradoColor', 'D', 'Cat√°logo que define el grado de color de un diamante.');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (15, 'Diamantes', 'Color', 'Cat√°logo que define el color de un diamante.');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (16, 'Diamantes', 'EscalaColor', 'Cat√°logo que define la escala de color de un diamante.');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (17, 'Diamantes', 'GrupoColor', 'Cat√°logo que define el grupo de color de un diamante.');
-INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (18, 'Diamantes', 'QuilatajeDiamante', '0.25_Q', 'Cat√°logo de Quilatajes de Diamante');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (1, 'Alhajas', 'CondicionPrenda', 'EX', 'Cat·logo de Condiciones de la Prenda');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (2, 'Alhajas', 'Metal', 'AU', 'Cat·logo de Metales');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (3, 'Alhajas', 'ColorOro', 'Cat·logo de Color Oro');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (4, 'Alhajas', 'QuilatajeOro', 'Cat·logo de Quilataje Oro');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (5, 'Alhajas', 'CalidadLey', 'Cat·logo de Calidades Ley');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (6, 'Alhajas', 'RangoOro', 'Cat·logo de Rango Oro');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (7, 'Alhajas', 'RangoMetal', 'Cat·logo de Rango Metal');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (8, 'Diamantes', 'MotivoBajaPrestamo', 'MTA', 'Cat·logo de Motivos de Baja de PrÈstamo');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (9, 'Diamantes', 'CertificadoDiamantes', 'Cat·logo de Certificados de Diamante');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (10, 'Diamantes', 'TipoPiedraComplementaria', 'Cat·logo de Tipos de Piedra Complementaria');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (11, 'Diamantes', 'ClaridadDiamante', 'Cat·logo de Claridades de Diamante');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (12, 'Diamantes', 'Corte', 'Cat·logo de Cortes de Diamante');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (13, 'Alhajas', 'TipoPrenda', 'ANILLO', 'Cat·logo que define los tipos de prenda.');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (14, 'Diamantes', 'GradoColor', 'D', 'Cat·logo que define el grado de color de un diamante.');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (15, 'Diamantes', 'Color', 'Cat·logo que define el color de un diamante.');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (16, 'Diamantes', 'EscalaColor', 'Cat·logo que define la escala de color de un diamante.');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (17, 'Diamantes', 'GrupoColor', 'Cat·logo que define el grupo de color de un diamante.');
+INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (18, 'Diamantes', 'QuilatajeDiamante', '0.25_Q', 'Cat·logo de Quilatajes de Diamante');
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'CONDICI√ìN PRENDA'
+-- INICIA - DATOS CAT¡LOGO: 'CONDICI”N PRENDA'
 --
 INSERT INTO cat_condicion_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'EX', 'Excelente', 1);
 INSERT INTO cat_condicion_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'BN', 'Bueno', 1);
 INSERT INTO cat_condicion_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'RE', 'Regular', 1);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'METALES'
+-- INICIA - DATOS CAT¡LOGO: 'METALES'
 --
 INSERT INTO cat_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'AU', 'Oro', 2);
 INSERT INTO cat_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'PT', 'Platino', 2);
@@ -41,7 +41,7 @@ INSERT INTO cat_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VAL
 INSERT INTO cat_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (4, 'PD', 'Plata-Paladio', 2);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'COLOR ORO'
+-- INICIA - DATOS CAT¡LOGO: 'COLOR ORO'
 --
 INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'AU_AM', 'Amarillo', 3);
 INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'AU_BL', 'Blanco', 3);
@@ -54,7 +54,7 @@ INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion)
 INSERT INTO cat_color_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (9, 'AU_CO', 'Combinado', 3);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'QUILATAJE ORO'
+-- INICIA - DATOS CAT¡LOGO: 'QUILATAJE ORO'
 --
 INSERT INTO cat_quilataje_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, '8_Q', '8', 4);
 INSERT INTO cat_quilataje_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, '10_Q', '10', 4);
@@ -66,7 +66,7 @@ INSERT INTO cat_quilataje_oro (elemento_id, abreviatura, etiqueta, id_configurac
 INSERT INTO cat_quilataje_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, '24_Q', '24', 4);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'CALIDAD LEY'
+-- INICIA - DATOS CAT¡LOGO: 'CALIDAD LEY'
 --
 INSERT INTO cat_calidad_ley (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'CL_999', '0.999', 5);
 INSERT INTO cat_calidad_ley (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'CL_925', '0.925', 5);
@@ -75,51 +75,51 @@ INSERT INTO cat_calidad_ley (elemento_id, abreviatura, etiqueta, id_configuracio
 INSERT INTO cat_calidad_ley (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (5, 'CL_500', '0.500', 5);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'RANGO ORO'
+-- INICIA - DATOS CAT¡LOGO: 'RANGO ORO'
 --
-INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'F1', 'Pedacer√≠a y Piezas Rotas', 6);
+INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'F1', 'PedacerÌa y Piezas Rotas', 6);
 INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'F2', 'Buen Estado Personalizadas', 6);
 INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'F3', 'Buen Estado Sin Personalizar', 6);
 INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (4, 'F4', 'Piezas Nuevas', 6);
 INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (5, 'F5', 'Marcas Comerciales', 6);
-INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'F6', 'Alta Joyer√≠a', 6);
+INSERT INTO cat_rango_oro (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'F6', 'Alta JoyerÌa', 6);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'RANGO METAL'
+-- INICIA - DATOS CAT¡LOGO: 'RANGO METAL'
 --
 INSERT INTO cat_rango_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'F1', 'Factor 1', 7);
-INSERT INTO cat_rango_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'DE', 'Dise√±o y Estado', 7);
+INSERT INTO cat_rango_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'DE', 'DiseÒo y Estado', 7);
 INSERT INTO cat_rango_metal (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'MC', 'Marca', 7);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'MOTIVOS DE BAJA DE PR√âSTAMO'
+-- INICIA - DATOS CAT¡LOGO: 'MOTIVOS DE BAJA DE PR…STAMO'
 --
 INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'MBP_CL', 'Solicitado por el Cliente', 8);
-INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'MBP_PV', 'A consideraci√≥n del Perito Valuador', 8);
+INSERT INTO cat_motivo_baja_prestamo (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'MBP_PV', 'A consideraciÛn del Perito Valuador', 8);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'CERTIFICADOS DE DIAMANTES'
+-- INICIA - DATOS CAT¡LOGO: 'CERTIFICADOS DE DIAMANTES'
 --
 INSERT INTO cat_certificado_diamantes (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'GI', 'GIA', 9);
 INSERT INTO cat_certificado_diamantes (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'HR', 'HRD Antwerp', 9);
 INSERT INTO cat_certificado_diamantes (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'IG', 'IGE', 9);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'TIPOS DE PIEDRA COMPLEMENTARIA'
+-- INICIA - DATOS CAT¡LOGO: 'TIPOS DE PIEDRA COMPLEMENTARIA'
 --
-INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'CI', 'Zirc√≥n', 10);
+INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'CI', 'ZircÛn', 10);
 INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'CU', 'Cuarzo', 10);
 INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (3, 'ES', 'Esmeralda', 10);
 INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (4, 'GR', 'Granate', 10);
 INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (5, 'JA', 'Jade', 10);
-INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'LA', 'Lapisl√°zuli', 10);
+INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'LA', 'Lapisl·zuli', 10);
 INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (7, 'PE', 'Perla', 10);
-INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, 'RU', 'Rub√≠', 10);
+INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8, 'RU', 'RubÌ', 10);
 INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (9, 'TO', 'Topacio', 10);
 INSERT INTO cat_tipo_piedra_complementaria (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (10, 'ZA', 'Zafiro', 10);
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'CLARIDAD DIAMANTE'
+-- INICIA - DATOS CAT¡LOGO: 'CLARIDAD DIAMANTE'
 --
 INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'IF', 'IF', 11);
 INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'VVS1', 'VVS1', 11);
@@ -129,7 +129,7 @@ INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_config
 INSERT INTO cat_claridad_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (6, 'SI1', 'SI1', 11);
 
 -- ----------------------------------------------------------------------------------------------------------------------
--- INICIA - DATOS CAT√ÅLOGO: 'CORTE DIAMANTE'
+-- INICIA - DATOS CAT¡LOGO: 'CORTE DIAMANTE'
 -- ----------------------------------------------------------------------------------------------------------------------
 INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'Round', 'Round', 12);
 INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'Pear', 'Pear', 12);
@@ -137,7 +137,7 @@ INSERT INTO cat_corte (elemento_id, abreviatura, etiqueta, id_configuracion) VAL
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (1, 1, 'BR', 'Brillante');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (2, 1, 'AN', 'Antiguo');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (3, 1, 'CJ', 'Cojin');
-INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (4, 1, 'CO', 'Coraz√≥n');
+INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (4, 1, 'CO', 'CorazÛn');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (5, 1, 'MA', 'Marquesa');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (6, 1, 'OV', 'Oval');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (7, 1, 'BA', 'Baguette');
@@ -154,7 +154,7 @@ INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (16
 
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'TIPO PRENDA'
+-- INICIA - DATOS CAT¡LOGO: 'TIPO PRENDA'
 --
 INSERT INTO cat_diamante_tipo_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'ANILLO', 'Anillo', 13);
 INSERT INTO cat_diamante_tipo_prenda (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'ARETES', 'Juego de aretes', 13);
@@ -176,7 +176,7 @@ INSERT INTO cat_diamante_tipo_prenda (elemento_id, abreviatura, etiqueta, id_con
 
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'GRADO COLOR'
+-- INICIA - DATOS CAT¡LOGO: 'GRADO COLOR'
 --
 INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'D', 'D', 14);
 INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'E', 'E', 14);
@@ -192,7 +192,7 @@ INSERT INTO cat_diamante_grado_color (elemento_id, abreviatura, etiqueta, id_con
 
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'COLOR'
+-- INICIA - DATOS CAT¡LOGO: 'COLOR'
 --
 INSERT INTO cat_diamante_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'COLOR_D_E', '', 15);
 INSERT INTO cat_diamante_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'BLANCO_NATURAL', 'Blanco natural', 15);
@@ -215,7 +215,7 @@ INSERT INTO cat_diamante_grado_color_color (elemento_padre, elemento_hijo) VALUE
 
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'ESCALA COLOR'
+-- INICIA - DATOS CAT¡LOGO: 'ESCALA COLOR'
 --
 INSERT INTO cat_diamante_escala_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'INCOLORO', 'Incoloro', 16);
 INSERT INTO cat_diamante_escala_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'CASI_INCOLORO', 'Casi incoloro', 16);
@@ -235,7 +235,7 @@ INSERT INTO cat_diamante_color_escala_color (elemento_padre, elemento_hijo) VALU
 
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'GRUPO COLOR'
+-- INICIA - DATOS CAT¡LOGO: 'GRUPO COLOR'
 --
 INSERT INTO cat_diamante_grupo_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (1, 'E', 'D-E', 17);
 INSERT INTO cat_diamante_grupo_color (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (2, 'G', 'F-G', 17);
@@ -256,7 +256,7 @@ INSERT INTO cat_diamante_escala_color_grupo_color (elemento_padre, elemento_hijo
 
 
 --
--- INICIA - DATOS CAT√ÅLOGO: 'QUILATAJE DIAMANTE'
+-- INICIA - DATOS CAT¡LOGO: 'QUILATAJE DIAMANTE'
 --
 INSERT INTO cat_quilataje_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES ( 1, '0.001', '0.001', 18);
 INSERT INTO cat_quilataje_diamante (elemento_id, abreviatura, etiqueta, id_configuracion) VALUES ( 2, '0.002', '0.002', 18);
@@ -337,8 +337,8 @@ UPDATE cat_sub_corte SET etiqueta='Trillante' WHERE elemento_id='14';
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (16, 1, 'TP', 'Trapecio');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (17, 1, '8X', '8x8');
 INSERT INTO cat_sub_corte (elemento_id, corte, abreviatura, etiqueta) VALUES (18, 1, 'OT', 'Otro');
--- Se homologan los nombres del cat√°logo como en Midas
-UPDATE cat_rango_oro SET etiqueta='Rotas y Pedacer√≠a' WHERE elemento_id=1;
+-- Se homologan los nombres del cat·logo como en Midas
+UPDATE cat_rango_oro SET etiqueta='Rotas y PedacerÌa' WHERE elemento_id=1;
 UPDATE cat_rango_oro SET etiqueta='Personalizado' WHERE elemento_id=2;
 UPDATE cat_rango_oro SET etiqueta='Sin Personalizar' WHERE elemento_id=3;
 UPDATE cat_rango_oro SET etiqueta='Buen Estado Sin Personalizar' WHERE elemento_id=4;
@@ -568,3 +568,638 @@ INSERT INTO cat_claridad_diamante_claridad(elemento_hijo, elemento_padre, id_ran
 INSERT INTO cat_claridad_diamante_claridad(elemento_hijo, elemento_padre, id_rango) VALUES(11,21,2);
 INSERT INTO cat_claridad_diamante_claridad(elemento_hijo, elemento_padre, id_rango) VALUES(12,22,2);
 INSERT INTO cat_claridad_diamante_claridad(elemento_hijo, elemento_padre, id_rango) VALUES(13,23,2);
+
+----------------------------------------------------------------------------------------------------------------------
+-- SISTEMA DE OPERACION PRENDARIA EMERGENTE
+-- ----------------------------------------------------------------------------------------------------------------------
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (20,'Perfiles', 'Perfil', 'Cat·logo de perfiles',today());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (21,'Ramos', 'Ramo', 'Cat·logo de ramos',today());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (22,'Subramos', 'Subramo', 'Cat·logo de subramos',today());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (23,'Sucursales', 'Sucursal', 'Cat·logo de sucursales',today());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (24,'Contratos','TipoContrato','Cat·logo de tipo de contratos',today());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (25,'Operaciones','OperacionesCaja','Cat·logo de las operaciones de caja',today());
+
+
+-- Cat·logo de Perfiles
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (2,'V' ,'Valuador',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (3,'A' ,'Amarrador',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (4,'AD' ,'Auxiliar de deposito',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (5,'JA' ,'Jefe de Almoneda',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (6,'G' ,'Gerente',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (12,'AA' ,'Auxiliar de Jefe de Almoneda',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (27,'AG' ,'Auxiliar de gerente',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (28,'CA' ,'Cajero de almoneda',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (29,'CI' ,'Cajero de indemnizaciÛn',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (30,'CE' ,'Cajero de empeÒo',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (31,'CR' ,'Cajero de refrendo',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (32,'CD' ,'Cajero de desempeÒo',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (33,'DI' ,'Cajero de divisas',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (34,'DE' ,'Depositario',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (35,'EN' ,'Entregador',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (36,'RE' ,'Responsable de entrada de depÛsito',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (37,'RS' ,'Responsable de salida de depÛsito',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (38,'EX' ,'Expendedor',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (39,'CG' ,'Cajero General',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (40,'RI' ,'Responsible de IndemnizaciÛn',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (50,'PO' ,'Perito Valuador Inspector Operativo',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (53,'EC' ,'Ejecutivo de Caja',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (54,'AX' ,'Cajero Auxiliar',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (55,'AEC' ,'Auxiliar de Ejecutivo de Caja',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (62,'GPV' ,'Gerente Perito Valuador',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (63,'DA' ,'Responsable Depositario Amarrador',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (64,'CML' ,'Cajero Multiple',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (69,'WS' ,'Administrador ProyecciÛn',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (68,'AOP' ,'Auxiliar de OperaciÛn',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (70,'ACO' ,'Analista de Concentradora',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (72,'' ,'Gerente de Concentradora',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (77,'GDB' ,'Gerente de Bodega',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (78,'GDJ' ,'Gerente de JoyerÌa',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (80,'CRD' ,'Corredor',20);
+INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (81,'MCO' ,'Mesa de Control Operativo',20);
+-- Cat·logo de Ramos
+INSERT INTO cat_ramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1,'AL','Alhajas',21);
+INSERT INTO cat_ramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (2,'VE','VehÌculos',21);
+INSERT INTO cat_ramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (3,'GE','Generos',21);
+INSERT INTO cat_ramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (4,'VA','Varios',21);
+INSERT INTO cat_ramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (5,'VAP','Varios Articulos PequeÒos',21);
+INSERT INTO cat_ramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (6,'RJ','Relojes',21);
+INSERT INTO cat_ramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (7,'SR','Sin Resguardo',21);
+-- Cat·logo de Subramos
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1,'RJ','Relojes',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (2,'AL','Alhajas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (3,'MN','Monedas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (4,'DI','Diamantes',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (5,'AU','Automoviles',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (6,'GE','Generos',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (7,'HE','Herramientas Electricas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (8,'HM','Herramientas Mecanicas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (9,'CE','Camaras Electronicas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (10,'CM','Camaras Mecanicas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (11,'VA','Varios Chicos',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (12,'AR','Artes',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (13,'BC','Brazos Maquinas de Coser',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (14,'LI','Libros',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (15,'ME','Maquinas de Escribir',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (16,'RG','Radio Grabadoras',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (17,'VC','Videocaseteras',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (18,'LC','Licuadoras',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (19,'VJ','Vajillas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (20,'BT','Baterias de Cocina',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (21,'IM','Instrumentos Musicales',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (22,'EL','Electrodomesticos',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (23,'SA','Salas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (24,'RE','Recamaras',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (25,'CO','Comedores',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (26,'LB','Linea Blanca',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (27,'TV','Televisores y Pantallas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (28,'OT','Otros',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (29,'DC','Discos Compactos',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (30,'CV','Camara de Video',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (31,'PR','Prism·ticos',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (32,'BI','Bicicletas (Fijas y Movibles)',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (33,'MO','Modulares y Minicomponentes',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (34,'AE','ArtÌculos de Escritorio',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (35,'CT','Cortadoras',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (36,'BL','Basculas de Balanzon',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (37,'BP','Basculas de Plataforma',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (38,'CR','Compresores',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (39,'MT','Motores',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (40,'OR','Organos Musicales',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (41,'SN','Super Nintendo',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (42,'PD','PedrerÌa',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (43,'CL','Celulares',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (44,'OS','Otros',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (45,'AAP','Accesorios y artÌculos personales',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (46,'AD','ArtÌculos decorativos',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (47,'AV','Audio y video',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (48,'CA','C·maras',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (49,'EC','Equipo de cÛmputo',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (50,'JV','Juego de video',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (51,'R6','Alta RelojerÌa - Gama Alta',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (52,'R5','Alta RelojerÌa - Gama Media Alta',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (53,'R4','Relojes Comerciales - Gama Media',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (54,'R3','Relojes Comerciales - Gama Media Baja',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (55,'R2','Relojes Boutique - Gama Baja',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (56,'R1','Relojes de Oro',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (57,'MC','Motocicletas',22);
+INSERT INTO cat_subramo(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (58,'SR','Sin Resguardo',22);
+
+-- Cat·logo de Sucursales
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (0,'suc0','Casa Matriz-Centro HistÛrico, CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1,'suc1','Victoria-Centro HistÛrico, CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (2,'suc2','El Carmen-Centro HistÛrico, CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (3,'suc3','Escandon-Miguel Hidalgo, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (4,'suc4','Isabel la CatÛlica/Izazaga-CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (5,'suc5','Morelos Hortelanos-Venustiano Carranza, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (6,'suc6','Orizaba-Orizaba Pte., VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (7,'suc7','Veracruz-CallejÛn Reforma, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (8,'suc8','Metro Portales-Benito Ju·rez, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (9,'suc9','LeÛn-Miguel Alem·n, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (10,'suc10','Puente de Alvarado-CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (11,'suc11','Refineria-Azcapotzalco, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (12,'suc12','Toluca-Centro, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (13,'suc13','Morelia-Centro, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (14,'suc14','Miguel Angel de Quevedo-Coyoac·n, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (15,'suc15','San Luis PotosÌ-Centro, SLP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (172,'suc172','MÈrida-Circuito Itzaes, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (234,'suc234','Puerto Vallarta-Fluvial Vallarta, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (221,'suc221','Metro Culhuac·n, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (241,'suc241','Miramontes-Coyoac·n, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (231,'suc231','Morelia-TorreÛn Nuevo, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (238,'suc238','Xalapa-Plaza Cristal, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (242,'suc242','Canc˙n-Mercado 28, QR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (16,'suc16','Aguascalientes-Centro, AGS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (17,'suc17','Sta. Maria Insurgentes-CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (18,'suc18','Guadalajara-R. Michel, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (19,'suc19','TorreÛn-Centro, COAH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (20,'suc20','Guadalajara-Parque Morelos, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (21,'suc21','Peralvillo-CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (22,'suc22','Monterrey-Av. Guerrero, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (23,'suc23','Durango-Centro, DGO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (24,'suc24','Chihuahua-Centro, CHIH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (25,'suc25','Guadalajara-¡lvaro ObregÛn, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (27,'suc27','Santo Tom·s- Azcapotzalco, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (28,'suc28','MÈrida-Centro, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (29,'suc29','Xalapa-Los Sauces, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (30,'suc30','Monterrey-Av.ColÛn, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (31,'suc31','QuerÈtaro-Centro, QRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (32,'suc32','Chetumal-EfraÌn Aguilar, QR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (33,'suc33','Tepic-Allende I-Tepic, NAY',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (34,'suc34','Colima-Centro, COL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (35,'suc35','Veracruz-Ju·rez, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (244,'suc244','Tampico-Norte, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (246,'suc246','Monterrey-Av. Lincoln, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (248,'suc248','Los Mochis-Gabriel Leyva, SIN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (36,'suc36','QuerÈtaro-TecnolÛgico, QRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (37,'suc37','Havre D.F.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (38,'suc38','Plaza AragÛn-Ecatepec, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (39,'suc39','Xochimilco-Centro, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (40,'suc40','Guadalajara-Plaza Atemajac, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (41,'suc41','MÈrida-Santiago, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (42,'suc42','Mazatl·n-Centro, SIN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (43,'suc43','Tercera Sur,Tuxtla GutiÈrrez, CHIS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (44,'suc44','Zacatecas-Centro, ZAC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (45,'suc45','Campeche-Centro, CAMP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (46,'suc46','Av. Del Taller D.F.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (47,'suc47','CÛrdoba-Centro Avenida 2, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (48,'suc48','Veracruz-CuauhtÈmoc, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (49,'suc49','Villahermosa-Centro, TAB',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (50,'suc50','Tampico-Centro, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (51,'suc51','Ermita Toltecas-Iztapalapa, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (52,'suc52','Xalapa-Zamora, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (53,'suc53','Canc˙n-LÛpez Portillo, QR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (54,'suc54','Poza Rica-Centro Obrera, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (55,'suc55','Monterrey-Av.CuauhtÈmoc, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (56,'suc56','Cuernavaca-Lerdo de Tejada Centro, MOR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (57,'suc57','Acapulco-Parada del Vaquero Centro, GRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (58,'suc58','Uruapan-Morelos, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (59,'suc59','Tlaquepaque-Central Nueva, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (60,'suc60','La Venta-Cuautitl·n Izcalli, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (61,'suc61','Clouthier-Metepec, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (62,'suc62','La Romana-Tlalnepantla, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (63,'suc63','Irapuato-Centro, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (64,'suc64','Iguala-Bandera Nacional Centro, GRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (65,'suc65','La Paz-Centro, BCS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (66,'suc66','Tapachula-Centro, CHIS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (67,'suc67','Tijuana-Plaza Las Brisas, BCN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (68,'suc68','Nuevo Laredo-Centro, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (69,'suc69','San Nicol·s de Los Garza-Centro, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (70,'suc70','LeÛn-LÛpez Mateos, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (71,'suc71','Matamoros-Centro, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (72,'suc72','MÈrida-Plaza Royal AmÈricas, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (73,'suc73','Celaya-Centro, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (74,'suc74','Coatzacoalcos-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (75,'suc75','Ju·rez-Centro, CHIH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (76,'suc76','Morelia-L·zaro C·rdenas, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (77,'suc77','Mexicali-Centro CÌvico, BCN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (78,'suc78','Puerto Vallarta-Boulevard Francisco Medina, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (79,'suc79','Chilpancingo-L·zaro C·rdenas, GRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (80,'suc80','Ixtapaluca - Centro, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (81,'suc81','Lopez Mateos-Cd. Neza, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (82,'suc82','Tecom·n-Las Palmas, COL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (83,'suc83','Boca del RÌo-Plaza Santa Ana, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (84,'suc84','Cuautla-Reforma, MOR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (85,'suc85','Morelos-Ecatepec, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (86,'suc86','Aguascalientes-Central Camionera, AGS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (171,'suc171','Apatzing·n-Centro, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (87,'suc87','Ciudad del Carmen-Centro, CAMP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (88,'suc88','LeÛn-Insurgentes T1, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (89,'suc89','San Juan del RÌo-Centro, QRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (90,'suc90','Plaza de la ConstituciÛn-Texcoco, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (91,'suc91','Tuxpan-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (92,'suc92','GÛmez Palacio-Centro, DGO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (93,'suc93','MartÌnez de La Torre-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (94,'suc94','Culiac·n-Centro, SIN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (95,'suc95','Tlaquepaque-Centro, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (96,'suc96','Puebla-Norte 8 Centro, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (97,'suc97','MÈrida-Plaza Fiesta, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (98,'suc98','Chetumal-Zaragoza Centro, QR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (99,'suc99','Saltillo-Centro, COAH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (100,'suc100','Veracruz-CuauhtÈmoc, Alcocer, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (101,'suc101','Zamora-Centro, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (102,'suc102','Ciudad Madero-Centro, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (103,'suc103','Ciudad ObregÛn-Centro, SON',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (104,'suc104','Tepic-Allende II, NAY',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (105,'suc105','Centro-Naucalpan, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (106,'suc106','Morelia-Madero Pte., MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (187,'suc187','Comalcalco-Reforma, TAB',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (107,'suc107','Veracruz-CuauhtÈmoc Norte, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (108,'suc108','Monterrey-Chapultepec, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (109,'suc109','Manzanillo-Centro, COL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (110,'suc110','Chihuahua-Av.TecnolÛgico, CHIH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (111,'suc111','Zapopan-Centro, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (112,'suc112','Oaxaca-Centro, OAX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (113,'suc113','Veracruz-El Coyol, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (114,'suc114','C·rdenas-Zona Remodelada, TAB',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (115,'suc115','Hermosillo-Centro, SON',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (116,'suc116','Tollocan-Toluca, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (117,'suc117','Orizaba-CircunvalaciÛn Oriente, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (118,'suc118','La Villa-Gustavo A. Madero, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (119,'suc119','Villa de ¡lvarez-Centro, COL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (120,'suc120','San Luis PotosÌ-B. Anaya, SLP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (121,'suc121','Tuxtla GutiÈrrez-Parque Marimba, CHIS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (122,'suc122','Guadalupe-Plaza Los Cristales, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (123,'suc123','General Escobedo-HEB Escobedo, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (124,'suc124','Guadalupe-Metro ExposiciÛn, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (125,'suc125','Las Alamedas-Atizap·n, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (126,'suc126','CÛrdoba-Avenida 3 Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (127,'suc127','Guadalajara-Sta. Teresita, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (128,'suc128','Acapulco-Magallanes CuauhtÈmoc, GRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (129,'suc129','Ciudad del Carmen-Calle 31, CAMP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (190,'suc190','Reynosa-Boulevard Hidalgo, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (130,'suc130','Monterrey-Metro Mitras, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (131,'suc131','Canc˙n-Canc˙n Mall, QR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (132,'suc132','Xalapa-Avenida Xalapa, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (133,'suc133','Veracruz-Astilleros, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (134,'suc134','Apodaca-Plaza Fresnos, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (135,'suc135','Monterrey-Plaza Aztl·n, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (136,'suc136','Guadalajara-GranTerraza Oblatos,JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (137,'suc137','Guadalajara-Alcalde, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (138,'suc138','Tacubaya-Miguel Hidalgo, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (139,'suc139','San Juan de AragÛn-Gustavo A. Madero, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (140,'suc140','MÈrida-ChichÈn, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (141,'suc141','La VÌa-Cuautitl·n, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (142,'suc142','Centro Comercial las AmÈricas, Ecatepec MEX.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (143,'suc143','Miramontes-Coyoac·n, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (144,'suc144','Plaza Cantil-Coyoac·n, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (145,'suc145','QuerÈtaro-Plaza El Sol, QRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (146,'suc146','Tepic-Avenida MÈxico, NAY',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (147,'suc147','MÈrida-Chuburn·, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (148,'suc148','Av. CuauhtÈmoc, Chalco, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (149,'suc149','LeÛn-Plaza Hidalgo, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (150,'suc150','TorreÛn-Central de Abastos, COAH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (151,'suc151','Maravillas-Cd. Neza, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (191,'suc191','La Piedad-Centro, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (192,'suc192','Zit·cuaro-RevoluciÛn Sur, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (152,'suc152','Boca del RÌo-EjÈrcito Mexicano, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (170,'suc170','Rojo GÛmez Agricola Oriental-Iztacalco, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (157,'suc157','Villa Nicol·s Romero, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (160,'suc160','Plaza las Flores- Coacalco, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (153,'suc153','Valle Dorado-Tlalnepantla, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (188,'suc188','Plaza Toltecas-Tlalnepantla, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (184,'suc184','Ermita Barrio San Miguel-Iztapalapa, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (200,'suc200','San Cristobal-Ecatepec, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (210,'suc210','Be Grand Rio Magdalena, ¡lvaro ObregÛn, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (194,'suc194','Temoaya-Cuautitl·n Izcalli, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (156,'suc156','Avenida 8-Venustiano Carranza, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (164,'suc164','Xalapa-Manuel ¡vila Camacho, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (169,'suc169','Boca del RÌo-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (206,'suc206','Santa Catarina-Plaza La Puerta, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (209,'suc209','Tonal·-Lomas de Tonal·, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (205,'suc205','MÈrida-Macroplaza, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (161,'suc161','Guadalupe-Plaza Molinete, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (203,'suc203','Tlajomulco-Multiplaza del Valle, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (159,'suc159','Tierra Blanca-Ju·rez, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (162,'suc162','Tehuac·n-Independencia Poniente, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (163,'suc163','Morelia-Plazuela Carrillo, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (166,'suc166','Papantla-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (167,'suc167','San Juan Bautista Tuxtepec-5 de Mayo, OAX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (173,'suc173','Metro Muzquiz-Ecatepec, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (179,'suc179','Poza Rica-Boulevard, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (180,'suc180','Acapulco-Plaza Sendero, GRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (168,'suc168','Los Reyes-La Paz, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (182,'suc182','Lago de Guadalupe-Atizap·n, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (154,'suc154','Cozumel-Centro, QR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (155,'suc155','Irapuato-Las Reynas, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (158,'suc158','Minatitl·n-Parquecito Hidalgo, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (165,'suc165','Tecom·n-Baldino D·valos, COL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (174,'suc174','Comit·n-Belisario DomÌnguez, CHIS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (175,'suc175','Salamanca-Centro, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (176,'suc176','Zapopan-Mariano Otero, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (177,'suc177','Cd. Ju·rez-Plaza San Carlos, CHIH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (183,'suc183','Colima-Francisco I. Madero, COL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (186,'suc186','Tulyehualco-Tl·huac, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (178,'suc178','Coatepec-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (185,'suc185','Zihuatanejo-Los Mangos Centro, GRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (189,'suc189','Acayucan-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (195,'suc195','Durango-Centro Comercial Paseo Durango, DGO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (196,'suc196','Cuernavaca-Plan de Ayala, MOR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (197,'suc197','Salina Cruz-Centro, OAX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (198,'suc198','Zapopan-Patria, JAL.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (201,'suc201','San AndrÈs Tuxtla-Centro, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (202,'suc202','Aguascalientes-PetrÛleos, AGS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (204,'suc204','Valladolid-Plaza Bella Valladolid, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (211,'suc211','Multiplaza Arenera-Naucalpan, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (193,'suc193','Monclova-Centro, COAH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (199,'suc199','Zacapu, Mich.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (208,'suc208','Ciudad Valles-Centro, SLP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (212,'suc212','Veracruz- Parque Zamora, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (181,'suc181','L·zaro C·rdenas-Centro, MICH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (207,'suc207','Plaza Dorada, Ciudad Juarez, CHIH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (214,'suc214','Las Aguilas-Cd. Neza, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (217,'suc217','Tonal·-RÌo Nilo, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (218,'suc218','San JosÈ de los Cedros-Cuajimalpa, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (213,'suc213','Jamaica-Venustiano Carranza, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (215,'suc215','Fuentes del Valle-Tultitl·n, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (216,'suc216','Santa Clara-Ecatepec, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (224,'suc224','Benito Ju·rez-Sun Mall Vip, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (222,'suc222','San Luis PotosÌ-MuÒoz, SLP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (226,'suc226','Urbiplaza-Tlalpan, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (219,'suc219','MÈrida-Francisco de Montejo, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (227,'suc227','Insurgentes Roma Sur-CuauhtÈmoc, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (228,'suc228','Federico GÛmez-Zumpango, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (236,'suc236','Gustavo Baz-Tlalnepantla, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (240,'suc240','Guadalupe-Eloy Cavazos, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (233,'suc233','LeÛn-Mariano Escobedo, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (232,'suc232','QuerÈtaro-Pie de la Cuesta, QRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (245,'suc245','Veracruz-DÌaz MirÛn, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (220,'suc220','Cd. Guzm·n-Centro, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (225,'suc225','MÈrida-Santa Rosa, YUC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (230,'suc230','Puebla-Capu, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (243,'suc243','Guadalajara-Presa Laurel, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (229,'suc229','Puebla-Blvd. Valsequillo, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (252,'suc252','San Felipe-Gustavo A. Madero, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (251,'suc251','Tuxtla GutiÈrrez-Plaza del Sol, CHIS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (247,'suc247','Picacho, Ajusco, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (250,'suc250','Tulancingo-Centro, HGO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (501,'suc501','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (502,'suc502','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (235,'suc235','Pachuca-Centro, HGO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (253,'suc253','Carretera Federal-Tec·mac, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (255,'suc255','Guasave-Centro, SIN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (503,'suc503','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (504,'suc504','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (505,'suc505','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (506,'suc506','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (507,'suc507','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (508,'suc508','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (509,'suc509','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (510,'suc510','Real de 14',23);
+
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (511,'suc511','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (512,'suc512','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (280,'suc280','Vallejo-Gustavo A. Madero, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (282,'suc282','Culiac·n-Sanalona-Guadalupe Victoria, SIN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (513,'suc513','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (514,'suc514','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (515,'suc515','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (516,'suc516','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (517,'suc517','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (518,'suc518','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (519,'suc519','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (520,'suc520','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (237,'suc237','Guanajuato-Centro, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (254,'suc254','San MartÌn Texmelucan-Libertad Sur Zona Centro, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (256,'suc256','Tenayuca-Tlalnepantla, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (257,'suc257','Plaza Urban Center, Rioja',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (258,'suc258','Vasco de Quiroga-Santa Fe, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (260,'suc260','Apodaca-Plaza Morelos, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (261,'suc261','Solidaridad-Playa del Carmen, QR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (263,'suc263','Guadalajara-Lomas de Polanco, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (264,'suc264','Tijuana-Centro, BCN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (265,'suc265','Atlixco-Independencia, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (266,'suc266','HÈroes de Tecamac, MEX.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (283,'suc283','Tijuana-Mariano Matamoros Ruta Independencia, BCN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (223,'suc223','Chihuahua-Plaza Dostoievsky, CHIH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (239,'suc239','Puebla-Reforma Centro, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (249,'suc249','Insurgentes San ¡ngel-Alvaro ObregÛn, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (259,'suc259','Piedras Negras-San Vicente Chicoloapan, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (267,'suc267','Ensenada-Centro, BCN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (268,'suc268','Juan Diego-Valle de Chalco Solidaridad, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (269,'suc269','San Luis PotosÌ-Himno Nacional, SLP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (271,'suc271','Plaza Atizap·n-Atizap·n, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (272,'suc272','QuerÈtaro-Plaza Candiles, QRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (273,'suc273','Plaza Vista Norte, G.A.M-CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (274,'suc274','Chihuahua-Fuentes Mares, CHIH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (275,'suc275','Plaza Arboledas, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (262,'suc262','MoroleÛn-Centro, GTO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (285,'suc285','Acapulco-Renacimiento, GRO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (521,'suc521','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (522,'suc522','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (523,'suc523','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (600,'suc600','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (524,'suc524','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (525,'suc525','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (526,'suc526','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (527,'suc527','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (599,'suc599','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (528,'suc528','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (529,'suc529','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (530,'suc530','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (531,'suc531','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (532,'suc532','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (533,'suc533','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (534,'suc534','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (535,'suc535','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (536,'suc536','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (537,'suc537','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (538,'suc538','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (539,'suc539','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (540,'suc540','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (541,'suc541','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (284,'suc284','Metropolitana-Cd. Neza, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (286,'suc286','Chimalhuac·n-Del PeÒÛn, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (542,'suc542','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (543,'suc543','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (544,'suc544','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (545,'suc545','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (546,'suc546','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (598,'suc598','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (547,'suc547','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (548,'suc548','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (549,'suc549','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (550,'suc550','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (551,'suc551','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (552,'suc552','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (597,'suc597','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (553,'suc553','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (554,'suc554','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (555,'suc555','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (556,'suc556','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (596,'suc596','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (288,'suc288','Coatzacoalcos-Universidad, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (289,'suc289','Mexicali-Nuevo Mexicali, BCN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (557,'suc557','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (558,'suc558','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (559,'suc559','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (560,'suc560','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (595,'suc595','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (594,'suc594','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (593,'suc593','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (592,'suc592','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (591,'suc591','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (590,'suc590','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (589,'suc589','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (588,'suc588','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (587,'suc587','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (586,'suc586','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (585,'suc585','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (584,'suc584','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (583,'suc583','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (582,'suc582','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (290,'suc290','SatÈlite-Arquitectos, Naucalpan, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (291,'suc291','Aguascalientes-Haciendas, AGS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (581,'suc581','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (580,'suc580','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (579,'suc579','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (578,'suc578','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (577,'suc577','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (576,'suc576','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (575,'suc575','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (574,'suc574','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (573,'suc573','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (572,'suc572','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (571,'suc571','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (570,'suc570','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (569,'suc569','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (568,'suc568','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (567,'suc567','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (566,'suc566','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (565,'suc565','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (564,'suc564','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (292,'suc292','Gran Sur-Coyoac·n, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (293,'suc293','Doctores-Hospital General, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (563,'suc563','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (562,'suc562','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (561,'suc561','Real de 14',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (270,'suc270','San Nicol·s de los Garza-Av. Universidad, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (276,'suc276','Paseo Reynosa, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (277,'suc277','Matamoros-Plaza HEB, TAMPS',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (279,'suc279','Saltillo-Venustiano Carranza, COAH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (281,'suc281','Iztapalapa-Santa Cruz Meyehualco, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (278,'suc278','San JerÛnimo LÌdice, ¡lvaro ObregÛn CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (287,'suc287','TorreÛn-Triana, COAH',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (294,'suc294','Puebla-Las ¡nimas, PUE.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (295,'suc295','ObregÛn-Central Camionera, SON',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (296,'suc296','Campeche-¡lvaro ObregÛn, CAMP',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (297,'suc297','Xalapa-Atenas Veracruzana, VER',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (298,'suc298','Guadalajara-Independencia Norte, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (299,'suc299','Puebla-Plaza Loreto, PUE',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (300,'suc300','Hermosillo-Plaza Sendero, SON',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (301,'suc301','Apodaca-Plaza Sendero La Concordia, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (302,'suc302','San Pedro Garza GarcÌa-Bazar San AgustÌn, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (303,'suc303','Pachuca-Nuevo Hidalgo, HGO',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (304,'suc304','Lindavista-Montevideo, GAM. CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (305,'suc305','FÈlix Cuevas-Benito Ju·rez, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (306,'suc306','Mazatl·n-Ju·rez Av. de las AmÈricas, SIN',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (307,'suc307','El Molinito-Naucalpan, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (308,'suc308','Tesist·n-Zapopan, JAL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (310,'suc310','Las Armas-Azcapotzalco, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (309,'suc309','Villahermosa-Av. ConstituciÛn, TAB',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1001,'suc1001','Concentradora',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (311,'suc311','Toluca-Alfredo del Mazo, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (312,'suc312','Insurgentes Sur Fuentes Brotantes-Tlalpan, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (313,'suc313','Torres de SatÈlite La Abeja-Naucalpan, MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1002,'suc1002','WTC',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (314,'suc314','Monterrey-Solidaridad, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (315,'suc315','Tlalpan-Metro Xola, Benito Ju·rez, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (316,'suc316','Centro Comercial Santa Fe-Cuajimalpa, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (900,'suc900','Avenida Paseo de la Reforma No',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (318,'suc318','PopocatÈpetl-Benito Juarez, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (320,'suc320','Apizaco-Centro, TLAX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1005,'suc1005','Venta en lÌnea',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (319,'suc319','Mercado de Sonora, Venustiano Carranza, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (317,'suc317','Metro Tacuba, Miguel Hidalgo, CDMX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1008,'suc1008','Compra Cumplido',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1003,'suc1003','Outlet',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1004,'suc1004','JoyerÌa externa',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1006,'suc1006','Centro de distribuciÛn',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1007,'suc1007','Autos sin resguardo',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (321,'suc321','Cumbres Elite Monterrey, NL',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (322,'suc322','Jiutepec, Cuernavaca, MOR',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (323,'suc323','Pino Suarez, Metepec - MEX',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1009,'suc1009','Servicio a Clientes',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1010,'suc1010','CrÈdito',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (324,'suc324','Garza Sada - Monterrey, N.L.',23);
+INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (700,'suc700','Tienda Monte Corporativo-CDMX',23);
+-- Cat·logo de Tipo de contratos
+INSERT INTO cat_tipo_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (146,'PL','PAGOS LIBRES',24);
+INSERT INTO cat_tipo_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (145,'CL','CLASICO',24);
+-- Cat·logo de OperaciÛn de Caja
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1,'PP','Pagar Prestamo',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (3,'VB','Venta con Billete',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (6,'DS','Cobro Desempeno',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (8,'RF','Cobro Refrendo',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (9,'CI','Cobro Reimpresion Billete',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (10,'RB','Cobro Reposicion Billete',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (11,'BA','Cobro de Cargo Anticipado a Valuador',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (14,'PD','Pagar Demasia',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (15,'GA','Cobro Almacenaje',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (17,'AS','Servicio Avaluo',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (82,'DN','Devolucion Mercancia',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (116,'APL','Abono-Pagos Libres',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (118,'CCE','Apartado Monte',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (124,'REE','Cobro para ReempeÒo',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (132,'CRC','Cobro ReimpresiÛn Car·tula',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (198,'RFE','Cobro Refrendo Extemporaneo',25);
+INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1004,'CK','Cancelacion Corte Caja',25);
+
+-- relacion entre ramo y subramo
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,1);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,2);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,3);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,4);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (2,5);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (3,6);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,7);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,8);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,9);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,10);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,11);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,12);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,13);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,14);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,15);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,16);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,17);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,18);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,19);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,20);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,21);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,22);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,23);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,24);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,25);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,26);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,27);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,28);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,29);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,30);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,31);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,32);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,33);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,34);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,35);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,36);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,37);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,38);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,39);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,40);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,41);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,42);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (4,43);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,44);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (5,45);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (5,46);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (5,47);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (5,48);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (5,49);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (5,50);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,51);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,52);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,53);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,54);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,55);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,56);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (2,57);
+INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (7,58);
