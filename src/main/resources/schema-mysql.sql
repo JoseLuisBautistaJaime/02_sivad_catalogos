@@ -683,7 +683,7 @@ CREATE TABLE cat_subramo
 DROP TABLE IF EXISTS cat_sucursal;
 CREATE TABLE cat_sucursal
 (
-    id_elemento BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    id_elemento BIGINT UNSIGNED NOT NULL,
     abreviatura VARCHAR(20) NOT NULL,
     etiqueta VARCHAR(255) NOT NULL,
     id_configuracion BIGINT NOT NULL,
