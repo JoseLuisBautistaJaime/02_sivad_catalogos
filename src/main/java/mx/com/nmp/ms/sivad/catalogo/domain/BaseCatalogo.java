@@ -33,9 +33,9 @@ public abstract class BaseCatalogo implements CatalogoConfigurable{
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id_elemento", nullable = false)
-    @JsonIgnore 
+//    @JsonIgnore 
     @JournalData
-    private Long idElemento;
+    private Long elementoId;
 
     /**
      * Nombre reconocible de este elemento orientado a uso interno de los sistemas.
@@ -74,7 +74,7 @@ public abstract class BaseCatalogo implements CatalogoConfigurable{
      * @return Identificador
      */
     public Long getIdElemento() {
-        return idElemento;
+        return elementoId;
     }
 
     /**
@@ -82,8 +82,8 @@ public abstract class BaseCatalogo implements CatalogoConfigurable{
      *
      * @param idElemento Identificador
      */
-    public void setIdElemento(Long idElemento) {
-        this.idElemento = idElemento;
+    public void setIdElemento(Long elementoId) {
+        this.elementoId = elementoId;
     }
 
     /**

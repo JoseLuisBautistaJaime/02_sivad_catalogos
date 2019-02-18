@@ -113,7 +113,21 @@ public class CatalogoService {
         
         return CatalogoFactory.build(obj);
     }
+    
+    
+     @Transactional(readOnly = true)
+     public Catalogo get(@NotNull CatalogoEnum catalogoEnum,@NotNull Long idElemento){
+        Class domain = getDomainClass(catalogoEnum);
+        CatalogoRepository repository = null;
+        CatalogoConfigurable obj = null;
         
+        repository =  getRepository(domain);
+        obj = (CatalogoConfigurable) repository.findOne(idElemento);
+        validarElementoExistenteId(obj,catalogoEnum,idElemento,domain);
+        
+        
+        return CatalogoFactory.build(obj);
+     }
     
     
     public void delete(@NotNull CatalogoEnum catalogoEnum,@HasText String abreviatura){
@@ -287,6 +301,15 @@ public class CatalogoService {
         if (ObjectUtils.isEmpty(serial)) {
                 String mensaje =
                     "El catalogo"+ catalogoEnum.getCatalogo() +" no contiene un elemento con la abreviatura: [" + abreviatura + "].";
+                LOGGER.warn(mensaje);
+                throw new CatalogoNotFoundException(mensaje, domain);
+        }
+    }
+    
+    private void validarElementoExistenteId(Serializable serial,CatalogoEnum catalogoEnum,Long IdElement,Class<?> domain){
+        if (ObjectUtils.isEmpty(serial)) {
+                String mensaje =
+                    "El catalogo"+ catalogoEnum.getCatalogo() +" no contiene un elemento con la abreviatura: [" + IdElement + "].";
                 LOGGER.warn(mensaje);
                 throw new CatalogoNotFoundException(mensaje, domain);
         }

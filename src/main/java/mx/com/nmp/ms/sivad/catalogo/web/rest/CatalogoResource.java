@@ -122,5 +122,24 @@ public class CatalogoResource {
         
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/{catalogo}/id/{idElement}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Catalogo> getById(@PathVariable String catalogo,@PathVariable Long idElement, @RequestParam(name = "dependencias",required = false) boolean dependencias) {
+        LOGGER.info(">> get catalogo: {},abreviatura:{}",catalogo,idElement);
+        CatalogoEnum catalogoEnum = null;
+        try{
+            catalogoEnum = CatalogoEnum.valueOf(catalogo.toUpperCase());
+        }catch(IllegalArgumentException e){
+            LOGGER.error(">> El catálogo que solicito no existe");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        Catalogo cat = catalogoService.get(catalogoEnum,idElement);
+        
+        return new ResponseEntity<>(cat,HttpStatus.OK);
+    }
 
 }
