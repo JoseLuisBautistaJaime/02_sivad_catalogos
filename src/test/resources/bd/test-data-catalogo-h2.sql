@@ -2,8 +2,10 @@ INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_AC
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (21,'Ramos','Ramo','Catálogo de ramos',today());
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (22,'Subramos','Subramo','Catálogo de subramos',today());
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (23,'Sucursales','Sucursal','Catálogo de sucursales',today());
-INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (24,'Contratos','TipoContrato','Catálogo de tipo de contratos',today());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (24,'TipoContrato','TipoContrato','Catálogo de tipo de contratos',today());
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (25,'Operaciones','OperacionesCaja','Catálogo de las operaciones de caja',today());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (26,'Contratos','Contrato','Catálogo de las operaciones de caja',today());
+
 INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, descripcion) VALUES (4,'Alhajas','QuilatajeOro','Catálogo de Quilataje Oro');
 INSERT INTO cnf_configuracion_catalogo (id, dominio, tipo, valor_default, descripcion) VALUES (2,'Alhajas','Metal','AU','Catálogo de Metales');
 
@@ -71,8 +73,17 @@ INSERT INTO cat_quilataje_oro(elemento_id, abreviatura, etiqueta, id_configuraci
 INSERT INTO cat_quilataje_oro(elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (7,'22_Q','22', 4);
 INSERT INTO cat_quilataje_oro(elemento_id, abreviatura, etiqueta, id_configuracion) VALUES (8,'24_Q','24', 4);
 
+-- Catálogo Contrato
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (44,'44','Contrato Interes Diario Clasico - Ofertas F2',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (45,'45','Contrato Interes Diario Pagos Libres - Ofertas F2',26);
+
+
 -- relacion entre ramo y subramo
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,1);
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,2);
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,3);
+
+-- relación entre contrato y tipoContrato
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (44,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (45,146);
 

@@ -177,6 +177,21 @@ public class CatalogoResourceTest {
                 .andExpect(jsonPath("$.Catalogo.listaValores[1].etiqueta").value("10"));
     }
     
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-catalogo-h2.sql")
+    public void getAllContrato() throws Exception {
+        test.perform(get("/catalogo/contrato"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.CONTRATOS.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.CONTRATOS.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("44"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("Contrato Interes Diario Clasico - Ofertas F2"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].abreviatura").value("45"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[1].etiqueta").value("Contrato Interes Diario Pagos Libres - Ofertas F2"));
+    }
+    
     
     @Test
     @Transactional
@@ -192,6 +207,23 @@ public class CatalogoResourceTest {
                 .andExpect(jsonPath("$.Catalogo.listaValores[0].subramos[0].abreviatura").value("RJ"))
                 .andExpect(jsonPath("$.Catalogo.listaValores[0].subramos[0].etiqueta").value("Relojes"));
     }
+    
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-catalogo-h2.sql")
+    public void getAllContratoConDependencias() throws Exception {
+        test.perform(get("/catalogo/contrato?dependencias=true"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.CONTRATOS.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.CONTRATOS.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("44"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("Contrato Interes Diario Clasico - Ofertas F2"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].tipoContrato[0].abreviatura").value("CL"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].tipoContrato[0].etiqueta").value("CLASICO"));
+    }
+    
+    
     
     @Test
     @Transactional
@@ -315,6 +347,19 @@ public class CatalogoResourceTest {
     @Test
     @Transactional
     @Sql("/bd/test-data-catalogo-h2.sql")
+    public void getOneContrato() throws Exception {
+        test.perform(get("/catalogo/contrato/44"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.Catalogo.dominio").value(ConfiguracionCatalogoEnum.CONTRATOS.getDominioUnwrap()))
+                .andExpect(jsonPath("$.Catalogo.tipo").value(ConfiguracionCatalogoEnum.CONTRATOS.getTipo()))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].abreviatura").value("44"))
+                .andExpect(jsonPath("$.Catalogo.listaValores[0].etiqueta").value("Contrato Interes Diario Clasico - Ofertas F2"));
+    }
+    
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-catalogo-h2.sql")
     public void deletePerfilTest() throws Exception {
         test.perform(delete("/catalogo/perfil/V").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -373,6 +418,14 @@ public class CatalogoResourceTest {
     @Sql("/bd/test-data-catalogo-h2.sql")
     public void deleteQuilatajeTest() throws Exception {
         test.perform(delete("/catalogo/quilates/8_Q"))
+                .andExpect(status().isOk());
+    }
+    
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-catalogo-h2.sql")
+    public void deleteContratoTest() throws Exception {
+        test.perform(delete("/catalogo/contrato/45"))
                 .andExpect(status().isOk());
     }
     
@@ -511,6 +564,26 @@ public class CatalogoResourceTest {
     @Test
     @Transactional
     @Sql("/bd/test-data-catalogo-h2.sql")
+    public void createContratoTest() throws Exception {
+        
+        CatalogoDTO catalogoDTO = new CatalogoDTO();
+        catalogoDTO.setAbreviatura("46");
+        catalogoDTO.setEtiqueta("Contrato Prueba");
+        List<String> contrato = new ArrayList<>();
+        contrato.add("CL");
+        catalogoDTO.setAbreviaturasHijas(contrato);
+        
+        
+        test.perform(post("/catalogo/contrato")
+            .content(asJsonString(catalogoDTO))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+    
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-catalogo-h2.sql")
     public void updatePerfilTest() throws Exception {
         
         CatalogoDTO catalogoDTO = new CatalogoDTO();
@@ -640,14 +713,31 @@ public class CatalogoResourceTest {
     
     
     public static String asJsonString(final Object obj) {
-    try {
-        final ObjectMapper mapper = new ObjectMapper();
-        final String jsonContent = mapper.writeValueAsString(obj);
-        return jsonContent;
-    } catch (Exception e) {
-        throw new RuntimeException(e);
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    
     }
-}  
+    
+    @Test
+    @Transactional
+    @Sql("/bd/test-data-catalogo-h2.sql")
+    public void updateContratoTest() throws Exception {
+        
+        CatalogoDTO catalogoDTO = new CatalogoDTO();
+        catalogoDTO.setAbreviatura("45");
+        catalogoDTO.setEtiqueta("Contrato update");
+ 
+        test.perform(put("/catalogo/contrato/45")
+            .content(asJsonString(catalogoDTO))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
     
     
     

@@ -711,6 +711,24 @@ CREATE TABLE cat_operacion_caja
     PRIMARY KEY (id_elemento)
 );
 
+DROP TABLE IF EXISTS cat_contrato;
+CREATE TABLE cat_contrato
+(
+    id_elemento BIGINT AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
+
+DROP TABLE IF EXISTS cat_contrato_tipo_contrato;
+CREATE TABLE cat_contrato_tipo_contrato(
+    elemento_padre BIGINT NOT NULL,
+    elemento_hijo BIGINT NOT NULL,
+    PRIMARY KEY (elemento_padre, elemento_hijo)
+);
+
+
 DROP TABLE IF EXISTS cat_ramo_subramo;
 CREATE TABLE cat_ramo_subramo(
     elemento_padre BIGINT NOT NULL,
@@ -775,7 +793,21 @@ FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
 CREATE INDEX cat_operacion_caja_elemento_id ON cat_operacion_caja(id_elemento);
 CREATE INDEX cat_operacion_caja_abreviatura ON cat_operacion_caja(abreviatura);
 
+ALTER TABLE cat_contrato ADD CONSTRAINT uk_cat_contrato_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_contrato ADD CONSTRAINT fk_cat_contrato_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_cat_contrato_elemento_id ON cat_contrato(id_elemento);
+CREATE INDEX cat_cat_contrato_abreviatura ON cat_contrato(abreviatura);
+
 ALTER TABLE cat_ramo_subramo ADD CONSTRAINT fk_cat_ramo_subramo_elemento_padre
 FOREIGN KEY(elemento_padre) REFERENCES cat_ramo(id_elemento);
 ALTER TABLE cat_ramo_subramo ADD CONSTRAINT fk_cat_ramo_subramo_elemento_hijo
 FOREIGN KEY(elemento_hijo) REFERENCES cat_subramo(id_elemento);
+
+ALTER TABLE cat_contrato_tipo_contrato ADD CONSTRAINT fk_cat_contrato_tipo_contrato_elemento_padre
+FOREIGN KEY(elemento_padre) REFERENCES cat_contrato(id_elemento);
+ALTER TABLE cat_contrato_tipo_contrato ADD CONSTRAINT fk_cat_contrato_tipo_contrato_elemento_hijo
+FOREIGN KEY(elemento_hijo) REFERENCES cat_tipo_contrato(id_elemento);

@@ -14,6 +14,7 @@ import mx.com.nmp.ms.sivad.catalogo.domain.CatalogoEnum;
 import mx.com.nmp.ms.sivad.catalogo.domain.CatalogoWithoutDependenciesProjection;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogo;
 import mx.com.nmp.ms.sivad.catalogo.domain.ConfiguracionCatalogoEnum;
+import mx.com.nmp.ms.sivad.catalogo.domain.Contrato;
 import mx.com.nmp.ms.sivad.catalogo.domain.Metal;
 import mx.com.nmp.ms.sivad.catalogo.domain.OperacionCaja;
 import mx.com.nmp.ms.sivad.catalogo.domain.Perfil;
@@ -174,6 +175,14 @@ public class CatalogoService {
                         ((Ramo) instancia).setSubramos(subramos);
                     }
                 }
+            }else if(instancia instanceof Contrato){
+                if(!ObjectUtils.isEmpty(catalogoDTO.getAbreviaturasHijas())){
+                    CatalogoRepository repositorioTipoContrato = getRepository(TipoContrato.class);
+                    List<TipoContrato> contrato = repositorioTipoContrato.findAllByAbreviaturaIn(catalogoDTO.getAbreviaturasHijas());
+                    if(!ObjectUtils.isEmpty(contrato)){
+                        ((Contrato) instancia).setTipoContrato(contrato);
+                    }
+                }
             }
             
             repository.save(instancia);
@@ -237,6 +246,14 @@ public class CatalogoService {
                     ((Ramo) instancia).setSubramos(subramos);
                 }
             }
+        }else if(instancia instanceof Contrato){
+            if(!ObjectUtils.isEmpty(catalogoDTO.getAbreviaturasHijas())){
+                CatalogoRepository repositorioTipoContrato = getRepository(TipoContrato.class);
+                List<TipoContrato> contrato = repositorioTipoContrato.findAllByAbreviaturaIn(catalogoDTO.getAbreviaturasHijas());
+                if(!ObjectUtils.isEmpty(contrato)){
+                    ((Contrato) instancia).setTipoContrato(contrato);
+                }
+            }
         }
         
         try {
@@ -266,6 +283,7 @@ public class CatalogoService {
             case OPERACIONCAJA: domain = OperacionCaja.class; break;
             case METAL: domain = Metal.class; break;
             case QUILATES: domain = QuilatajeOro.class; break;
+            case CONTRATO: domain = Contrato.class; break;
             default:break;
         }
         
@@ -291,6 +309,7 @@ public class CatalogoService {
             case OPERACIONCAJA: config = ConfiguracionCatalogoEnum.OPERACIONES_CAJA; break;
             case METAL: config = ConfiguracionCatalogoEnum.METAL; break;
             case QUILATES: config = ConfiguracionCatalogoEnum.QUILATAJE_ORO; break;
+            case CONTRATO: config = ConfiguracionCatalogoEnum.CONTRATOS; break;
             default:break;
         }
         return config;

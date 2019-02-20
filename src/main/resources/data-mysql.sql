@@ -576,9 +576,10 @@ INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_AC
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (21,'Ramos', 'Ramo', 'Catálogo de ramos',now());
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (22,'Subramos', 'Subramo', 'Catálogo de subramos',now());
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (23,'Sucursales', 'Sucursal', 'Catálogo de sucursales',now());
-INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (24,'Contratos','TipoContrato','Catálogo de tipo de contratos',now());
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (24,'TipoContrato','TipoContrato','Catálogo de tipo de contratos',now());
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (25,'Operaciones','OperacionesCaja','Catálogo de las operaciones de caja',now());
 
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (26,'Contratos','Contrato','Catálogo de las operaciones de caja',now());
 
 -- Catálogo de Perfiles
 INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (2,'V' ,'Valuador',20);
@@ -947,6 +948,7 @@ INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALU
 INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (510,'suc510','Real de 14',23);
 
 INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (511,'suc511','Real de 14',23);
+
 INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (512,'suc512','Real de 14',23);
 INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (280,'suc280','Vallejo-Gustavo A. Madero, CDMX',23);
 INSERT INTO cat_sucursal(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (282,'suc282','Culiacán-Sanalona-Guadalupe Victoria, SIN',23);
@@ -1143,6 +1145,45 @@ INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion
 INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (132,'CRC','Cobro Reimpresión Carátula',25);
 INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (198,'RFE','Cobro Refrendo Extemporaneo',25);
 INSERT INTO cat_operacion_caja(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1004,'CK','Cancelacion Corte Caja',25);
+-- Catálogo contrato
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1,'1','Contrato Normal',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (2,'2','Contrato Interes Semanal',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (3,'3','Contrato Condonacion 2o Mes',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (4,'4','Contrato Interes Semanal para 20 Marzo',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (5,'5','Contrato Interes Semanal 1er Mes 1.5%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (6,'6','Contrato Interes Semanal 3%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (7,'7','Contrato Interes Semanal 3.5%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (8,'8','Contrato Interes Semanal Cond 2o mes Prom Int 3%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (9,'9','Contrato Interes Semanal Cond 2o mes Prom Int 3.5%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (10,'10','Contrato 2 Interes Semanal 1% y Mensual 3%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (11,'11','Contrato Promocion Interes Semanal 1% y Mensual 3%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (12,'12','Contrato Promocion Interes Semanal 1% y Mensual 3.5%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (13,'13','Contrato Interes Semanal 1% y Mensual 3%',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (14,'14','Contrato Interes Semanal Congelar Meses Interes a 2',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (15,'15','Contrato Interes Semanal Congelar Meses Interes a 1',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (16,'16','Contrato Interes Semanal Condonar 2 Meses Interes',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (17,'17','Contrato Interes Semanal Congelar Meses Interes a 4',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (18,'18','Contrato Interes Semanal Congelar Meses Interes a 3',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (20,'20','Contrato Pagos Libres',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (21,'21','Contrato Interes Semanal Condonar 3 Meses Interes',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (22,'22','Contrato Interes Semanal Condonar 4 Meses Interes',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (23,'23','Contrato Pagos Libres Condonar 4 meses',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (24,'24','Contrato Pagos Libres Condonacion',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (27,'27','Contrato Interes Semanal 1% y Mensual 3% aplica IVASI',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (28,'28','Contrato Pagos Libres - IVASI',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (31,'31','Contrato Interes Diario Clasico - PROFECO',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (32,'32','Contrato Interes Diario Pagos Libres - PROFECO',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (33,'33','Contrato Interes Diario Clasico - PROFECO T 3.5',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (34,'34','Contrato Interes Diario Pagos Libres - PROFECO T 4',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (35,'35','Contrato Interes Diario Clasico Sin resguardo',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (38,'38','Contrato Interes Diario Clasico - PROFECO SIVA3',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (39,'39','Contrato Interes Diario Pagos Libres - PROFECO SIVA3',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (40,'40','Contrato Interes Diario Clasico - PROFECO T 3.5 SIVA3',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (41,'41','Contrato Interes Diario Pagos Libres - PROFECO T 4 SIVA3',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (42,'42','Contrato Interes Diario Clasico Sin resguardo SIVA3',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (43,'43','Contrato Interes Diario Clasico Condonaciones Sismo Septiembre 2017',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (44,'44','Contrato Interes Diario Clasico - Ofertas F2',26);
+INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (45,'45','Contrato Interes Diario Pagos Libres - Ofertas F2',26);
 
 -- relacion entre ramo y subramo
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,1);
@@ -1203,3 +1244,44 @@ INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,55);
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (6,56);
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (2,57);
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (7,58);
+
+-- relación entre contrato y tipo contrato
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (1,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (2,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (3,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (4,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (5,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (6,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (7,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (8,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (9,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (10,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (11,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (12,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (13,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (14,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (15,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (16,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (17,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (18,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (20,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (21,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (22,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (23,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (24,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (27,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (28,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (31,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (32,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (33,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (34,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (35,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (38,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (39,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (40,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (41,146);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (42,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (43,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (44,145);
+INSERT INTO cat_contrato_tipo_contrato(elemento_padre,elemento_hijo) VALUES (45,146);
+
