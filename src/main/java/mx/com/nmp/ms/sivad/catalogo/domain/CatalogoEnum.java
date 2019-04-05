@@ -15,7 +15,8 @@ public enum CatalogoEnum {
     OPERACIONCAJA("operacion_caja"),
     METAL("metal"),
     QUILATES("quilates"),
-    CONTRATO("contrato");
+    CONTRATO("contrato"),
+    REPORTE("reporte");
     
     
     private String catalogo;
