@@ -41,7 +41,8 @@ public enum ConfiguracionCatalogoEnum {
     SUCURSALES("Sucursal",DominioEnum.SUCURSALES),
     TIPO_CONTRATOS("TipoContrato",DominioEnum.TIPOSCONTRATOS),
     OPERACIONES_CAJA("OperacionesCaja",DominioEnum.OPERACIONES),
-    CONTRATOS("Contrato",DominioEnum.CONTRATOS);
+    CONTRATOS("Contrato",DominioEnum.CONTRATOS),
+    REPORTES("Reporte",DominioEnum.REPORTE);
     
     private String tipo;
     private DominioEnum dominio;

@@ -24,7 +24,8 @@ public enum DominioEnum {
     SUCURSALES("Sucursales"),
     TIPOSCONTRATOS("TipoContrato"),
     OPERACIONES("Operaciones"),
-    CONTRATOS("Contratos");
+    CONTRATOS("Contratos"),
+    REPORTE("Reportes");
 
     private String dominio;
 

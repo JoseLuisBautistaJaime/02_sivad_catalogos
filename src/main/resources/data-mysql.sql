@@ -581,6 +581,9 @@ INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_AC
 
 INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (26,'Contratos','Contrato','Catálogo de las operaciones de caja',now());
 
+INSERT INTO cnf_configuracion_catalogo (ID,DOMINIO, TIPO, DESCRIPCION, ULTIMA_ACTUALIZACION) VALUES (27,'Reportes','Reporte','Catálogo de reportes',now());
+
+
 -- Catálogo de Perfiles
 INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (2,'V' ,'Valuador',20);
 INSERT INTO cat_perfil(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (3,'A' ,'Amarrador',20);
@@ -1189,6 +1192,8 @@ INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALU
 INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (48,'48','Contrato Interes Diario Clasico Apoyo Sucursales',26);
 INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (49,'49','Contrato Interes Diario Clasico Profeco 2019',26);
 INSERT INTO cat_contrato(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (50,'50','Contrato Interes Diario Pagos Libres Profeco 2019',26);
+-- Catálogo de reportes
+INSERT INTO cat_reportes(id_elemento,abreviatura,etiqueta,id_configuracion) VALUES (1,'RMP0001' ,'Reporte Detalle de Operaciones',27);
 
 -- relacion entre ramo y subramo
 INSERT INTO cat_ramo_subramo(elemento_padre,elemento_hijo) VALUES (1,1);

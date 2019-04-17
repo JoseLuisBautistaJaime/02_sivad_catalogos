@@ -20,6 +20,7 @@ import mx.com.nmp.ms.sivad.catalogo.domain.OperacionCaja;
 import mx.com.nmp.ms.sivad.catalogo.domain.Perfil;
 import mx.com.nmp.ms.sivad.catalogo.domain.QuilatajeOro;
 import mx.com.nmp.ms.sivad.catalogo.domain.Ramo;
+import mx.com.nmp.ms.sivad.catalogo.domain.Reportes;
 import mx.com.nmp.ms.sivad.catalogo.domain.Subramo;
 import mx.com.nmp.ms.sivad.catalogo.domain.Sucursal;
 import mx.com.nmp.ms.sivad.catalogo.domain.TipoContrato;
@@ -284,6 +285,7 @@ public class CatalogoService {
             case METAL: domain = Metal.class; break;
             case QUILATES: domain = QuilatajeOro.class; break;
             case CONTRATO: domain = Contrato.class; break;
+            case REPORTE: domain = Reportes.class; break;
             default:break;
         }
         
@@ -310,6 +312,7 @@ public class CatalogoService {
             case METAL: config = ConfiguracionCatalogoEnum.METAL; break;
             case QUILATES: config = ConfiguracionCatalogoEnum.QUILATAJE_ORO; break;
             case CONTRATO: config = ConfiguracionCatalogoEnum.CONTRATOS; break;
+            case REPORTE: config = ConfiguracionCatalogoEnum.REPORTES; break;
             default:break;
         }
         return config;

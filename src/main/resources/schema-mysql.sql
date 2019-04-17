@@ -736,7 +736,15 @@ CREATE TABLE cat_ramo_subramo(
     PRIMARY KEY (elemento_padre, elemento_hijo)
 );
 
-
+DROP TABLE IF EXISTS cat_reportes;
+CREATE TABLE cat_reportes
+(
+    id_elemento BIGINT AUTO_INCREMENT NOT NULL,
+    abreviatura VARCHAR(20) NOT NULL,
+    etiqueta VARCHAR(255) NOT NULL,
+    id_configuracion BIGINT NOT NULL,
+    PRIMARY KEY (id_elemento)
+);
 
 ALTER TABLE cat_perfil ADD CONSTRAINT uk_cat_perfil_abreviatura
 UNIQUE(abreviatura);
@@ -811,3 +819,13 @@ ALTER TABLE cat_contrato_tipo_contrato ADD CONSTRAINT fk_cat_contrato_tipo_contr
 FOREIGN KEY(elemento_padre) REFERENCES cat_contrato(id_elemento);
 ALTER TABLE cat_contrato_tipo_contrato ADD CONSTRAINT fk_cat_contrato_tipo_contrato_elemento_hijo
 FOREIGN KEY(elemento_hijo) REFERENCES cat_tipo_contrato(id_elemento);
+
+ALTER TABLE cat_reportes ADD CONSTRAINT uk_cat_reportes_abreviatura
+UNIQUE(abreviatura);
+
+ALTER TABLE cat_reportes ADD CONSTRAINT fk_cat_reportes_id_configuracion
+FOREIGN KEY(id_configuracion) REFERENCES cnf_configuracion_catalogo(id);
+
+CREATE INDEX cat_reportes_elemento_id ON cat_reportes(id_elemento);
+CREATE INDEX cat_reportes_abreviatura ON cat_reportes(abreviatura);
+
